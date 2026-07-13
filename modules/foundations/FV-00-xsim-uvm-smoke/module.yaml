@@ -1,0 +1,34 @@
+id: FV-00
+title: Vivado 2025.2 SystemVerilog and UVM smoke test
+phase: foundations
+kind: infrastructure
+status: verified
+estimated_minutes: 45
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Verification Process Overview
+prerequisites: []
+objectives:
+  primary: Run a self-checking UVM 1.2 test from PowerShell without opening the Vivado GUI.
+  supporting:
+    - Identify compile, elaborate, and simulate stages.
+    - Reproduce a run with a named UVM test and random seed.
+    - Confirm the runner rejects a deliberate UVM error.
+learner_owns:
+  - reflection.md
+codex_owns:
+  - dut/smoke_counter.sv
+  - tb/smoke_if.sv
+  - tb/smoke_pkg.sv
+  - tb/tb_top.sv
+  - tests/verify-runner.ps1
+  - run.ps1
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: Vivado/XSim 2025.2 and precompiled UVM 1.2
+completion_evidence:
+  - The known-pass test returns process exit code 0.
+  - The deliberate-failure test returns a nonzero process exit code.
+  - The learner can explain the purpose of xvlog, xelab, and xsim.
+

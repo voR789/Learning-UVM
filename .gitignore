@@ -1,0 +1,28 @@
+# Vivado and XSim generated files
+.Xil/
+build/
+*.jou
+*.log
+*.pb
+*.wdb
+*.wcfg
+*.str
+*.vcd
+*.xpr
+xsim.dir/
+xvlog.pb
+xelab.pb
+webtalk*.jou
+webtalk*.log
+
+# Generated reports and coverage
+coverage/
+reports/generated/
+*.ucdb
+
+# Local editor and OS state
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+

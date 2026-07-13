@@ -1,0 +1,25 @@
+schema_version: 1
+learner:
+  weekly_study_hours: null
+  vivado_version: "2025.2"
+  uvm_version: "1.2"
+current_focus: FV-00
+last_updated: "2026-07-12"
+summary:
+  state: not_started
+  highest_gate_passed: null
+  notes:
+    - Repository foundation created before exercise implementation.
+modules: {}
+evidence_schema:
+  state: not_started
+  attempts: 0
+  completed_on: null
+  score: null
+  hints_used: []
+  seeds: []
+  artifacts: []
+  strengths: []
+  gaps: []
+  reviewer_notes: []
+

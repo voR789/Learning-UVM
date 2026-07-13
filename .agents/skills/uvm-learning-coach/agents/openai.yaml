@@ -1,0 +1,4 @@
+interface:
+  display_name: "UVM Learning Coach"
+  short_description: "Create, coach, and assess UVM practice labs"
+  default_prompt: "Use $uvm-learning-coach to select or review my next UVM learning exercise."

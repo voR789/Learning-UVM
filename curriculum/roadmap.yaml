@@ -1,0 +1,370 @@
+schema_version: 1
+title: Learning UVM Roadmap
+toolchain:
+  simulator: AMD Vivado Simulator (XSim)
+  vivado_version: "2025.2"
+  uvm_version: "1.2"
+  host_shell: PowerShell
+learner:
+  starting_point: RTL design experience with limited verification practice and no practical UVM experience
+  weekly_study_hours: null
+  target: Independent UVM testbench development and DV internship readiness
+progress_states: [not_started, guided, completed, independent, mastered]
+gates:
+  micro_pass_score: 75
+  integration_pass_score: 80
+  capstone_pass_score: 85
+
+phases:
+  - id: foundations
+    title: Functional Verification Foundations
+    purpose: Learn verification thinking and essential SystemVerilog testbench mechanisms before adding UVM structure.
+    siemens_track: Functional Verification of Digital Logic
+    modules:
+      - id: FV-00
+        title: Vivado 2025.2 SystemVerilog and UVM smoke test
+        kind: infrastructure
+        estimated_minutes: 45
+        siemens_unit: Verification Process Overview
+        prerequisites: []
+        concepts: [xvlog, xelab, xsim, UVM 1.2, reproducible runs]
+      - id: FV-01
+        title: Read a specification and write a verification plan
+        kind: micro
+        estimated_minutes: 60
+        siemens_unit: Creating and Using a Test Plan
+        prerequisites: [FV-00]
+        concepts: [features, test intent, observability, pass criteria]
+      - id: FV-02
+        title: Build a directed self-checking ALU testbench
+        kind: micro
+        estimated_minutes: 75
+        siemens_unit: Data Types and Procedural Statements
+        prerequisites: [FV-01]
+        concepts: [tasks, expected values, comparisons, failure accounting]
+      - id: FV-03
+        title: Model transactions with structs and classes
+        kind: micro
+        estimated_minutes: 75
+        siemens_unit: Object-Oriented Programming in SystemVerilog
+        prerequisites: [FV-02]
+        concepts: [classes, handles, copy, compare, print]
+      - id: FV-04
+        title: Generate constrained-random stimulus
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Creating and Using Constrained Random
+        prerequisites: [FV-03]
+        concepts: [rand, constraints, randomize failures, seeds]
+      - id: FV-05
+        title: Connect a testbench with an interface
+        kind: micro
+        estimated_minutes: 75
+        siemens_unit: Connecting the Testbench to the Design
+        prerequisites: [FV-02]
+        concepts: [interfaces, virtual interfaces, timing ownership]
+      - id: FV-06
+        title: Synchronize concurrent stimulus and checking
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Execution Semantics and Synchronization
+        prerequisites: [FV-04, FV-05]
+        concepts: [processes, events, mailboxes, races, reset]
+      - id: FV-07
+        title: Measure functional coverage
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Creating and Using Functional Coverage
+        prerequisites: [FV-04]
+        concepts: [covergroups, coverpoints, bins, crosses, coverage intent]
+      - id: FV-G1
+        title: Verify an intentionally buggy synchronous FIFO without UVM
+        kind: integration
+        estimated_minutes: 360
+        siemens_unit: Foundations integration gate
+        prerequisites: [FV-06, FV-07]
+        concepts: [test plan, reference model, concurrency, assertions, coverage, debug]
+
+  - id: uvm-introduction
+    title: Introduction to the UVM
+    purpose: Translate foundation concepts into the UVM component and transaction model.
+    siemens_track: Introduction to the UVM
+    modules:
+      - id: UI-01
+        title: Map a procedural testbench onto UVM responsibilities
+        kind: micro
+        estimated_minutes: 45
+        siemens_unit: Overview and Welcome
+        prerequisites: [FV-G1]
+        concepts: [architecture, reuse, separation of concerns]
+      - id: UI-02
+        title: Practice inheritance and polymorphism for verification
+        kind: micro
+        estimated_minutes: 75
+        siemens_unit: Object Oriented Programming
+        prerequisites: [UI-01]
+        concepts: [inheritance, virtual methods, overriding, handles]
+      - id: UI-03
+        title: Organize packages, includes, and UVM macros
+        kind: micro
+        estimated_minutes: 60
+        siemens_unit: Packages, Includes and Macros
+        prerequisites: [UI-02]
+        concepts: [packages, imports, compile order, factory registration]
+      - id: UI-04
+        title: Build and inspect a UVM component hierarchy
+        kind: micro
+        estimated_minutes: 75
+        siemens_unit: UVM Components and Tests
+        prerequisites: [UI-03]
+        concepts: [uvm_component, build_phase, run_test, topology]
+      - id: UI-05
+        title: Compose a reusable UVM environment
+        kind: micro
+        estimated_minutes: 75
+        siemens_unit: UVM Environments
+        prerequisites: [UI-04]
+        concepts: [env, hierarchy, configuration boundaries]
+      - id: UI-06
+        title: Connect UVM objects with TLM ports
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Connecting Objects
+        prerequisites: [UI-05]
+        concepts: [ports, exports, imps, TLM FIFO]
+      - id: UI-07
+        title: Drive transaction-level stimulus
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: Transaction-Level Testing
+        prerequisites: [UI-06]
+        concepts: [sequence_item, sequencer, driver handshake]
+      - id: UI-08
+        title: Observe traffic through the analysis layer
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: The Analysis Layer
+        prerequisites: [UI-07]
+        concepts: [monitor, analysis_port, subscriber, broadcast]
+      - id: UI-09
+        title: Control UVM reporting and end-of-test results
+        kind: micro
+        estimated_minutes: 60
+        siemens_unit: UVM Reporting
+        prerequisites: [UI-04]
+        concepts: [severity, verbosity, error counts]
+      - id: UI-10
+        title: Add functional coverage to transaction observation
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Functional Coverage with Covergroups
+        prerequisites: [UI-08, FV-07]
+        concepts: [transaction sampling, subscribers, coverage models]
+      - id: UI-11
+        title: Create and compose basic sequences
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Introduction to Sequences
+        prerequisites: [UI-07]
+        concepts: [sequence body, start, items, subsequences]
+      - id: UI-G1
+        title: Build a complete UVM environment for a programmable counter
+        kind: integration
+        estimated_minutes: 420
+        siemens_unit: Introduction integration gate
+        prerequisites: [UI-09, UI-10, UI-11]
+        concepts: [environment, stimulus, monitor, scoreboard, coverage, reporting]
+
+  - id: uvm-basics
+    title: UVM Basics
+    purpose: Build a conventional reusable agent and complete block-level environment.
+    siemens_track: UVM Basics
+    modules:
+      - id: UB-01
+        title: Explain UVM reuse and test flow
+        kind: micro
+        estimated_minutes: 45
+        siemens_unit: Introduction to UVM
+        prerequisites: [UI-G1]
+        concepts: [test flow, reuse, active and passive behavior]
+      - id: UB-02
+        title: Rebuild a minimal UVM test from memory
+        kind: assessment
+        estimated_minutes: 75
+        siemens_unit: UVM Hello World
+        prerequisites: [UB-01]
+        concepts: [test, component, phase, factory, run_test]
+      - id: UB-03
+        title: Connect an environment to the DUT safely
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Connecting Env to DUT
+        prerequisites: [UB-02]
+        concepts: [virtual interface, config_db, top-level boundary]
+      - id: UB-04
+        title: Build and connect an agent
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: Connecting Components
+        prerequisites: [UB-03]
+        concepts: [agent, build_phase, connect_phase, active and passive configuration]
+      - id: UB-05
+        title: Design robust transaction objects
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Introducing Transactions
+        prerequisites: [UB-04]
+        concepts: [fields, constraints, copy, compare, convert2string]
+      - id: UB-06
+        title: Coordinate sequences, sequencers, drivers, and tests
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: Sequences and Tests
+        prerequisites: [UB-05]
+        concepts: [handshake, responses, sequence control, objections]
+      - id: UB-07
+        title: Implement passive monitoring and subscribers
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: Monitors and Subscribers
+        prerequisites: [UB-05]
+        concepts: [passive observation, analysis ports, coverage subscriber]
+      - id: UB-08
+        title: Make failures reproducible and reports useful
+        kind: micro
+        estimated_minutes: 75
+        siemens_unit: Reporting
+        prerequisites: [UB-06, UB-07]
+        concepts: [reporting, seeds, transaction recording, summaries]
+      - id: UB-G1
+        title: Build a reusable UVM environment for a synchronous FIFO
+        kind: integration
+        estimated_minutes: 480
+        siemens_unit: UVM Basics integration gate
+        prerequisites: [UB-08]
+        concepts: [agent, sequences, monitor, scoreboard, coverage, reset, fault detection]
+
+  - id: advanced-uvm
+    title: Advanced UVM
+    purpose: Customize and scale environments, compose stimulus, and verify register-oriented designs.
+    siemens_track: Advanced UVM
+    modules:
+      - id: UA-01
+        title: Architect a reusable block-level testbench
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Architecting a UVM Testbench
+        prerequisites: [UB-G1]
+        concepts: [UVC boundaries, configuration objects, reuse planning]
+      - id: UA-02
+        title: Customize components with factory and configuration
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: Understanding the Factory and Configuration
+        prerequisites: [UA-01]
+        concepts: [type override, instance override, config objects, config_db]
+      - id: UA-03
+        title: Extend and encapsulate transaction models
+        kind: micro
+        estimated_minutes: 90
+        siemens_unit: Modeling Transactions
+        prerequisites: [UA-02]
+        concepts: [transaction extension, constraints, encapsulation]
+      - id: UA-04
+        title: Implement predictor-to-scoreboard TLM flow
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: How TLM Works
+        prerequisites: [UA-03]
+        concepts: [TLM interfaces, analysis FIFOs, predictors, scoreboards]
+      - id: UA-05
+        title: Control sequential, parallel, and hierarchical sequences
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: The Proper Care and Feeding of Sequences
+        prerequisites: [UA-02]
+        concepts: [sequence lifecycle, arbitration, parallelism, responses]
+      - id: UA-06
+        title: Coordinate agents with virtual and layered sequences
+        kind: micro
+        estimated_minutes: 150
+        siemens_unit: Layered Sequences
+        prerequisites: [UA-05]
+        concepts: [virtual sequencer, virtual sequence, layered protocols]
+      - id: UA-07
+        title: Build a maintainable test hierarchy and regression set
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: Writing and Managing Tests
+        prerequisites: [UA-04, UA-06]
+        concepts: [base test, objections, test selection, seeds, regression taxonomy]
+      - id: UA-08
+        title: Construct and connect a UVM register model
+        kind: micro
+        estimated_minutes: 150
+        siemens_unit: Setting Up the Register Layer
+        prerequisites: [UA-04]
+        concepts: [register blocks, maps, adapters, predictors]
+      - id: UA-09
+        title: Exercise frontdoor and backdoor register access
+        kind: micro
+        estimated_minutes: 120
+        siemens_unit: Using the Register Layer
+        prerequisites: [UA-08]
+        concepts: [frontdoor, backdoor, mirror, predict, update]
+      - id: UA-10
+        title: Build register-level tests, scoreboards, and coverage
+        kind: micro
+        estimated_minutes: 150
+        siemens_unit: Register-Based Testing
+        prerequisites: [UA-09]
+        concepts: [register sequences, memories, register coverage, checking]
+      - id: UA-G1
+        title: Verify an APB-style register-controlled peripheral
+        kind: integration
+        estimated_minutes: 600
+        siemens_unit: Advanced UVM integration gate
+        prerequisites: [UA-07, UA-10]
+        concepts: [reusable agent, virtual sequences, RAL, scoreboard, coverage closure]
+
+  - id: internship-readiness
+    title: Independent DV Internship Readiness
+    purpose: Demonstrate independent planning, implementation, debug, and communication on unfamiliar RTL.
+    siemens_track: Independent application
+    modules:
+      - id: DV-01
+        title: Review and repair a flawed UVM environment
+        kind: assessment
+        estimated_minutes: 180
+        siemens_unit: Independent debug practice
+        prerequisites: [UA-G1]
+        concepts: [code review, races, architecture, root-cause analysis]
+      - id: DV-02
+        title: Plan and run a reproducible regression
+        kind: assessment
+        estimated_minutes: 180
+        siemens_unit: Independent regression practice
+        prerequisites: [DV-01]
+        concepts: [test matrix, seeds, triage, failure buckets]
+      - id: DV-03
+        title: Close functional coverage without gaming metrics
+        kind: assessment
+        estimated_minutes: 240
+        siemens_unit: Independent coverage practice
+        prerequisites: [DV-02]
+        concepts: [coverage holes, unreachable bins, targeted sequences, evidence]
+      - id: DV-C1
+        title: Blind capstone on an unfamiliar protocol peripheral
+        kind: capstone
+        estimated_minutes: 1200
+        siemens_unit: Portfolio capstone
+        prerequisites: [DV-03]
+        concepts: [specification, plan, architecture, implementation, regression, coverage, report]
+      - id: DV-C2
+        title: Apply the workflow to one external personal project
+        kind: capstone
+        estimated_minutes: 1200
+        siemens_unit: Transfer assessment
+        prerequisites: [DV-C1]
+        concepts: [knowledge transfer, adaptation, portfolio communication]
+
