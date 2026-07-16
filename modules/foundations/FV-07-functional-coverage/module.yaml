@@ -1,0 +1,36 @@
+id: FV-07
+title: Measure functional coverage
+phase: foundations
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Creating and Using Functional Coverage
+prerequisites:
+  - FV-04
+objectives:
+  primary: Measure verification intent with transaction-based functional coverage and use coverage holes to select additional stimulus.
+  supporting:
+    - Define meaningful coverpoints, bins, and a cross from requirements.
+    - Sample completed transactions rather than arbitrary simulation cycles.
+    - Distinguish coverage completion from functional correctness.
+learner_owns:
+  - tb/coverage_lab.sv
+  - reflection.md
+codex_owns:
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/xsim-coverage-probe.sv
+  - tests/run-coverage-probe.ps1
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: null
+completion_evidence:
+  - XSim reports every required operation and operand-class bin as covered.
+  - The valid-operation-by-zero-result cross reaches all reachable planned bins.
+  - Coverage is sampled once per completed transaction.
+  - At least one initial coverage hole is identified and closed with purposeful stimulus.
+  - The learner explains why coverage does not replace checking.

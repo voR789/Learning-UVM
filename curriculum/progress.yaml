@@ -3,14 +3,238 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: FV-00
-last_updated: "2026-07-12"
+current_focus: FV-G1
+last_updated: "2026-07-16"
 summary:
-  state: not_started
+  state: guided
   highest_gate_passed: null
   notes:
     - Repository foundation created before exercise implementation.
-modules: {}
+    - Foundation micro-modules FV-00 through FV-07 are complete with guided evidence.
+    - FV-G1 is the next eligible module and the current focus.
+modules:
+  FV-00:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-13"
+    score: 97
+    hints_used:
+      - Command-line compile, elaborate, and simulation workflow explanation.
+      - XSim waveform database versus live snapshot guidance.
+      - Correction of elaboration responsibilities and generated log names.
+    seeds:
+      - 2025
+    artifacts:
+      - modules/foundations/FV-00-xsim-uvm-smoke/reflection.md
+      - modules/foundations/FV-00-xsim-uvm-smoke/tests/verify-runner.ps1
+    strengths:
+      - Explained why a successful XSim process exit does not prove a UVM test passed.
+      - Connected test name and seed to reproducible failures.
+      - Demonstrated both the known-pass and deliberate-failure runner paths.
+    gaps:
+      - Reflection should use the exact generated log names elaborate.log and simulation.log.
+    reviewer_notes:
+      - Known-pass test returned zero with TEST_RESULT PASS and no UVM errors at seed 2025.
+      - Deliberate UVM error returned nonzero and the runner self-test completed successfully.
+      - Guided reflects the substantial workflow and waveform coaching used during completion.
+  FV-01:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-14"
+    score: 91
+    hints_used:
+      - Guided review questions for traceability, boundary behavior, and failure criteria.
+      - Direct mechanical radix formatting and failure-criterion completion.
+      - Scope, assumptions, and completion-criteria wording guidance.
+    seeds: []
+    artifacts:
+      - modules/foundations/FV-01-verification-plan/plan/verification-plan.md
+      - modules/foundations/FV-01-verification-plan/reflection.md
+    strengths:
+      - Traced all eight ALU requirements across 16 directed cases.
+      - Distinguished stimulus, observation, expected behavior, and failure criteria.
+      - Covered valid operations, invalid selectors, zero behavior, carry, and borrow behavior.
+    gaps:
+      - Arithmetic boundary selection required coaching and is not yet independently reused.
+    reviewer_notes:
+      - Module scaffolded after FV-00 evidence made the prerequisite eligible.
+      - Structural checker passed with requirements=8 and cases=16 on 2026-07-14.
+      - Semantic review confirmed executable expected values and complete output mismatch criteria.
+      - Score: traceability 30/30, boundary and negative intent 21/25, observation and failure criteria 24/25, feasibility and clarity 8/10, reflection 8/10.
+  FV-02:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-14"
+    score: 96
+    hints_used:
+      - Combinational settling and simulator scheduling explanation.
+      - Review questions for check counting, error accumulation, and four-state comparisons.
+      - Mechanical generation of check_case calls from the completed verification plan.
+    seeds:
+      - 1
+    artifacts:
+      - modules/foundations/FV-02-directed-alu-testbench/tb/alu_tb.sv
+      - modules/foundations/FV-02-directed-alu-testbench/reflection.md
+    strengths:
+      - Implemented a reusable self-checking task with four-state comparisons and field-level diagnostics.
+      - Executed all 16 planned cases with an explicit nonzero settling delay.
+      - Demonstrated that an incorrect expected invalid flag produces a counted failure and nonzero runner exit.
+    gaps:
+      - Case-data transcription was generated directly rather than practiced manually.
+    reviewer_notes:
+      - Eligible after guided completion of FV-01; starter module created on 2026-07-14.
+      - Starter compiled and elaborated in XSim 2025.2, then failed intentionally because zero directed checks executed.
+      - Normal XSim 2025.2 regression passed 16 checks at seed 1 on 2026-07-14.
+      - Score: functional checking 35/35, separation and reuse 20/20, combinational sampling 15/15, completion and diagnostics 18/20, reflection 8/10.
+  FV-03:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-15"
+    score: 90
+    hints_used:
+      - Class-handle alias prediction and focused experiment guidance.
+      - String formatting guidance for sprint using sformatf.
+      - Review questions that converted printed demonstrations into self-checking invariants.
+    seeds:
+      - 1
+    artifacts:
+      - modules/foundations/FV-03-transaction-models/tb/transaction_lab.sv
+      - modules/foundations/FV-03-transaction-models/reflection.md
+    strengths:
+      - Implemented field-wise copy, compare, and transaction formatting methods.
+      - Demonstrated alias behavior and independent-copy behavior with executable checks.
+      - Proved a changed copied field does not mutate the original object.
+    gaps:
+      - Reflection wording still partially conflates class-handle semantics with object-oriented programming generally.
+      - Copying the diagnostic name makes original and copy logs less distinguishable.
+    reviewer_notes:
+      - Eligible after guided completion of FV-02; starter module created on 2026-07-14.
+      - Starter compiled and elaborated in XSim 2025.2, then failed intentionally because no transaction checks executed.
+      - Final XSim 2025.2 transaction lab passed at seed 1 on 2026-07-15.
+      - Score: representation 20/20, handle reasoning 22/25, copy and compare 28/30, diagnostics 14/15, reflection 6/10.
+  FV-04:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-15"
+    score: 94
+    hints_used:
+      - Randomize return-value and failure-policy explanation.
+      - Guidance to widen arithmetic inside overflow constraints.
+      - Seed-reproducibility review and reflection refinement.
+    seeds:
+      - 1
+      - 2
+    artifacts:
+      - modules/foundations/FV-04-constrained-random/tb/randomization_lab.sv
+      - modules/foundations/FV-04-constrained-random/reflection.md
+    strengths:
+      - Generated and validated 20 legal constrained-random transactions.
+      - Used a targeted inline constraint for ADD overflow with widened arithmetic.
+      - Correctly handled an intentionally unsatisfiable constraint.
+      - Demonstrated identical sequences for repeated seed 1 and a different sequence for seed 2.
+    gaps:
+      - Reusable-constraint reflection wording remains broader than the implemented per-item legality invariant.
+    reviewer_notes:
+      - Eligible after guided completion of FV-03; starter module created on 2026-07-15.
+      - Starter compiled and elaborated in XSim 2025.2, then failed intentionally because no randomization checks executed.
+      - Final XSim 2025.2 run passed at seed 1 on 2026-07-15; seed 2 also passed with a different sequence.
+      - Score: legal generation 25/25, constraint design 24/25, failure handling 20/20, reproducibility 18/20, reflection 7/10.
+  FV-05:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-15"
+    score: 86
+    hints_used:
+      - Modport perspective and syntax explanation.
+      - Correction from hierarchical modport access to direct virtual-interface signal access.
+      - Reflection guidance on static interfaces and dynamic class handles.
+    seeds:
+      - 1
+    artifacts:
+      - modules/foundations/FV-05-systemverilog-interface/tb/alu_if.sv
+      - modules/foundations/FV-05-systemverilog-interface/tb/interface_lab.sv
+      - modules/foundations/FV-05-systemverilog-interface/reflection.md
+    strengths:
+      - Declared correct DUT and testbench modport directions.
+      - Connected a class-based checker to the concrete interface and performed self-checking drive/wait/sample behavior.
+      - Final XSim run passed without illegal-modport warnings.
+    gaps:
+      - The class stores generic virtual alu_if rather than virtual alu_if.tb_mp, so compile-time modport restrictions are not retained.
+      - Reflection describes the modport-limited handle more precisely than the final declaration implements it.
+    reviewer_notes:
+      - Eligible after guided completion of FV-04; starter module created on 2026-07-15.
+      - Starter compiled and elaborated in XSim 2025.2, then failed intentionally because no interface checks executed.
+      - Final XSim 2025.2 interface run passed at seed 1 on 2026-07-15.
+      - Learner reported deliberate expected-value fault testing before restoring the passing case.
+      - Score: interface and modports 25/25, virtual-interface use 17/25, timing and checking 30/30, fault evidence 8/10, reflection 6/10.
+  FV-06:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-16"
+    score: 92
+    hints_used:
+      - Blocking mailbox and fresh-object ownership guidance.
+      - Monitor sampling guidance for registered outputs.
+      - End-of-test timeout architecture correction and publication-order invariant coaching.
+    seeds:
+      - 1
+    artifacts:
+      - modules/foundations/FV-06-concurrent-synchronization/tb/concurrency_lab.sv
+      - modules/foundations/FV-06-concurrent-synchronization/reflection.md
+    strengths:
+      - Separated generator, driver, passive monitor, and scoreboard responsibilities.
+      - Used blocking mailboxes and events to synchronize reset, transaction flow, and completion.
+      - Checked all ten transactions exactly once and prevented premature successful termination.
+      - Restored a passing run after demonstrating a deliberate mismatch failure.
+    gaps:
+      - Required substantial guidance on sampling edges, timeout concurrency, and cross-process publication ordering.
+    reviewer_notes:
+      - Eligible after guided completion of FV-04 and FV-05; starter module created on 2026-07-15.
+      - Starter compiled and elaborated with classes, mailboxes, events, interface, and concurrent processes in XSim 2025.2, then reached the intended 1 us timeout with zero checks.
+      - Final XSim 2025.2 run passed ten generated, driven, observed, and checked transactions at seed 1 on 2026-07-16.
+      - Learner reported deliberate fault testing before restoring the expected sum.
+      - Score: concurrent architecture 20/20, synchronization and reset 22/25, transaction communication 19/20, checking and termination 24/25, reflection 7/10.
+  FV-07:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-16"
+    score: 93
+    hints_used:
+      - Coverage-versus-correctness invariant and focused reflection questions.
+      - XSim functional-coverage database and report workflow guidance.
+      - Direct repair of per-encoding operation bins, the defined-operation-by-zero cross, and closure stimulus.
+    seeds:
+      - 1
+    artifacts:
+      - modules/foundations/FV-07-functional-coverage/tb/coverage_lab.sv
+      - modules/foundations/FV-07-functional-coverage/reflection.md
+    strengths:
+      - Defined operand-class and result-zero coverage and sampled once per completed transaction.
+      - Used the XSim report to identify missing zero operand bins and added purposeful stimulus.
+      - Explained that coverage measures occurrence rather than DUT correctness.
+      - Located transaction-based coverage after passive observation of a completed transaction.
+    gaps:
+      - Initially grouped operation encodings too coarsely for requirement-level hole detection.
+      - Required direct repair of the cross model and remaining closure stimulus.
+    reviewer_notes:
+      - Eligible after guided completion of FV-04; starter module created on 2026-07-16.
+      - XSim 2025.2 compatibility probe passed covergroup sampling and get_inst_coverage at 100 percent.
+      - Starter compiled, elaborated, sampled six transactions, and failed intentionally at 0 percent because the learner coverage model is empty.
+      - Final XSim 2025.2 run passed at seed 1 with 13 samples, eight operation bins, complete operand and result-zero bins, and all ten reachable operation-by-zero cross bins covered.
+      - Score: requirement-derived model 30/30, cross coverage 20/20, sampling correctness 20/20, coverage analysis and closure 15/20, reflection 8/10.
+      - Guided reflects the direct repair used to restore per-encoding observability and valid cross closure.
+  FV-G1:
+    state: not_started
+    attempts: 0
+    completed_on: null
+    score: null
+    hints_used: []
+    seeds: []
+    artifacts: []
+    strengths: []
+    gaps: []
+    reviewer_notes:
+      - Eligible after guided completion of FV-06 and FV-07.
 evidence_schema:
   state: not_started
   attempts: 0
@@ -22,4 +246,3 @@ evidence_schema:
   strengths: []
   gaps: []
   reviewer_notes: []
-

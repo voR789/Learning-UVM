@@ -1,0 +1,34 @@
+id: FV-04
+title: Generate constrained-random stimulus
+phase: foundations
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Creating and Using Constrained Random
+prerequisites:
+  - FV-03
+objectives:
+  primary: Generate legal, targeted, and reproducible constrained-random transaction data while handling randomization failure explicitly.
+  supporting:
+    - Declare random transaction fields and reusable constraints.
+    - Add inline constraints for a targeted scenario.
+    - Treat randomize failure as observable testbench behavior.
+learner_owns:
+  - tb/randomization_lab.sv
+  - reflection.md
+codex_owns:
+  - run.ps1
+  - rubric.md
+  - hints.md
+run:
+  shell: powershell
+  command: ./run.ps1 -Seed 1
+  verified_with: null
+completion_evidence:
+  - Legal randomization produces the requested number of valid transactions.
+  - A targeted inline constraint produces and checks its intended scenario.
+  - An intentionally contradictory constraint fails and is handled correctly.
+  - Repeating a seed reproduces the generated transaction sequence.
+  - The learner completes the reflection in their own words.

@@ -1,0 +1,33 @@
+id: FV-03
+title: Model transactions with structs and classes
+phase: foundations
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Object-Oriented Programming in SystemVerilog
+prerequisites:
+  - FV-02
+objectives:
+  primary: Represent verification data as a transaction and explain SystemVerilog handle, copy, compare, and print behavior.
+  supporting:
+    - Distinguish a packed struct value from a class handle.
+    - Detect accidental aliasing between expected and observed transactions.
+    - Implement reusable copy, compare, and formatting methods.
+learner_owns:
+  - tb/transaction_lab.sv
+  - reflection.md
+codex_owns:
+  - run.ps1
+  - rubric.md
+  - hints.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: null
+completion_evidence:
+  - The transaction lab compiles and emits TEST_RESULT PASS.
+  - Copy and alias experiments produce the predicted behavior.
+  - Compare detects at least one deliberately changed field.
+  - The learner completes the reflection in their own words.

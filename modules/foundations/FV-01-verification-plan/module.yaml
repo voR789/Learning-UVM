@@ -1,0 +1,40 @@
+id: FV-01
+title: Read a specification and write a verification plan
+phase: foundations
+kind: micro
+status: ready
+estimated_minutes: 60
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Creating and Using a Test Plan
+prerequisites:
+  - FV-00
+objectives:
+  primary: Derive a traceable verification plan from observable behavioral requirements before writing testbench code.
+  supporting:
+    - Separate stimulus, observation, expected behavior, and pass criteria.
+    - Include boundary and negative cases that could expose meaningful faults.
+    - Identify assumptions without relying on a DUT implementation.
+learner_owns:
+  - plan/verification-plan.md
+  - reflection.md
+codex_owns:
+  - dut/alu-spec.md
+  - tb/README.md
+  - tests/check-plan.ps1
+  - tests/verify-checker.ps1
+  - tests/fixtures/valid-plan.md
+  - tests/fixtures/invalid-plan.md
+  - run.ps1
+  - README.md
+  - rubric.md
+  - hints.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: PowerShell 5.1 checker self-test on 2026-07-13
+completion_evidence:
+  - The plan validator passes with every specification requirement traced to at least one test case.
+  - Human review confirms observable expected results and unambiguous failure criteria.
+  - The plan includes meaningful boundary and invalid-operation cases.
+  - The learner completes the reflection in their own words.

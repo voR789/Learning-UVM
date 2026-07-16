@@ -20,6 +20,8 @@ param(
 
     [int]$Seed = 1,
 
+    [switch]$FunctionalCoverageReport,
+
     [string]$VivadoRoot = $(
         if ($env:VIVADO_ROOT) {
             $env:VIVADO_ROOT
@@ -62,11 +64,15 @@ try {
     $xvlog = Join-Path $vivadoPath 'bin\xvlog.bat'
     $xelab = Join-Path $vivadoPath 'bin\xelab.bat'
     $xsim = Join-Path $vivadoPath 'bin\xsim.bat'
+    $xcrg = Join-Path $vivadoPath 'bin\xcrg.bat'
 
     foreach ($tool in @($xvlog, $xelab, $xsim)) {
         if (-not (Test-Path -LiteralPath $tool -PathType Leaf)) {
             throw "Required Vivado tool not found: $tool"
         }
+    }
+    if ($FunctionalCoverageReport -and -not (Test-Path -LiteralPath $xcrg -PathType Leaf)) {
+        throw "Required XSim coverage report generator not found: $xcrg"
     }
 
     $resolvedSources = foreach ($source in $Sources) {
@@ -94,6 +100,9 @@ try {
         $compileLog = Join-Path $buildDirectory 'compile.log'
         $elaborateLog = Join-Path $buildDirectory 'elaborate.log'
         $simulationLog = Join-Path $buildDirectory 'simulation.log'
+        $coverageDatabaseName = $Snapshot
+        $coverageReportDirectory = Join-Path $buildDirectory 'coverage-report'
+        $coverageReportLog = Join-Path $buildDirectory 'coverage-report.log'
 
         $compileArguments = @('-sv', '-L', 'uvm') + $resolvedSources
         Invoke-XSimStage -Name 'Compile' -Executable $xvlog -Arguments $compileArguments -LogPath $compileLog
@@ -117,7 +126,35 @@ try {
             '-sv_seed', $Seed.ToString(),
             '-testplusarg', "`"UVM_TESTNAME=$Test`""
         )
-        Invoke-XSimStage -Name 'Simulate' -Executable $xsim -Arguments $simulationArguments -LogPath $simulationLog
+        if ($FunctionalCoverageReport) {
+            $simulationArguments += @(
+                '-cov_db_dir', '.',
+                '-cov_db_name', $coverageDatabaseName
+            )
+
+            # Coverage closure commonly ends a run with a deliberate failure.
+            # Preserve that exit code, but generate the bin-level report before
+            # reporting the simulation failure to the caller.
+            Write-Host "[$ModuleId] Simulate"
+            & $xsim @simulationArguments 2>&1 | Tee-Object -FilePath $simulationLog
+            $simulationExitCode = $LASTEXITCODE
+
+            $coverageArguments = @(
+                '-cov_db_dir', '.',
+                '-cov_db_name', $coverageDatabaseName,
+                '-report_dir', 'coverage-report',
+                '-report_format', 'all',
+                '-nolog'
+            )
+            Invoke-XSimStage -Name 'Generate functional coverage report' -Executable $xcrg -Arguments $coverageArguments -LogPath $coverageReportLog
+            Write-Host "[$ModuleId] Coverage report: $coverageReportDirectory"
+
+            if ($simulationExitCode -ne 0) {
+                throw "Simulate failed with exit code $simulationExitCode. See $simulationLog and $coverageReportDirectory"
+            }
+        } else {
+            Invoke-XSimStage -Name 'Simulate' -Executable $xsim -Arguments $simulationArguments -LogPath $simulationLog
+        }
 
         $simulationText = Get-Content -LiteralPath $simulationLog -Raw
         $hasUvmErrors = $simulationText -match '(?m)^\s*UVM_(ERROR|FATAL)\s*:\s*[1-9][0-9]*\s*$'

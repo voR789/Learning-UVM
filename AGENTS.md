@@ -62,6 +62,8 @@ Use this hint ladder unless the learner explicitly requests stronger help:
 5. Provide a minimal patch only when explicitly requested or after an explained attempt.
 6. Provide a complete reference solution only when explicitly requested.
 
+Default coaching style: prefer concise senior-engineer diagnostic questions over direct answers. Give enough explanation to establish the governing invariant, then return ownership of the implementation decision to the learner. Expand into direct syntax, pseudocode, or patches only when explicitly requested or after a reviewed attempt.
+
 Never weaken a grader merely to make incorrect learner code pass. Never overwrite learner-owned code without preserving and explaining the change.
 
 ## Ownership Boundaries
@@ -158,4 +160,3 @@ Grow these expectations with the curriculum rather than forcing full UVM archite
 5. Build and verify a Vivado 2025.2 UVM smoke test and shared XSim runner.
 6. Create the foundation pilot modules only.
 7. Complete the pilot, revise the teaching system, then expand one Siemens unit at a time.
-

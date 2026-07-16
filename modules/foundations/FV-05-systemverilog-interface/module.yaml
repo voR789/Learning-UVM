@@ -1,0 +1,35 @@
+id: FV-05
+title: Connect a testbench with an interface
+phase: foundations
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Connecting the Testbench to the Design
+prerequisites:
+  - FV-02
+objectives:
+  primary: Bundle DUT signals in a SystemVerilog interface and access them through a virtual interface without losing timing ownership.
+  supporting:
+    - Distinguish an interface instance from a virtual-interface handle.
+    - Use modports to document testbench and DUT signal direction.
+    - Drive and sample the combinational DUT through the interface.
+learner_owns:
+  - tb/alu_if.sv
+  - tb/interface_lab.sv
+  - reflection.md
+codex_owns:
+  - dut/alu.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: null
+completion_evidence:
+  - The interface declares the complete ALU connection and directional modports.
+  - A class receives and uses a non-null virtual interface.
+  - At least one passing and one deliberately failing expected result prove checking through the interface.
+  - The learner completes the reflection in their own words.

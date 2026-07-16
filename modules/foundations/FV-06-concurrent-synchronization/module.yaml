@@ -1,0 +1,37 @@
+id: FV-06
+title: Synchronize concurrent stimulus and checking
+phase: foundations
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Execution Semantics and Synchronization
+prerequisites:
+  - FV-04
+  - FV-05
+objectives:
+  primary: Coordinate concurrent generator, driver, monitor, and scoreboard processes without races, lost transactions, or premature termination.
+  supporting:
+    - Use mailboxes for blocking transaction transfer.
+    - Use events to coordinate reset release and completion.
+    - Drive and sample a synchronous interface on deterministic edges.
+learner_owns:
+  - tb/sync_if.sv
+  - tb/concurrency_lab.sv
+  - reflection.md
+codex_owns:
+  - dut/registered_adder.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+run:
+  shell: powershell
+  command: ./run.ps1 -Seed 1
+  verified_with: null
+completion_evidence:
+  - All generated transactions are driven, passively observed, and checked exactly once.
+  - Reset prevents transactions from being accepted before release.
+  - The test terminates only after the scoreboard checks every expected item.
+  - A deliberate DUT-output or expected-value fault produces a nonzero result.
+  - The learner completes the reflection in their own words.

@@ -1,0 +1,34 @@
+id: FV-02
+title: Build a directed self-checking ALU testbench
+phase: foundations
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Data Types and Procedural Statements
+prerequisites:
+  - FV-01
+objectives:
+  primary: Implement a directed SystemVerilog testbench that predicts and checks ALU outputs automatically.
+  supporting:
+    - Translate verification-plan rows into executable stimulus and checks.
+    - Count failures and return an unambiguous process result.
+    - Sample combinational outputs without a zero-delay race.
+learner_owns:
+  - tb/alu_tb.sv
+  - reflection.md
+codex_owns:
+  - dut/alu.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: null
+completion_evidence:
+  - All directed cases derived from FV-01 execute and check result, carry, zero, and invalid.
+  - The documented run command emits TEST_RESULT PASS and returns zero.
+  - A deliberate expected-value fault is shown to make the testbench fail.
+  - The learner completes the reflection in their own words.

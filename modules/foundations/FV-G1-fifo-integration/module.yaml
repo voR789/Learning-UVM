@@ -1,0 +1,41 @@
+id: FV-G1
+title: Verify an intentionally buggy synchronous FIFO without UVM
+phase: foundations
+kind: integration
+status: ready
+estimated_minutes: 360
+siemens_mapping:
+  track: Functional Verification of Digital Logic
+  unit: Foundations integration gate
+prerequisites:
+  - FV-06
+  - FV-07
+objectives:
+  primary: Independently plan and implement a reusable self-checking verification environment that exposes specification violations in a synchronous FIFO.
+  supporting:
+    - Separate stimulus, driving, passive observation, prediction, checking, and coverage.
+    - Verify reset, ordering, capacity boundaries, blocked requests, and simultaneous operations.
+    - Produce reproducible failure evidence and distinguish DUT defects from testbench defects.
+learner_owns:
+  - plan/verification-plan.md
+  - tb/fifo_tb.sv
+  - reflection.md
+  - reports/evidence-summary.md
+codex_owns:
+  - dut/sync_fifo.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: null
+completion_evidence:
+  - A verification plan traces every FIFO requirement to stimulus, observation, expected behavior, and failure criteria.
+  - XSim produces reproducible self-checking evidence for reset, ordering, boundary, blocked-request, and simultaneous-operation behavior.
+  - The scoreboard predicts from accepted operations rather than copying DUT internals.
+  - Assertions check selected temporal or interface invariants supported by XSim.
+  - Functional coverage measures the required operation and occupancy scenarios and reports remaining holes.
+  - At least one seeded DUT defect is localized with a reproducing test and seed.
+  - The learner explains stimulus, observation, prediction, checking, coverage, and termination.
