@@ -144,6 +144,14 @@ Grow these expectations with the curriculum rather than forcing full UVM archite
 ## Repository Change Rules
 
 - Read this file, the relevant `module.yaml`, and learner progress before changing a module.
+- When resuming `current_focus`, read that module's
+  `implementation-handoff.md` when present, followed by the authoritative
+  specification, verification plan, and learner-owned source. A handoff records
+  current working context but never overrides the specification, executable
+  evidence, or learner ownership.
+- Update a module handoff only after a material planning, implementation,
+  debugging, or assessment milestone. Do not treat a handoff as completion
+  evidence.
 - Preserve prerequisite order and stable module IDs.
 - Do not advance progress without executable or review evidence.
 - Do not commit generated Vivado projects, waves, logs, coverage databases, or work libraries.

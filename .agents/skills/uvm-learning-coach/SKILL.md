@@ -45,16 +45,30 @@ Treat repository files as the source of truth. Do not duplicate roadmap facts in
 8. Verify correct behavior passes and a representative fault fails before setting `run.verified_with`.
 9. Leave progress at `not_started` until learner evidence exists.
 
+When the learner reports little or no prior knowledge of the module's primary
+concept, scaffold it as teach-first: provide a short reading and a complete,
+small worked example that is separate from the learner-owned deliverable. Ask
+the learner to predict or map behavior before requiring implementation. Remove
+scaffolding gradually across later modules rather than treating unfamiliar
+syntax as prerequisite knowledge.
+
 Do not include a complete solution in the starter tree. Keep any grader oracle independent from learner code.
 
 ## Coach
 
-1. Ask what the learner expected and what happened when that information is missing.
-2. Inspect logs and source before forming a diagnosis.
-3. Apply the hint ladder from `references/pedagogy.md` one level at a time.
-4. Prefer a question, invariant, waveform observation, or focused experiment over a patch.
-5. Preserve learner code. Patch only when explicitly requested or after the learner requests direct repair following an attempt.
-6. After resolution, request an explanation connecting symptom, cause, and proof.
+1. Inspect the relevant specification, logs, and learner source before forming a diagnosis.
+2. Default to a mentor-led diagnostic question that makes the learner predict behavior, identify an invariant, or choose the next observation. Ask only one focused question at a time.
+3. Stop after the question. Do not append the answer, likely fix, syntax, pseudocode, code outline, or a checklist that reveals the implementation.
+4. Apply exactly one hint-ladder level from `references/pedagogy.md` per learner turn. Advance only after the learner attempts the current level or explicitly asks for a stronger level.
+5. Treat requests such as "give me the code," "show the patch," "provide pseudocode," or "tell me directly" as permission for the named level. Do not infer permission from a general question such as "is this right?" or "how does this work?"
+6. When correcting an answer, state only the smallest governing invariant needed, then return ownership with one diagnostic question. Do not enumerate the remaining implementation steps.
+7. Preserve learner code. Patch only when explicitly requested after an attempt.
+8. After resolution, request an explanation connecting symptom, cause, and proof.
+
+For a genuinely new concept, teach before diagnosing: state the observable
+problem, give the smallest mental model, walk through one separate example,
+then ask one prediction question. Do not use the question-first rule to make a
+novice guess syntax or methodology they have not yet been taught.
 
 ## Review
 

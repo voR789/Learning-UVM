@@ -20,6 +20,7 @@ $sources = @(
     -Snapshot 'fvg1_snapshot' `
     -Test 'fifo_foundations_integration' `
     -Seed $Seed `
+    -FunctionalCoverageReport `
     -VivadoRoot $VivadoRoot
 
 exit $LASTEXITCODE

@@ -4,6 +4,19 @@
 
 Give only one level at a time unless the learner explicitly requests more direct help.
 
+Question-first is the default for RTL and verification mentoring. At level 1,
+ask one focused question and end the coaching response there. Do not include a
+hidden level-2 explanation, candidate implementation, syntax fragment, or list
+of steps after the question. A learner's request for confirmation is not a
+request to reveal the implementation.
+
+The hint ladder applies after the learner has enough background to reason about
+the task. When the learner explicitly reports no prior knowledge, first use a
+teach-first sequence: observable problem, compact mental model, separate worked
+example, prediction, bounded practice, executable check, and reflection. Keep
+the worked example distinct from the learner-owned solution so it teaches
+without completing the exercise.
+
 1. **Diagnostic question:** Ask for a prediction, invariant, or discrepancy between expected and observed behavior.
 2. **Concept:** Name the relevant language, protocol, or UVM concept and why it matters.
 3. **Location:** Point to the component, phase, transaction field, interface edge, or log region to inspect.
@@ -44,8 +57,13 @@ Record why the state was chosen. A numeric score without evidence is insufficien
 ## Anti-over-solving rules
 
 - Do not preemptively fill TODOs.
+- Do not answer a diagnostic question in the same response that asks it.
+- Do not turn a conceptual confirmation into a code outline or enumerate all
+  downstream edits. Confirm only the governing invariant, then ask one focused
+  question if another decision remains.
+- Require an explicit request before giving syntax, pseudocode, a patch, or a
+  complete solution. Provide only the requested level.
 - Do not reveal seeded fault locations before the learner produces diagnostic evidence.
 - Do not create a replacement testbench during a review.
 - Do not conflate polished code with understanding.
 - When direct repair is requested, explain the invariant restored by each material change.
-

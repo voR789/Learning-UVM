@@ -22,6 +22,8 @@ learner_owns:
   - reflection.md
   - reports/evidence-summary.md
 codex_owns:
+  - spec/fifo-hardware-specification.md
+  - implementation-handoff.md
   - dut/sync_fifo.sv
   - run.ps1
   - rubric.md
@@ -32,7 +34,7 @@ run:
   command: ./run.ps1
   verified_with: null
 completion_evidence:
-  - A verification plan traces every FIFO requirement to stimulus, observation, expected behavior, and failure criteria.
+  - A verification plan traces the normative FIFO specification requirements to stimulus, observation, expected behavior, and failure criteria.
   - XSim produces reproducible self-checking evidence for reset, ordering, boundary, blocked-request, and simultaneous-operation behavior.
   - The scoreboard predicts from accepted operations rather than copying DUT internals.
   - Assertions check selected temporal or interface invariants supported by XSim.

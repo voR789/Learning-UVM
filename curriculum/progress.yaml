@@ -3,15 +3,16 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: FV-G1
-last_updated: "2026-07-16"
+current_focus: UI-01
+last_updated: "2026-07-22"
 summary:
   state: guided
-  highest_gate_passed: null
+  highest_gate_passed: FV-G1
   notes:
     - Repository foundation created before exercise implementation.
     - Foundation micro-modules FV-00 through FV-07 are complete with guided evidence.
-    - FV-G1 is the next eligible module and the current focus.
+    - FV-G1 completed with guided evidence and passed the foundations integration gate.
+    - UI-01 is the next eligible module and the current focus.
 modules:
   FV-00:
     state: guided
@@ -224,6 +225,44 @@ modules:
       - Score: requirement-derived model 30/30, cross coverage 20/20, sampling correctness 20/20, coverage analysis and closure 15/20, reflection 8/10.
       - Guided reflects the direct repair used to restore per-encoding observability and valid cross closure.
   FV-G1:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-22"
+    score: 89
+    hints_used:
+      - Requirement-level traceability, scenario bundling, and coverage-intent coaching.
+      - Independent-model acceptance, passive-observation timing, and failure-criterion guidance.
+      - Direct completion of simultaneous-operation, full-recovery, and wraparound plan rows.
+      - Non-UVM transaction, mailbox termination, predictor, scoreboard, assertion, and coverage architecture guidance.
+    seeds:
+      - 1
+      - 231
+      - 353
+    artifacts:
+      - modules/foundations/FV-G1-fifo-integration/spec/fifo-hardware-specification.md
+      - modules/foundations/FV-G1-fifo-integration/plan/verification-plan.md
+      - modules/foundations/FV-G1-fifo-integration/implementation-handoff.md
+      - modules/foundations/FV-G1-fifo-integration/tb/fifo_tb.sv
+    strengths:
+      - Distinguished request intent, passive observation, independent prediction, and DUT output checking.
+      - Developed reset, full/empty boundary, rejected-read recovery, and simultaneous-operation scenarios.
+      - Used later observable operations to expose hidden pointer or ordering corruption.
+      - Completed requirement traceability across all 34 normative FIFO requirements.
+      - Implemented an independent queue-based predictor, passive monitor, field-wise scoreboard, assertions, deterministic termination, and requirement-derived coverage.
+      - Localized the seeded full-boundary defect and restored passing behavior with the same reproducing seed.
+    gaps:
+      - Required substantial coaching on edge-relative timing, acceptance semantics, and concise failure criteria.
+      - Final planning rows were completed with direct assistance.
+      - Required substantial coaching on end-marker flow, concurrency, coverage lifetime, assertion placement, and completion invariants.
+      - UVM architecture mapping remains intentionally broad before the UVM Introduction phase.
+    reviewer_notes:
+      - Eligible after guided completion of FV-06 and FV-07.
+      - Verification plan reached 34 of 34 requirement IDs with zero unknown IDs on 2026-07-18.
+      - XSim 2025.2 passed seeds 1, 231, and 353 on 2026-07-22 with 94 scoreboard checks, drained end-marker flow, 100 percent functional coverage, explicit TEST_RESULT PASS, and exit code zero for each run.
+      - Fault evidence records the first full mismatch at 146000 ps under seed 1 and identifies FIFO-STATE-003 as the governing requirement.
+      - Score: functional correctness and fault detection 34/35, architecture and separation 18/20, protocol/timing/reset/concurrency 13/15, assertions and coverage 9/10, reproducibility/diagnostics/evidence 8/10, explanation/reflection 7/10.
+      - Guided reflects substantial direct architecture and debugging assistance; later independent reuse is unproven.
+  UI-01:
     state: not_started
     attempts: 0
     completed_on: null
@@ -234,7 +273,9 @@ modules:
     strengths: []
     gaps: []
     reviewer_notes:
-      - Eligible after guided completion of FV-06 and FV-07.
+      - Eligible after guided completion of FV-G1.
+      - Learner requested a teach-first introduction with reading and a worked example before implementation.
+      - Module scaffolded on 2026-07-22; XSim 2025.2 hierarchy example and valid mapping fixture passed at seed 1, while the starter and invalid mapping fixture failed as intended.
 evidence_schema:
   state: not_started
   attempts: 0

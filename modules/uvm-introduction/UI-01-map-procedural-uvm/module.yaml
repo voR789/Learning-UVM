@@ -1,0 +1,42 @@
+id: UI-01
+title: Map a procedural testbench onto UVM responsibilities
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 45
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Overview and Welcome
+prerequisites:
+  - FV-G1
+objectives:
+  primary: Explain how familiar procedural verification responsibilities map onto a reusable UVM architecture before implementing UVM components.
+  supporting:
+    - Distinguish UVM objects from persistent UVM components.
+    - Trace stimulus intent, timed driving, passive observation, prediction, checking, coverage, and termination through an environment.
+    - Explain what UVM standardizes without assuming that UVM provides expected DUT behavior.
+learner_owns:
+  - exercise/architecture-map.md
+  - reflection.md
+codex_owns:
+  - README.md
+  - reading/uvm-mental-model.md
+  - worked-example.md
+  - dut/README.md
+  - tb/ui01_pkg.sv
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "Vivado/XSim 2025.2 seed 1; hierarchy example and valid mapping fixture passed 2026-07-22; starter and invalid fixtures failed as intended"
+completion_evidence:
+  - The executable UVM hierarchy example compiles, elaborates, and passes in XSim 2025.2.
+  - The learner maps every FV-G1 responsibility to a proposed UVM responsibility and explains why each boundary remains useful.
+  - The learner distinguishes sequence items and sequences from persistent testbench components.
+  - The learner explains that UVM standardizes structure and communication but does not supply the specification-derived predictor.
+  - The learner completes the reflection in their own words.

@@ -19,7 +19,7 @@ module sync_fifo #(
     logic [PTR_W-1:0] rd_ptr;
 
     assign empty = (count == 0);
-    assign full  = (count == DEPTH - 1);
+    assign full  = (count == DEPTH); // BUG FIX, full = count == DEPTH, not DEPTH - 1
 
     always_ff @(posedge clk) begin
         if (rst) begin
