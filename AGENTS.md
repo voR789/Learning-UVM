@@ -139,6 +139,10 @@ Grow these expectations with the curriculum rather than forcing full UVM archite
 - For standalone XSim UVM flows, compile and elaborate against the precompiled `uvm` library.
 - Keep generated simulator artifacts outside source directories where practical and ignore them in Git.
 - A runner must return nonzero on compile, elaboration, UVM, assertion, timeout, or scoreboard failure.
+- In XSim 2025.2, never put a method call or dereference of a possibly null
+  class/component handle in a ternary branch. Guard the handle with explicit
+  `if/else` control flow before dereferencing it; an observed unselected
+  null-handle branch caused an unrecoverable XSim kernel failure.
 - Until the shared runner is implemented, run commands may be marked `planned`, not falsely reported as verified.
 
 ## Repository Change Rules

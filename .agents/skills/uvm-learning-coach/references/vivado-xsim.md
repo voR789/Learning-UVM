@@ -32,6 +32,12 @@ Do not copy this shape into every module once a shared runner exists. Centralize
 
 - XSim supports a subset of SystemVerilog. Probe questionable constructs with the smallest compilable example.
 - Separate an XSim limitation from an incorrect language assumption in diagnostics.
+- XSim 2025.2 has exhibited an unrecoverable kernel failure when an unselected
+  ternary branch contains a method call through a null class/component handle.
+  Do not rely on short-circuit branch evaluation for maybe-null dereferences;
+  assign diagnostics or derived values with an explicit `if/else` null guard.
+  The UI-05 passive-agent run on 2026-07-23 reproduced the crash and passed
+  after replacing the ternary with guarded control flow.
 - Do not rewrite methodology merely because initial invocation syntax failed.
 - Record a working command and Vivado version after infrastructure fixes.
 - Re-run both a known pass and known fail after runner changes.
@@ -49,4 +55,3 @@ For every run, retain or print:
 - UVM warning/error/fatal counts.
 
 Do not commit logs, snapshots, wave databases, or simulator work directories.
-

@@ -1,0 +1,41 @@
+id: UI-06
+title: Connect UVM objects with TLM ports
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Connecting Objects
+prerequisites:
+  - UI-05
+objectives:
+  primary: Connect typed transaction paths through TLM ports, FIFO exports, and an implementation endpoint, then prove each transaction reaches its intended consumer exactly once.
+  supporting:
+    - Distinguish a caller port, forwarded export, terminal implementation, and buffered TLM FIFO.
+    - Build endpoints during build_phase and connect compatible endpoints during connect_phase.
+    - Explain blocking put/get behavior and deterministic end-of-test synchronization.
+learner_owns:
+  - tb/ui06_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - reading/tlm-mental-model.md
+  - worked-example.md
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - dut/README.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "Vivado/XSim 2025.2 seed 1; valid FIFO and imp paths passed, misroute timed out, and unconnected starter failed as intended on 2026-07-23"
+completion_evidence:
+  - One item travels producer put port to FIFO put export and consumer get port to FIFO get export.
+  - The same published item reaches an audit sink through a put port connected to a put imp.
+  - Consumer and audit sink each check exactly one item before the test ends.
+  - A misrouted audit connection fails through timeout or missing audit evidence.
+  - The learner explains port, export, imp, FIFO, connect_phase, and blocking semantics.

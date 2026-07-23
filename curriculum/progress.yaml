@@ -3,7 +3,7 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: UI-05
+current_focus: UI-06
 last_updated: "2026-07-22"
 summary:
   state: guided
@@ -19,6 +19,8 @@ summary:
     - UI-04 code-first component hierarchy module scaffolded and individually fixture-verified in XSim 2025.2.
     - UI-04 completed with guided evidence; UI-05 is the next eligible module and current focus.
     - UI-05 denser active/passive reusable-environment module scaffolded and individually fixture-verified.
+    - UI-05 completed with guided evidence; UI-06 is the next eligible module and current focus.
+    - UI-06 denser blocking-TLM ports, exports, imp, FIFO, and completion-barrier module scaffolded and fixture-verified.
 modules:
   FV-00:
     state: guided
@@ -396,6 +398,41 @@ modules:
       - Score: component hierarchy 30/30, factory construction and parenting 25/25, lifecycle reasoning 18/20, negative-case detection 10/10, reproducibility and diagnostics 5/5, reflection 7/10.
       - Guided reflects extensive teach-first lifecycle and terminology coaching; later independent reuse is unproven.
   UI-05:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-23"
+    score: 95
+    hints_used:
+      - Active/passive runner selection and configuration-flow explanation.
+      - Inherited requested_active field and constructor-chain clarification.
+      - Constructor invocation versus build-phase callback explanation.
+      - Passive-driver contention reflection prompt.
+      - Direct repair of an XSim kernel crash caused by a maybe-null method call inside a ternary diagnostic.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-05-reusable-environment/tb/ui05_pkg.sv
+      - modules/uvm-introduction/UI-05-reusable-environment/reflection.md
+      - modules/uvm-introduction/UI-05-reusable-environment/implementation-handoff.md
+    strengths:
+      - Composed one environment containing agent, predictor, and scoreboard roles.
+      - Built an always-present monitor and conditionally present driver from propagated configuration.
+      - Passed both active and passive tests with the required distinct topologies.
+      - Explained agent, environment, test, configuration, and future transaction-connection boundaries.
+    gaps:
+      - Needed clarification on inherited fields, constructor timing, and the difference between object construction and build-phase callbacks.
+      - Reflection grammar and exact configuration-flow terminology required direct editing.
+    reviewer_notes:
+      - Eligible after guided completion of UI-04.
+      - Denser code-first module scaffolded on 2026-07-23 for agent/environment/test/config ownership and active/passive structural reuse.
+      - XSim 2025.2 valid active and passive configurations each passed at seed 1 with their required topologies.
+      - Always-driver fixture failed passive mode as intended with one UVM fatal.
+      - Learner starter compiled and elaborated, then failed because env children were not yet built.
+      - Final learner active and passive runs each passed at seed 1 with zero UVM errors/fatals.
+      - Passive mode required a scaffold compatibility repair after XSim crashed on a null-handle method call in an unselected ternary branch; explicit if/else guarding restored the pass.
+      - Score: reusable environment composition 30/30, active/passive policy 25/25, configuration ownership 18/20, negative-case detection 10/10, diagnostics and reproducibility 5/5, reflection 7/10.
+      - Guided reflects lifecycle/configuration coaching and direct grammar plus XSim compatibility repair; later independent reuse is unproven.
+  UI-06:
     state: not_started
     attempts: 0
     completed_on: null
@@ -406,11 +443,11 @@ modules:
     strengths: []
     gaps: []
     reviewer_notes:
-      - Eligible after guided completion of UI-04.
-      - Denser code-first module scaffolded on 2026-07-23 for agent/environment/test/config ownership and active/passive structural reuse.
-      - XSim 2025.2 valid active and passive configurations each passed at seed 1 with their required topologies.
-      - Always-driver fixture failed passive mode as intended with one UVM fatal.
-      - Learner starter compiled and elaborated, then failed because env children were not yet built.
+      - Eligible after guided completion of UI-05.
+      - Denser code-first module scaffolded on 2026-07-23 for typed blocking ports, FIFO exports, terminal imps, connect_phase, and deterministic barrier completion.
+      - XSim 2025.2 valid fixture passed at seed 1 with one consumer check, one audit check, and fifo_used=0.
+      - Misroute fixture failed at timeout because the audit destination never received the item or reached the barrier.
+      - Learner starter failed at time zero with three unconnected-port errors and a UVM build-error fatal.
 evidence_schema:
   state: not_started
   attempts: 0

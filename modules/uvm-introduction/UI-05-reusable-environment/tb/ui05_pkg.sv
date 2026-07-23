@@ -36,8 +36,10 @@ package ui05_pkg;
         function new(string name, uvm_component parent); super.new(name, parent); endfunction
         function void build_phase(uvm_phase phase);
             super.build_phase(phase);
-            // TODO: always create monitor as "monitor" with this parent.
-            // TODO: create driver as "driver" with this parent only when active.
+
+            monitor = ui05_monitor::type_id::create("monitor", this);
+            if(is_active)
+                driver = ui05_driver::type_id::create("driver", this);
         endfunction
     endclass
 
@@ -53,6 +55,10 @@ package ui05_pkg;
             if (cfg == null) `uvm_fatal("UI05_CFG", "env.cfg must be assigned before env build")
             // TODO: create agent, predictor, and scoreboard with required names.
             // TODO: assign cfg.agent_active into agent.is_active before agent builds.
+            agent = ui05_agent::type_id::create("agent", this);
+            agent.is_active = cfg.agent_active;
+            predictor = ui05_predictor::type_id::create("predictor", this);
+            scoreboard = ui05_scoreboard::type_id::create("scoreboard", this);
         endfunction
     endclass
 
@@ -70,14 +76,19 @@ package ui05_pkg;
             env.cfg = cfg;
         endfunction
         task run_phase(uvm_phase phase);
+            string driver_path;
             phase.raise_objection(this);
             uvm_top.print_topology();
             check_topology();
+            if (env.agent.driver == null)
+                driver_path = "<absent>";
+            else
+                driver_path = env.agent.driver.get_full_name();
             $display("ENV_TRACE: mode=%s env=%s agent=%s monitor=%s driver=%s",
                      requested_active ? "active" : "passive",
                      env.get_full_name(), env.agent.get_full_name(),
                      env.agent.monitor.get_full_name(),
-                     env.agent.driver == null ? "<absent>" : env.agent.driver.get_full_name());
+                     driver_path);
             $display("TEST_RESULT: PASS");
             phase.drop_objection(this);
         endtask

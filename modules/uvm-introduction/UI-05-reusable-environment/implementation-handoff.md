@@ -4,10 +4,20 @@ Updated: 2026-07-23
 
 ## Status
 
-- UI-05 is current focus after guided UI-04 completion.
+- UI-05 completed with guided evidence on 2026-07-23; UI-06 is now current focus.
 - Learner requested faster progression; this module combines agent, environment,
   configuration object, two tests, and a structural negative case.
 - Learner owns `tb/ui05_pkg.sv` and `reflection.md`.
+
+## Completion evidence
+
+- Final learner active and passive tests passed in XSim 2025.2 at seed 1 with
+  zero UVM errors/fatals and the required distinct topologies.
+- The same environment class served both configurations; monitor remained
+  present and driver existed only in active mode.
+- Reflection explained ownership, configuration propagation, passive safety,
+  reuse, and the transaction connections deferred to UI-06.
+- Progress recorded as `guided`, score 95.
 
 ## Coaching start
 
@@ -23,6 +33,11 @@ Updated: 2026-07-23
   predictor, and scoreboard at the required paths.
 - Valid passive test passed at seed 1 with monitor, predictor, and scoreboard
   and no driver.
+- A learner passive run exposed an XSim 2025.2 kernel crash when a ternary
+  expression's unselected branch called `get_full_name()` through the null
+  passive-driver handle. Replacing that expression with an explicit null guard
+  and temporary string restored a passing passive run with `driver=<absent>`
+  and zero UVM errors/fatals on 2026-07-23.
 - The always-driver fixture failed passive mode with one UVM fatal and explicit
   `passive_has_driver` evidence.
 - The starter compiled and elaborated, then failed with only
