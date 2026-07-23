@@ -4,10 +4,19 @@ Updated: 2026-07-23
 
 ## Status
 
-- UI-06 is current focus after guided UI-05 completion.
+- UI-06 completed with guided evidence on 2026-07-23; UI-07 is now current focus.
 - Learner requested faster progression; this module combines ports, exports,
   imps, FIFO buffering, connect phase, blocking calls, and a completion barrier.
 - Learner owns `tb/ui06_pkg.sv` and `reflection.md`.
+
+## Completion evidence
+
+- Final learner run passed in XSim 2025.2 at seed 1 with one FIFO consumer
+  check, one direct audit check, drained FIFO, and zero UVM errors/fatals.
+- The learner connected all three intended paths in `connect_phase`.
+- Reflection was accepted with a remaining terminology gap around concrete
+  receiver APIs versus the unchanged `ui06_item` transaction type.
+- Progress recorded as `guided`, score 92.
 
 ## Coaching start
 

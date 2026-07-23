@@ -2,20 +2,20 @@ package ui06_pkg;
     import uvm_pkg::*;
     `include "uvm_macros.svh"
 
-    class ui06_item extends uvm_object;
+    class ui06_item extends uvm_object; // This is our transaction object
         `uvm_object_utils(ui06_item)
         int id;
         int payload;
         function new(string name = "ui06_item"); super.new(name); endfunction
     endclass
 
-    class ui06_producer extends uvm_component;
+    class ui06_producer extends uvm_component; // This is our "driver"
         `uvm_component_utils(ui06_producer)
-        uvm_blocking_put_port #(ui06_item) item_out;
+        uvm_blocking_put_port #(ui06_item) item_out; // Establish blocking output ports
         uvm_blocking_put_port #(ui06_item) audit_out;
         function new(string name, uvm_component parent);
             super.new(name, parent);
-            item_out = new("item_out", this);
+            item_out = new("item_out", this); // Instantiate them in new()
             audit_out = new("audit_out", this);
         endfunction
         task run_phase(uvm_phase phase);
@@ -23,7 +23,7 @@ package ui06_pkg;
             item = ui06_item::type_id::create("item");
             item.id = 7;
             item.payload = 42;
-            item_out.put(item);
+            item_out.put(item); // Output them
             audit_out.put(item);
             `uvm_info("UI06_PRODUCER", "published id=7 payload=42", UVM_LOW)
         endtask
@@ -55,7 +55,7 @@ package ui06_pkg;
         uvm_barrier done_barrier;
         int checks;
         function new(string name, uvm_component parent);
-            super.new(name, parent);
+            super.new(name, parent); 
             in_imp = new("in_imp", this);
         endfunction
         task put(ui06_item item);
@@ -88,8 +88,11 @@ package ui06_pkg;
         function void connect_phase(uvm_phase phase);
             super.connect_phase(phase);
             // TODO: connect producer.item_out to fifo.put_export.
+            producer.item_out.connect(fifo.put_export);
             // TODO: connect consumer.item_in to fifo.get_export.
+            consumer.item_in.connect(fifo.get_export);
             // TODO: connect producer.audit_out to audit.in_imp.
+            producer.audit_out.connect(audit.in_imp);
         endfunction
     endclass
 

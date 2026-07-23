@@ -1,0 +1,9 @@
+package ui07_pkg;
+ import uvm_pkg::*;`include "uvm_macros.svh"
+ class ui07_item extends uvm_sequence_item;`uvm_object_utils(ui07_item)int id;function new(string name="i");super.new(name);endfunction endclass
+ class ui07_sequence extends uvm_sequence#(ui07_item);`uvm_object_utils(ui07_sequence)function new(string name="s");super.new(name);endfunction task body();ui07_item req;for(int i=0;i<3;i++)begin req=ui07_item::type_id::create("r");start_item(req);req.id=i;finish_item(req);end endtask endclass
+ class ui07_sequencer extends uvm_sequencer#(ui07_item);`uvm_component_utils(ui07_sequencer)function new(string n,uvm_component p);super.new(n,p);endfunction endclass
+ class ui07_driver extends uvm_driver#(ui07_item);`uvm_component_utils(ui07_driver)function new(string n,uvm_component p);super.new(n,p);endfunction task run_phase(uvm_phase phase);ui07_item req;seq_item_port.get_next_item(req);/* missing item_done */endtask endclass
+ class ui07_agent extends uvm_agent;`uvm_component_utils(ui07_agent)ui07_sequencer sequencer;ui07_driver driver;function new(string n,uvm_component p);super.new(n,p);endfunction function void build_phase(uvm_phase phase);super.build_phase(phase);sequencer=ui07_sequencer::type_id::create("sequencer",this);driver=ui07_driver::type_id::create("driver",this);endfunction function void connect_phase(uvm_phase phase);driver.seq_item_port.connect(sequencer.seq_item_export);endfunction endclass
+ class ui07_test extends uvm_test;`uvm_component_utils(ui07_test)ui07_agent agent;function new(string n,uvm_component p);super.new(n,p);endfunction function void build_phase(uvm_phase phase);super.build_phase(phase);agent=ui07_agent::type_id::create("agent",this);endfunction task run_phase(uvm_phase phase);ui07_sequence seq;phase.raise_objection(this);seq=ui07_sequence::type_id::create("seq");seq.start(agent.sequencer);$display("TEST_RESULT: PASS");phase.drop_objection(this);endtask endclass
+endpackage

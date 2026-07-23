@@ -3,8 +3,8 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: UI-06
-last_updated: "2026-07-22"
+current_focus: UI-07
+last_updated: "2026-07-23"
 summary:
   state: guided
   highest_gate_passed: FV-G1
@@ -21,6 +21,7 @@ summary:
     - UI-05 denser active/passive reusable-environment module scaffolded and individually fixture-verified.
     - UI-05 completed with guided evidence; UI-06 is the next eligible module and current focus.
     - UI-06 denser blocking-TLM ports, exports, imp, FIFO, and completion-barrier module scaffolded and fixture-verified.
+    - UI-06 completed with guided evidence; UI-07 is the next eligible module and current focus.
 modules:
   FV-00:
     state: guided
@@ -433,21 +434,58 @@ modules:
       - Score: reusable environment composition 30/30, active/passive policy 25/25, configuration ownership 18/20, negative-case detection 10/10, diagnostics and reproducibility 5/5, reflection 7/10.
       - Guided reflects lifecycle/configuration coaching and direct grammar plus XSim compatibility repair; later independent reuse is unproven.
   UI-06:
-    state: not_started
-    attempts: 0
-    completed_on: null
-    score: null
-    hints_used: []
-    seeds: []
-    artifacts: []
-    strengths: []
-    gaps: []
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-23"
+    score: 92
+    hints_used:
+      - Expanded first-principles TLM explanation covering ports, exports, imps, FIFO buffering, call direction, and data direction.
+      - Direct-push put versus buffered-pull get explanation.
+      - Barrier threshold, participant arrival, and timeout behavior explanation.
+      - Concrete receiver-class coupling versus transaction-type coupling correction.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-06-tlm-connections/tb/ui06_pkg.sv
+      - modules/uvm-introduction/UI-06-tlm-connections/reflection.md
+      - modules/uvm-introduction/UI-06-tlm-connections/reading/tlm-mental-model.md
+    strengths:
+      - Correctly connected producer and consumer through FIFO put/get exports.
+      - Correctly connected a producer put port to a terminal audit imp.
+      - Produced exactly one consumer check, one audit check, and a drained FIFO.
+      - Explained TLM as typed endpoint wiring whose routing is owned by the environment.
+    gaps:
+      - Required extensive teaching to distinguish ports, exports, imps, push versus pull, and method-call versus data direction.
+      - Barrier behavior was initially omitted from instruction and required direct explanation.
+      - Reflection terminology still loosely calls concrete receiver APIs transaction methods.
     reviewer_notes:
       - Eligible after guided completion of UI-05.
       - Denser code-first module scaffolded on 2026-07-23 for typed blocking ports, FIFO exports, terminal imps, connect_phase, and deterministic barrier completion.
       - XSim 2025.2 valid fixture passed at seed 1 with one consumer check, one audit check, and fifo_used=0.
       - Misroute fixture failed at timeout because the audit destination never received the item or reached the barrier.
       - Learner starter failed at time zero with three unconnected-port errors and a UVM build-error fatal.
+      - Final learner run passed at seed 1 with consumer_checks=1, audit_checks=1, fifo_used=0, and zero UVM errors/fatals.
+      - Score: FIFO transaction path 25/25, direct implementation path 20/20, endpoint and lifecycle reasoning 16/20, completion and fault detection 18/20, diagnostics and reproducibility 5/5, reflection 8/10.
+      - Guided reflects extensive first-principles TLM and synchronization coaching; later independent reuse is unproven.
+  UI-07:
+    state: not_started
+    attempts: 0
+    completed_on: null
+    score: null
+    hints_used: []
+    seeds: []
+    artifacts:
+      - modules/uvm-introduction/UI-07-transaction-stimulus/tb/ui07_pkg.sv
+      - modules/uvm-introduction/UI-07-transaction-stimulus/reading/sequence-handshake.md
+      - modules/uvm-introduction/UI-07-transaction-stimulus/worked-example.md
+    strengths: []
+    gaps: []
+    reviewer_notes:
+      - Eligible after guided completion of UI-06.
+      - Scaffolded on 2026-07-23 as an executable bridge from general TLM recognition to the sequence-item handshake.
+      - Valid fixture passed at seed 1 with exactly three completed items and zero UVM errors/fatals.
+      - Missing-item_done fixture failed at the 1 us timeout as intended.
+      - Untouched learner starter compiled and elaborated, then failed on its absent request handshake as intended.
 evidence_schema:
   state: not_started
   attempts: 0

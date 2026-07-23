@@ -1,0 +1,28 @@
+id: UI-07
+title: Drive transaction-level stimulus
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 120
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Transaction-Level Testing
+prerequisites: [UI-06]
+objectives:
+  primary: Implement and explain the explicit sequence-item, sequencer, and driver request handshake.
+  supporting:
+    - Reinforce TLM by connecting seq_item_port to seq_item_export.
+    - Distinguish sequence policy, sequencer coordination, and driver execution.
+    - Prove every accepted request receives exactly one item_done response.
+learner_owns: [tb/ui07_pkg.sv, reflection.md]
+codex_owns: [README.md, reading/sequence-handshake.md, worked-example.md, tb/tb_top.sv, run.ps1, rubric.md, hints.md, tests/, dut/README.md, implementation-handoff.md]
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: AMD Vivado Simulator 2025.2, UVM 1.2, seed 1, 2026-07-23
+completion_evidence:
+  - Three deterministic items complete through start_item/finish_item and get_next_item/item_done.
+  - Driver seq_item_port connects to sequencer seq_item_export in connect_phase.
+  - Driver checks IDs and payloads in order and reports exactly three completions.
+  - Missing item_done fault times out.
+  - Learner explains the handshake and TLM connection.
