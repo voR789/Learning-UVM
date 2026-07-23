@@ -1,0 +1,42 @@
+id: UI-03
+title: Organize packages, includes, and UVM macros
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 60
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Packages, Includes and Macros
+prerequisites:
+  - UI-02
+objectives:
+  primary: Organize a UVM object in a package and register it so an external caller can construct it through the standard type interface.
+  supporting:
+    - Distinguish import, include, and source compilation order.
+    - Place UVM imports and macro definitions where package declarations can use them.
+    - Explain what object registration supplies without treating the factory as a component role.
+learner_owns:
+  - tb/ui03_pkg.sv
+  - exercise/syntax-map.md
+  - reflection.md
+codex_owns:
+  - README.md
+  - reading/packages-macros-mental-model.md
+  - worked-example.md
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - dut/README.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "Vivado/XSim 2025.2 seed 1; valid registered object passed, reversed compile order failed, and unregistered starter failed as intended on 2026-07-22"
+completion_evidence:
+  - The package and consumer compile in dependency order and emit TEST_RESULT PASS in XSim 2025.2.
+  - The learner registers ui03_packet and constructs it through type_id without changing the caller.
+  - The learner explains the distinct jobs of import, include, registration, and compile order.
+  - Reversed compilation order fails because the consumer cannot see the package.
+  - The learner completes the reflection in their own words.

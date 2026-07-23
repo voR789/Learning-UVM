@@ -3,7 +3,7 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: UI-01
+current_focus: UI-05
 last_updated: "2026-07-22"
 summary:
   state: guided
@@ -12,7 +12,13 @@ summary:
     - Repository foundation created before exercise implementation.
     - Foundation micro-modules FV-00 through FV-07 are complete with guided evidence.
     - FV-G1 completed with guided evidence and passed the foundations integration gate.
-    - UI-01 is the next eligible module and the current focus.
+    - UI-01 completed with guided evidence; UI-02 is the next eligible module and current focus.
+    - UI-02 completed with guided evidence; UI-03 is the next eligible module and current focus.
+    - UI-03 teach-first package, macro, registration, and compile-order module scaffolded and fixture-verified.
+    - UI-03 completed with guided evidence; UI-04 is the next eligible module and current focus.
+    - UI-04 code-first component hierarchy module scaffolded and individually fixture-verified in XSim 2025.2.
+    - UI-04 completed with guided evidence; UI-05 is the next eligible module and current focus.
+    - UI-05 denser active/passive reusable-environment module scaffolded and individually fixture-verified.
 modules:
   FV-00:
     state: guided
@@ -263,6 +269,133 @@ modules:
       - Score: functional correctness and fault detection 34/35, architecture and separation 18/20, protocol/timing/reset/concurrency 13/15, assertions and coverage 9/10, reproducibility/diagnostics/evidence 8/10, explanation/reflection 7/10.
       - Guided reflects substantial direct architecture and debugging assistance; later independent reuse is unproven.
   UI-01:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-22"
+    score: 94
+    hints_used:
+      - Teach-first explanation of UVM objects, persistent components, transaction flow, and lifecycle.
+      - Sequence-item, sequence, sequencer, and driver responsibility clarification.
+      - Predictor-versus-scoreboard independence and coverage-subscriber ownership coaching.
+      - Run-phase objection and component-completion distinction.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-01-map-procedural-uvm/exercise/architecture-map.md
+      - modules/uvm-introduction/UI-01-map-procedural-uvm/reflection.md
+    strengths:
+      - Mapped all seven procedural verification responsibilities to plausible UVM roles.
+      - Distinguished short-lived sequence items and sequences from persistent UVM components.
+      - Preserved active driving, passive observation, independent prediction, checking, and coverage boundaries.
+      - Explained that UVM standardizes structure while DUT-specific prediction, stimulus intent, and coverage still come from the specification.
+    gaps:
+      - UVM class construction, inheritance, factory registration, and exact lifecycle rules remain unfamiliar by design.
+      - Initially conflated sequence items with pin interfaces and predictors with correctness checking.
+    reviewer_notes:
+      - Eligible after guided completion of FV-G1.
+      - Learner requested a teach-first introduction with reading and a worked example before implementation.
+      - Module scaffolded on 2026-07-22; XSim 2025.2 hierarchy example and valid mapping fixture passed at seed 1, while the starter and invalid mapping fixture failed as intended.
+      - Learner architecture map passed semantic review and MAP_RESULT validation with seven rows and two predictions.
+      - Final XSim 2025.2 hierarchy run passed at seed 1 with zero UVM errors and zero UVM fatals.
+      - Score: responsibility mapping 35/35, object/component reasoning 18/20, transaction flow 20/20, executable observation 10/10, reuse reasoning 5/5, reflection 6/10.
+      - Guided reflects teach-first instruction and multiple conceptual corrections; later independent reuse is unproven.
+  UI-02:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-22"
+    score: 94
+    hints_used:
+      - Teach-first explanation of base classes, derived classes, overriding, handles, and virtual dispatch.
+      - Base-handle versus base-object terminology correction.
+      - Non-virtual dispatch prediction and four-state equality review.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-02-inheritance-polymorphism/tb/policy_lab.sv
+      - modules/uvm-introduction/UI-02-inheritance-polymorphism/reflection.md
+    strengths:
+      - Implemented exact and tolerance policies with correct behavior across six required checks.
+      - Used one unchanged base-handle caller to dispatch to both derived policy overrides.
+      - Corrected exact comparison so matching unknown values are not silently accepted.
+      - Explained how virtual dispatch permits policy replacement without caller type branching.
+    gaps:
+      - Reflection wording initially described a base handle as a base object and a derived method as impossible to override when non-virtual.
+      - UVM-specific construction, registration, and package syntax remain intentionally deferred to UI-03.
+    reviewer_notes:
+      - Eligible after guided completion of UI-01.
+      - Teach-first module scaffolded on 2026-07-22 to address class construction, inheritance, handles, overriding, and virtual dispatch.
+      - XSim 2025.2 valid polymorphism fixture passed six checks at seed 1.
+      - Non-virtual base-method fixture failed as intended on tolerance-policy dispatch through a base handle.
+      - Learner starter compiled and elaborated, then failed intentionally with three policy mismatches because its TODO methods return false.
+      - Final learner implementation passed all six checks at seed 1 with explicit TEST_RESULT PASS.
+      - Score: policy behavior 30/30, polymorphic dispatch 25/25, inheritance and handle reasoning 17/20, fault detection and diagnostics 10/10, reproducibility and clarity 5/5, reflection 7/10.
+      - Guided reflects teach-first instruction and conceptual corrections; later independent reuse is unproven.
+  UI-03:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-22"
+    score: 92
+    hints_used:
+      - Teach-first explanation of packages, namespaces, imports, textual includes, macros, registration, and factory construction.
+      - Factory registration, type_id, construction, and override mental-model coaching.
+      - Import-versus-namespace and include-location corrections.
+      - Factory override versus config_db distinction.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-03-packages-macros/tb/ui03_pkg.sv
+      - modules/uvm-introduction/UI-03-packages-macros/exercise/syntax-map.md
+      - modules/uvm-introduction/UI-03-packages-macros/reflection.md
+    strengths:
+      - Registered ui03_packet and constructed it through type_id without changing the caller.
+      - Distinguished compiled package declarations from textually included macro definitions.
+      - Explained why dependency order precedes import visibility.
+      - Connected factory construction to compatible type replacement through factory overrides.
+    gaps:
+      - Reflection omitted an explicit statement that registration alone creates no instance, although this was demonstrated correctly during practice.
+      - Some worksheet wording remains informal around include placement and returned object handles.
+    reviewer_notes:
+      - Eligible after guided completion of UI-02.
+      - Teach-first module scaffolded on 2026-07-22 for packages, imports, includes, compile order, UVM object registration, and type_id construction.
+      - XSim 2025.2 valid registered-object fixture passed at seed 1 with the required type, name, and value.
+      - Reversed compilation order failed as intended because the consumer could not resolve ui03_pkg.
+      - Learner starter failed as intended because ui03_packet lacks the registration macro and therefore type_id.
+      - Final learner run passed at seed 1 with type ui03_packet, name packet, value 42, and MAP_RESULT-equivalent syntax validation for five rows and one prediction.
+      - Score: package organization and compile order 24/25, imports and includes 18/20, UVM object registration 23/25, construction evidence 10/10, diagnostic reasoning 9/10, reflection 8/10.
+      - Guided reflects extensive teach-first explanation and multiple conceptual corrections; later independent reuse is unproven.
+  UI-04:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-23"
+    score: 95
+    hints_used:
+      - Teach-first explanation of constructors versus build_phase and top-down UVM component construction.
+      - uvm_phase type, phase handle, placeholder child_type, and runtime parent-path explanation.
+      - Wrong-parent fixture interpretation and persistent-component lifecycle correction.
+      - Handle declaration versus factory-created instance return-value correction.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-04-component-hierarchy/tb/ui04_pkg.sv
+      - modules/uvm-introduction/UI-04-component-hierarchy/reflection.md
+    strengths:
+      - Factory-created the container and leaf during their owners' build phases with correct names and parents.
+      - Produced and explained the exact uvm_test_top.container.leaf hierarchy.
+      - Distinguished static HDL top, dynamic UVM test top, runtime instance names, parents, and full paths.
+      - Explained that objections prevent phase termination but do not prove work is complete or correct.
+    gaps:
+      - Initially generalized build_phase to all objects rather than persistent component structure.
+      - Needed clarification between a declared handle variable and the handle value returned for a factory-created instance.
+    reviewer_notes:
+      - Eligible after guided completion of UI-03.
+      - Code-first module scaffolded on 2026-07-22 for run_test, registered tests, build_phase, component parenting, topology, run_phase, and objections.
+      - XSim 2025.2 valid fixture passed at seed 1 with the required uvm_test_top.container.leaf path.
+      - Wrong-parent fixture failed as intended after placing leaf at uvm_test_top.leaf.
+      - Learner starter compiled and elaborated, then failed as intended because no container was created.
+      - Final learner hierarchy passed at seed 1 with zero UVM errors/fatals and explicit TEST_RESULT PASS.
+      - Score: component hierarchy 30/30, factory construction and parenting 25/25, lifecycle reasoning 18/20, negative-case detection 10/10, reproducibility and diagnostics 5/5, reflection 7/10.
+      - Guided reflects extensive teach-first lifecycle and terminology coaching; later independent reuse is unproven.
+  UI-05:
     state: not_started
     attempts: 0
     completed_on: null
@@ -273,9 +406,11 @@ modules:
     strengths: []
     gaps: []
     reviewer_notes:
-      - Eligible after guided completion of FV-G1.
-      - Learner requested a teach-first introduction with reading and a worked example before implementation.
-      - Module scaffolded on 2026-07-22; XSim 2025.2 hierarchy example and valid mapping fixture passed at seed 1, while the starter and invalid mapping fixture failed as intended.
+      - Eligible after guided completion of UI-04.
+      - Denser code-first module scaffolded on 2026-07-23 for agent/environment/test/config ownership and active/passive structural reuse.
+      - XSim 2025.2 valid active and passive configurations each passed at seed 1 with their required topologies.
+      - Always-driver fixture failed passive mode as intended with one UVM fatal.
+      - Learner starter compiled and elaborated, then failed because env children were not yet built.
 evidence_schema:
   state: not_started
   attempts: 0

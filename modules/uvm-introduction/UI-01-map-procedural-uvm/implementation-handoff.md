@@ -4,13 +4,21 @@ Updated: 2026-07-22
 
 ## Status
 
-- UI-01 is the current focus after guided completion of FV-G1.
+- UI-01 completed with guided evidence on 2026-07-22; UI-02 is now the current focus.
 - The learner explicitly reported no prior UVM knowledge and requested reading plus a worked example before implementation.
 - This module is teach-first and conceptual. Do not ask the learner to construct a full UVM environment.
 - The local reading introduces objects versus components, responsibility ownership, broad build/connect/run lifecycle, and familiar transaction flow.
 - `worked-example.md` maps a registered-command peripheral without supplying the learner-owned FV-G1 mapping worksheet.
 - The executable XSim example demonstrates UVM hierarchy and role messages only; transaction connections are deferred to their roadmap modules.
 - The learner owns only `exercise/architecture-map.md` and `reflection.md`.
+
+## Completion evidence
+
+- The learner completed and explained all seven architecture-map rows and both prediction answers.
+- `MAP_RESULT: PASS rows=7 predictions=2`.
+- XSim 2025.2 passed the hierarchy example at seed 1 with zero UVM errors and fatals.
+- The reflection distinguishes UVM-standardized structure from specification-derived prediction, stimulus intent, and coverage.
+- Progress was recorded as `guided`, score 94, because teach-first instruction and multiple conceptual corrections were used.
 
 ## Coaching start
 

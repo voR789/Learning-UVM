@@ -1,0 +1,40 @@
+id: UI-04
+title: Build and inspect a UVM component hierarchy
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: UVM Components and Tests
+prerequisites:
+  - UI-03
+objectives:
+  primary: Build a parented UVM component hierarchy through factory creation in build_phase and prove its structure at runtime.
+  supporting:
+    - Trace control from run_test through test construction and top-down build_phase execution.
+    - Distinguish a component type, handle, instance name, and full hierarchical path.
+    - Explain why persistent child components receive a parent and are created during build_phase.
+learner_owns:
+  - tb/ui04_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - reading/component-hierarchy-mental-model.md
+  - worked-example.md
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - dut/README.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "Vivado/XSim 2025.2 seed 1; valid nested hierarchy passed, wrong-parent fixture failed, and unimplemented starter failed as intended on 2026-07-22"
+completion_evidence:
+  - XSim prints and validates uvm_test_top.container.leaf at seed 1.
+  - The test and container create their children through type_id::create during build_phase with the correct parent.
+  - A deliberately incorrect parent relationship fails the hierarchy check.
+  - The learner explains run_test, build_phase, instance names, parents, topology, and objections in their own words.

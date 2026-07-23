@@ -1,0 +1,41 @@
+id: UI-05
+title: Compose a reusable UVM environment
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: UVM Environments
+prerequisites:
+  - UI-04
+objectives:
+  primary: Compose one reusable environment whose configuration produces correct active and passive agent structures without changing the tests' consumers.
+  supporting:
+    - Place protocol roles inside an agent and testbench-wide roles inside an environment.
+    - Use a configuration object to express structural policy before child build phases execute.
+    - Prove topology invariants across two registered tests.
+learner_owns:
+  - tb/ui05_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - reading/environment-composition.md
+  - worked-example.md
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - dut/README.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "Vivado/XSim 2025.2 seed 1; active and passive configurations passed, always-driver passive fault failed, and starter failed as intended on 2026-07-23"
+completion_evidence:
+  - Active test passes with agent driver and monitor plus environment predictor and scoreboard.
+  - Passive test passes with monitor, predictor, and scoreboard but no driver.
+  - One unchanged environment class serves both tests through a configuration object.
+  - A faulty agent that always creates a driver fails the passive topology check.
+  - The learner explains agent, environment, test, and configuration ownership boundaries.

@@ -1,0 +1,38 @@
+id: UI-02
+title: Practice inheritance and polymorphism for verification
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Object Oriented Programming
+prerequisites:
+  - UI-01
+objectives:
+  primary: Use a base-class handle and virtual method to select verification behavior at runtime without changing the caller.
+  supporting:
+    - Distinguish inheritance from polymorphic dispatch.
+    - Explain why a virtual method is required when a base handle refers to a derived object.
+    - Keep test data separate from the checking policy applied to it.
+learner_owns:
+  - tb/policy_lab.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - reading/inheritance-mental-model.md
+  - worked-example.md
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "Vivado/XSim 2025.2 seed 1; valid polymorphism fixture passed and invalid non-virtual fixture failed as intended on 2026-07-22"
+completion_evidence:
+  - The learner implementation compiles, elaborates, and prints TEST_RESULT PASS.
+  - One unchanged base-handle caller dispatches to both exact and tolerance checking policies.
+  - A deliberate mismatch is rejected by both policies and a near-match distinguishes their behavior.
+  - The learner explains inheritance, overriding, base handles, and virtual dispatch in their own words.
