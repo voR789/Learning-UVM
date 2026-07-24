@@ -1,0 +1,28 @@
+id: UI-08
+title: Observe traffic through the analysis layer
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: The Analysis Layer
+prerequisites: [UI-07]
+objectives:
+  primary: Implement one-to-many transaction observation with a UVM analysis port.
+  supporting:
+    - Connect a publisher to a uvm_subscriber and an analysis implementation in connect_phase.
+    - Demonstrate that one write broadcasts to multiple independent consumers.
+    - Contrast nonblocking analysis broadcast with the blocking request paths from UI-06 and UI-07.
+learner_owns: [tb/ui08_pkg.sv, reflection.md]
+codex_owns: [README.md, reading/analysis-mental-model.md, worked-example.md, tb/tb_top.sv, run.ps1, rubric.md, hints.md, tests/, dut/README.md, implementation-handoff.md]
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: AMD Vivado Simulator 2025.2, UVM 1.2, seed 1, 2026-07-23
+completion_evidence:
+  - One publisher broadcasts three deterministic observed transactions.
+  - A uvm_subscriber and an independent analysis implementation each check all three transactions.
+  - Analysis connections are made in connect_phase and no consumer is called directly.
+  - The missing-audit fixture fails because one independent consumer receives zero transactions.
+  - Learner explains analysis broadcast versus blocking request TLM.

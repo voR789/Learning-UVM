@@ -3,7 +3,7 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: UI-07
+current_focus: UI-09
 last_updated: "2026-07-23"
 summary:
   state: guided
@@ -22,6 +22,8 @@ summary:
     - UI-05 completed with guided evidence; UI-06 is the next eligible module and current focus.
     - UI-06 denser blocking-TLM ports, exports, imp, FIFO, and completion-barrier module scaffolded and fixture-verified.
     - UI-06 completed with guided evidence; UI-07 is the next eligible module and current focus.
+    - UI-07 completed with guided evidence; UI-08 is the next eligible module and current focus.
+    - UI-08 completed with guided evidence; UI-09 is the next eligible module and current focus.
 modules:
   FV-00:
     state: guided
@@ -468,24 +470,72 @@ modules:
       - Score: FIFO transaction path 25/25, direct implementation path 20/20, endpoint and lifecycle reasoning 16/20, completion and fault detection 18/20, diagnostics and reproducibility 5/5, reflection 8/10.
       - Guided reflects extensive first-principles TLM and synchronization coaching; later independent reuse is unproven.
   UI-07:
-    state: not_started
-    attempts: 0
-    completed_on: null
-    score: null
-    hints_used: []
-    seeds: []
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-23"
+    score: 96
+    hints_used:
+      - Teach-first explanation of sequence, sequencer, driver roles and the four-call request handshake.
+      - Clarification that start_item obtains a grant rather than beginning object construction.
+      - Clarification that finish_item waits for the driver completion acknowledgment.
+      - Reflection coaching distinguishing sequencer arbitration from FIFO behavior.
+    seeds:
+      - 1
     artifacts:
       - modules/uvm-introduction/UI-07-transaction-stimulus/tb/ui07_pkg.sv
       - modules/uvm-introduction/UI-07-transaction-stimulus/reading/sequence-handshake.md
       - modules/uvm-introduction/UI-07-transaction-stimulus/worked-example.md
-    strengths: []
-    gaps: []
+    strengths:
+      - Implemented the explicit start_item and finish_item sequence-side handshake.
+      - Implemented the get_next_item and item_done driver-side handshake.
+      - Connected driver.seq_item_port to sequencer.seq_item_export in connect_phase.
+      - Completed and checked three deterministic requests in order with zero UVM errors or fatals.
+    gaps:
+      - Initially described start_item as the beginning of object construction rather than the arbitration grant boundary.
+      - Used FIFO terminology for sequencer arbitration in a source comment.
+      - Required guided reflection revisions to distinguish request submission from completion acknowledgment.
     reviewer_notes:
       - Eligible after guided completion of UI-06.
       - Scaffolded on 2026-07-23 as an executable bridge from general TLM recognition to the sequence-item handshake.
       - Valid fixture passed at seed 1 with exactly three completed items and zero UVM errors/fatals.
       - Missing-item_done fixture failed at the 1 us timeout as intended.
       - Untouched learner starter compiled and elaborated, then failed on its absent request handshake as intended.
+      - Final learner run passed at seed 1 with completed=3 and zero UVM errors/fatals.
+      - Score: sequence handshake and data 25/25, driver handshake and checking 30/30, TLM connection and reasoning 18/20, fault detection and completion 15/15, reflection 8/10.
+      - Guided reflects teach-first instruction and multiple mental-model corrections; later independent reuse is unproven.
+  UI-08:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-23"
+    score: 96
+    hints_used:
+      - Teach-first explanation of analysis broadcast, subscriber exports, and analysis implementations.
+      - Clarification that an analysis implementation endpoint and its write method form one receive path.
+      - Subscriber-versus-analysis-implementation architecture comparison.
+      - Reflection corrections for the missing audit connection and nonblocking analysis semantics.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-08-analysis-layer/tb/ui08_pkg.sv
+      - modules/uvm-introduction/UI-08-analysis-layer/reflection.md
+      - modules/uvm-introduction/UI-08-analysis-layer/reading/analysis-mental-model.md
+    strengths:
+      - Declared, constructed, and used one typed analysis port.
+      - Connected one publisher to a subscriber export and an independent analysis implementation.
+      - Demonstrated deterministic one-to-many broadcast with both consumers checking all three observations.
+      - Distinguished a dedicated subscriber from a flexible analysis implementation endpoint.
+      - Explained that analysis write has no request or completion handshake.
+    gaps:
+      - Initial reflection confused the missing audit branch with the subscriber branch.
+      - Initially described analysis broadcast as global and as disregarding handshake rules.
+      - Exercise implementation density was too low for the learner's desired practice level.
+    reviewer_notes:
+      - Eligible after guided completion of UI-07.
+      - Valid fixture passed at seed 1 with published/subscriber/audit counts of 3/3/3.
+      - Missing-audit fixture failed at the independent count oracle with 3/3/0.
+      - Final learner run passed XSim 2025.2 at seed 1 with zero UVM errors/fatals.
+      - Score: publication and fault detection 35/35, architecture 20/20, connection semantics 20/20, reproducibility 10/10, request-versus-analysis reasoning 4/5, reflection 7/10.
+      - Guided reflects teach-first instruction and multiple conceptual corrections; later independent reuse is unproven.
 evidence_schema:
   state: not_started
   attempts: 0

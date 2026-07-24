@@ -1,0 +1,28 @@
+id: UI-09
+title: Control UVM reporting and end-of-test results
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: UVM Reporting
+prerequisites: [UI-04]
+objectives:
+  primary: Implement report policy and derive a deterministic end-of-test verdict from UVM report counts.
+  supporting:
+    - Select meaningful report IDs, severities, and verbosity levels.
+    - Configure component verbosity without changing report-producing code.
+    - Prove that a pass marker cannot override UVM errors or fatals.
+learner_owns: [tb/ui09_pkg.sv, reflection.md]
+codex_owns: [README.md, reading/reporting-mental-model.md, worked-example.md, tb/tb_top.sv, run.ps1, rubric.md, hints.md, tests/, dut/README.md, implementation-handoff.md]
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: AMD Vivado Simulator 2025.2, UVM 1.2, seed 1, 2026-07-23
+completion_evidence:
+  - Four deterministic observations produce three matches and one recoverable warning.
+  - Report IDs, severities, and verbosity distinguish results from diagnostic detail.
+  - The test reads UVM report-server warning, error, and fatal counts.
+  - End-of-test passes only with the exact local and global counts.
+  - A fixture that prints a pass marker after a UVM error is rejected.

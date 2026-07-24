@@ -16,10 +16,10 @@ package ui07_pkg;
             ui07_item req;
             for (int i=0; i<3; i++) begin
                 req = ui07_item::type_id::create($sformatf("req_%0d", i));
-                // TODO: request permission with start_item(req).
+                start_item(req);
                 req.id = i;
                 req.payload = (i+1)*10;
-                // TODO: submit and wait for completion with finish_item(req).
+                finish_item(req);
             end
         endtask
     endclass
@@ -36,12 +36,12 @@ package ui07_pkg;
         task run_phase(uvm_phase phase);
             ui07_item req;
             for (int expected_id=0; expected_id<3; expected_id++) begin
-                // TODO: block for the next request with get_next_item(req).
+                seq_item_port.get_next_item(req); // Built in method for uvm_driver that grabs the next item from the sequencer fifo
                 if ((req.id != expected_id) || (req.payload != (expected_id+1)*10))
                     `uvm_fatal("UI07_DRIVER","request order or payload mismatch")
                 completed++;
                 `uvm_info("UI07_DRIVER",$sformatf("completed id=%0d payload=%0d",req.id,req.payload),UVM_LOW)
-                // TODO: acknowledge completion with item_done().
+                seq_item_port.item_done(); // Signal to sequencer we are done with the item, release it and send the next
             end
         endtask
     endclass
@@ -58,7 +58,7 @@ package ui07_pkg;
         endfunction
         function void connect_phase(uvm_phase phase);
             super.connect_phase(phase);
-            // TODO: connect driver.seq_item_port to sequencer.seq_item_export.
+            driver.seq_item_port.connect(sequencer.seq_item_export); // Connect built in TLM ports
         endfunction
     endclass
 

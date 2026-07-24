@@ -1,0 +1,28 @@
+id: UI-10
+title: Add functional coverage to transaction observation
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Functional Coverage with Covergroups
+prerequisites: [UI-08, FV-07]
+objectives:
+  primary: Implement a UVM coverage subscriber that samples every published transaction exactly once.
+  supporting:
+    - Define requirement-derived coverpoints, bins, and a cross.
+    - Connect transaction observation to coverage without coupling the publisher to the model.
+    - Use sample count, coverage percentage, and UVM report counts in the final verdict.
+learner_owns: [tb/ui10_pkg.sv, reflection.md]
+codex_owns: [README.md, reading/coverage-subscriber-mental-model.md, worked-example.md, tb/tb_top.sv, run.ps1, rubric.md, hints.md, tests/, dut/README.md, implementation-handoff.md]
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: AMD Vivado Simulator 2025.2, UVM 1.2, seed 1, 2026-07-24
+completion_evidence:
+  - A coverage subscriber receives all eight published observations.
+  - Four operation bins, two result-class bins, and all eight cross combinations are covered.
+  - The covergroup is sampled exactly once in write() for each received transaction.
+  - Coverage reaches 100 percent with zero UVM errors/fatals.
+  - A fixture missing one required cross combination fails coverage closure.

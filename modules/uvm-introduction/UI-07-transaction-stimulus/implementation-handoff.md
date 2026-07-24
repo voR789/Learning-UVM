@@ -4,9 +4,20 @@ Updated: 2026-07-23
 
 ## Status
 
-- UI-07 is current focus after guided UI-06 completion.
+- UI-07 completed with guided evidence on 2026-07-23; UI-08 is now current
+  focus.
 - Learner recognizes TLM concepts but wants executable implementation practice.
 - Learner owns `tb/ui07_pkg.sv` and `reflection.md`.
+
+## Completion evidence
+
+- Final learner run passed in XSim 2025.2 at seed 1 with exactly three
+  completed items and zero UVM errors/fatals.
+- The learner implemented both handshake pairs and the specialized TLM
+  port-to-export connection.
+- Reflection was accepted after corrections to grant, submission, ownership,
+  and acknowledgment terminology.
+- Progress recorded as `guided`, score 96.
 
 ## Coaching
 
