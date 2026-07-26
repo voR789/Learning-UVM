@@ -4,7 +4,7 @@ Updated: 2026-07-24
 
 ## Status
 
-- UI-10 scaffolded as the next roadmap unit after UI-09.
+- UI-10 completed independently on 2026-07-24.
 - Learner requested continued dense, hands-on coding.
 - Learner owns `tb/ui10_pkg.sv` and `reflection.md`.
 
@@ -28,6 +28,11 @@ Updated: 2026-07-24
   covergroup-typed handle.
 - Untouched learner starter compiles and elaborates, then fails because required
   environment children are absent.
+- Final learner run passed XSim 2025.2 at seed 1 with eight publications, eight
+  subscriber samples, 100.00% coverage, zero UVM errors/fatals, and the exact
+  pass trace.
+- Reflection correctly distinguishes sampling counts, coverage combinations,
+  and scoreboard correctness after one conceptual revision.
 
 ## Guardrails
 

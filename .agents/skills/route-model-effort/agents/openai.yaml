@@ -1,0 +1,4 @@
+interface:
+  display_name: "Route Model Effort"
+  short_description: "Recommend effort before demanding UVM work"
+  default_prompt: "Use $route-model-effort to select an efficient model and reasoning level for my next UVM task."

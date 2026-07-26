@@ -101,15 +101,14 @@ package ui09_pkg;
             // TODO 9: Print exactly:
             // REPORT_TRACE: matches=3 retries=1 mismatches=0 details=4 warnings=1 errors=0 fatals=0
             // TEST_RESULT: PASS
-            $display("REPORT_TRACE: matches = %d, retries = %d, mismatches = %d, details = %d, warnings = %d, errors = %d, fatals = %d",
-            reporter.match_count, 
-            reporter.retry_count,
-            reporter.mismatch_count,
-            reporter.detail_attempts,
-            warning_count,
-            error_count,
-            fatal_count
-            );
+            $display("REPORT_TRACE: matches=%0d retries=%0d mismatches=%0d details=%0d warnings=%0d errors=%0d fatals=%0d",
+                     reporter.match_count,
+                     reporter.retry_count,
+                     reporter.mismatch_count,
+                     reporter.detail_attempts,
+                     warning_count,
+                     error_count,
+                     fatal_count);
             $display("TEST_RESULT: PASS");
             // TODO 10: Drop the phase objection.
             phase.drop_objection(this);

@@ -4,8 +4,7 @@ Updated: 2026-07-23
 
 ## Status
 
-- UI-09 learner implementation and reflection are complete except for exact
-  `REPORT_TRACE` formatting; the documented run otherwise passes.
+- UI-09 completed with guided evidence on 2026-07-25.
 - Learner requested substantially more hands-on work than UI-08.
 - Learner owns report classification, verbosity configuration, report-server
   count inspection, objection handling, and final verdict logic in
@@ -32,6 +31,8 @@ Updated: 2026-07-23
   detail attempts, zero mismatches/errors/fatals, and correct verbosity checks.
 - The learner trace currently includes spaces around `=` and commas, so it does
   not yet match the exact module-contract trace text.
+- Exact trace formatting was directly repaired with learner authorization; the
+  final rerun passed with the required machine-readable line.
 
 ## Guardrails
 

@@ -1,0 +1,28 @@
+id: UI-11
+title: Create and compose basic sequences
+phase: uvm-introduction
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Introduction to Sequences
+prerequisites: [UI-07]
+objectives:
+  primary: Implement a reusable leaf sequence and compose ordered subsequences without duplicating item-handshake code.
+  supporting:
+    - Configure sequence intent before starting a sequence.
+    - Preserve start_item/finish_item and get_next_item/item_done invariants.
+    - Prove ordered completion of two subsequences through one sequencer and driver.
+learner_owns: [tb/ui11_pkg.sv, reflection.md]
+codex_owns: [README.md, reading/sequence-composition-mental-model.md, worked-example.md, tb/tb_top.sv, run.ps1, rubric.md, hints.md, tests/, dut/README.md, implementation-handoff.md]
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: AMD Vivado Simulator 2025.2, UVM 1.2, seed 1, 2026-07-24
+completion_evidence:
+  - A configurable leaf sequence generates three ordered items per invocation.
+  - A composite sequence configures and starts two leaf subsequences in order.
+  - The driver receives and acknowledges exactly six expected items.
+  - A missing-subsequence fixture times out because the completion contract is unmet.
+  - Learner explains sequence reuse, nesting, arbitration, and termination.

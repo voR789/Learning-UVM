@@ -3,7 +3,7 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: UI-09
+current_focus: UI-G1
 last_updated: "2026-07-23"
 summary:
   state: guided
@@ -24,6 +24,7 @@ summary:
     - UI-06 completed with guided evidence; UI-07 is the next eligible module and current focus.
     - UI-07 completed with guided evidence; UI-08 is the next eligible module and current focus.
     - UI-08 completed with guided evidence; UI-09 is the next eligible module and current focus.
+    - UI-09 and UI-11 completed with guided evidence; UI-G1 is the next integration gate and current focus.
 modules:
   FV-00:
     state: guided
@@ -536,6 +537,93 @@ modules:
       - Final learner run passed XSim 2025.2 at seed 1 with zero UVM errors/fatals.
       - Score: publication and fault detection 35/35, architecture 20/20, connection semantics 20/20, reproducibility 10/10, request-versus-analysis reasoning 4/5, reflection 7/10.
       - Guided reflects teach-first instruction and multiple conceptual corrections; later independent reuse is unproven.
+  UI-09:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-25"
+    score: 95
+    hints_used:
+      - Teach-first reporting explanation covering severity, verbosity, IDs, and report-server counts.
+      - Direct syntax guidance for objections, report-server access, severity queries, verbosity checks, and verdict reduction.
+      - Clarification of local component counters versus global report counts.
+      - Direct repair of exact machine-readable trace formatting.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-introduction/UI-09-reporting-results/tb/ui09_pkg.sv
+      - modules/uvm-introduction/UI-09-reporting-results/reflection.md
+    strengths:
+      - Implemented report classification, stable IDs, severity selection, and verbosity filtering.
+      - Combined local functional counters with global warning/error/fatal counts.
+      - Proved a pass marker cannot override UVM errors.
+      - Produced the exact deterministic report trace with zero errors/fatals.
+    gaps:
+      - Required direct syntax teaching for report-server and end-of-test APIs.
+      - Initially conflated recoverability with error severity and assumed filtered info reports were still counted.
+      - Exact trace formatting required direct repair.
+    reviewer_notes:
+      - Final XSim 2025.2 run passed at seed 1 with three matches, one retry warning, four detail attempts, zero mismatches/errors/fatals, and exact trace output.
+      - Error-with-pass-marker fixture failed as intended.
+      - Score: classification 30/30, verdict 25/25, architecture 14/15, verbosity 10/10, reproducibility 10/10, reflection 6/10.
+      - Guided reflects direct syntax instruction and trace repair.
+  UI-10:
+    state: independent
+    attempts: 1
+    completed_on: "2026-07-24"
+    score: 98
+    hints_used:
+      - Conceptual reflection correction distinguishing equal event counts from transaction identity and cross coverage.
+    seeds:
+      - 1
+    artifacts:
+      - modules/uvm-introduction/UI-10-analysis-coverage/tb/ui10_pkg.sv
+      - modules/uvm-introduction/UI-10-analysis-coverage/reflection.md
+      - modules/uvm-introduction/UI-10-analysis-coverage/implementation-handoff.md
+    strengths:
+      - Reused analysis publication and subscriber connection without implementation repair.
+      - Implemented four operation bins, two result-class bins, and the full eight-combination cross.
+      - Sampled exactly once per analysis write and kept the publisher independent of coverage intent.
+      - Produced eight publications, eight samples, and 100 percent coverage with zero UVM errors/fatals.
+      - Explained why coverage combinations complement but do not replace scoreboard correctness.
+    gaps:
+      - Initial reflection overstated what equal publication and sample counts prove.
+      - Reflection wording required conceptual tightening around observed transactions versus signals.
+      - Independent reuse in a later integration module remains unproven.
+    reviewer_notes:
+      - Eligible from completed UI-08 and FV-07 evidence even while UI-09 remained current focus.
+      - Valid fixture passed at seed 1 with eight samples and 100.00 percent coverage.
+      - Missing-cross-combination fixture failed at 95.83 percent as intended.
+      - Final learner run passed XSim 2025.2 at seed 1 with the exact coverage trace and zero UVM errors/fatals.
+      - Score: coverage model 25/25, analysis sampling 25/25, architecture 15/15, closure/fault detection 15/15, end-of-test evidence 10/10, reflection 8/10.
+      - Independent reflects implementation without code repair and only a conceptual reflection correction.
+  UI-11:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-25"
+    score: 96
+    hints_used:
+      - Expanded mental model for leaf/composite sequence call stacks, m_sequencer, parent context, and blocking points.
+      - Diagnostic guidance for sequence-item construction order and object-versus-component factory context.
+      - Diagnostic guidance for the null scenario handle.
+      - Direct repair of exact trace formatting.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-introduction/UI-11-basic-sequences/tb/ui11_pkg.sv
+      - modules/uvm-introduction/UI-11-basic-sequences/reflection.md
+      - modules/uvm-introduction/UI-11-basic-sequences/reading/sequence-composition-mental-model.md
+    strengths:
+      - Implemented a configurable reusable leaf sequence with explicit item handshakes.
+      - Composed two ordered child sequences on the same sequencer with parent context.
+      - Rebuilt sequencer/driver construction, connection, checking, and acknowledgment.
+      - Diagnosed null-object and factory-context errors from executable evidence.
+    gaps:
+      - Required conceptual coaching on m_sequencer, exports, and sequence-to-sequencer internals.
+      - Initially passed a sequence as component factory context and dereferenced an uncreated scenario.
+      - Exact trace formatting required direct repair.
+    reviewer_notes:
+      - Final XSim 2025.2 run passed at seed 1 with six completed items, two subsequences, zero UVM errors/fatals, and exact trace output.
+      - Missing-child fixture timed out at 1 us as intended.
+      - Score: leaf sequence 25/25, composite 25/25, driver 20/20, architecture 10/10, fault evidence 10/10, reflection 6/10.
+      - Guided reflects multiple conceptual hints and direct trace repair; later independent reuse is unproven.
 evidence_schema:
   state: not_started
   attempts: 0

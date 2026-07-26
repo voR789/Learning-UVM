@@ -1,0 +1,29 @@
+id: UI-G1
+title: Build a complete UVM environment for a programmable counter
+phase: uvm-introduction
+kind: integration
+status: ready
+estimated_minutes: 420
+siemens_mapping:
+  track: Introduction to the UVM
+  unit: Introduction integration gate
+prerequisites: [UI-09, UI-10, UI-11]
+objectives:
+  primary: Integrate stimulus, pin-level execution, passive observation, independent checking, coverage, and reporting in one reusable UVM environment.
+  supporting:
+    - Reuse explicit sequence/sequencer/driver handshakes and composed stimulus.
+    - Broadcast monitor observations to independent scoreboard and coverage consumers.
+    - Produce deterministic completion and fault-detection evidence from a real RTL DUT.
+learner_owns: [plan/verification-plan.md, tb/ui_g1_pkg.sv, reflection.md]
+codex_owns: [README.md, spec/counter-spec.md, dut/counter.sv, tb/counter_if.sv, tb/tb_top.sv, run.ps1, rubric.md, hints.md, tests/, implementation-handoff.md]
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: AMD Vivado Simulator 2025.2, seed 1, known-good and faulty-DUT fixtures
+completion_evidence:
+  - Nine deterministic counter operations complete through the sequence/driver handshake.
+  - A passive monitor publishes nine observations, including reset of a nonzero sentinel.
+  - An independent scoreboard predicts and checks all nine results, including both wrap directions.
+  - Functional coverage closes all required operation and result-class bins.
+  - The decrement-as-increment faulty DUT fails for the intended scoreboard mismatch.
+  - Learner completes the verification plan and reflection in their own words.

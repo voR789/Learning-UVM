@@ -14,11 +14,13 @@ package ui10_pkg;
     class ui10_publisher extends uvm_component;
         `uvm_component_utils(ui10_publisher)
         // TODO 1: Declare a typed analysis port named observed_ap.
+        uvm_analysis_port #(ui10_observation) observed_ap;
         int published;
 
         function new(string name, uvm_component parent);
             super.new(name, parent);
             // TODO 2: Construct observed_ap.
+            observed_ap = new("observed_ap", this);
         endfunction
 
         task run_phase(uvm_phase phase);
@@ -27,6 +29,15 @@ package ui10_pkg;
             // each once with result_zero=0 and once with result_zero=1.
             // Create each item through the factory, set both fields, call one
             // analysis write, and increment published.
+            for(int op = 0; op < 4; op++) begin
+                for(int z = 0; z < 2; z++) begin
+                    item = ui10_observation::type_id::create("item", this);
+                    item.operation = 2'(op);
+                    item.result_zero = z;
+                    observed_ap.write(item);
+                    published++;
+                end
+            end
         endtask
     endclass
 
@@ -41,21 +52,35 @@ package ui10_pkg;
 
             // TODO 4: Define cp_operation with four explicit named bins:
             // read=0, write=1, flush=2, status=3.
-
+            cp_operation: coverpoint sampled_operation {
+                bins read = {0};
+                bins write = {1};
+                bins flush = {2};
+                bins status = {3};
+            }
             // TODO 5: Define cp_result_zero with explicit bins:
             // nonzero=0 and zero=1.
-
+            cp_result_zero : coverpoint sampled_result_zero {
+                bins nonzero = {0};
+                bins zero = {1};
+            }
             // TODO 6: Define cx_operation_zero as the full cross.
+            cx_operation_zero : cross cp_operation, cp_result_zero;
         endgroup
 
         function new(string name, uvm_component parent);
             super.new(name, parent);
             // TODO 7: Construct the embedded observation_cg instance.
+            observation_cg = new();
         endfunction
 
         function void write(ui10_observation item);
             // TODO 8: Copy both item fields, sample coverage exactly once,
             // and increment sample_count. Do not mutate item.
+            sampled_operation = item.operation;
+            sampled_result_zero = item.result_zero;
+            observation_cg.sample();
+            sample_count++;
         endfunction
     endclass
 
@@ -72,12 +97,15 @@ package ui10_pkg;
             super.build_phase(phase);
             // TODO 9: Factory-create publisher and coverage_subscriber using
             // those exact instance names.
+            publisher = ui10_publisher::type_id::create("publisher", this);
+            coverage_subscriber = ui10_coverage_subscriber::type_id::create("coverage_subscriber", this);
         endfunction
 
         function void connect_phase(uvm_phase phase);
             super.connect_phase(phase);
             // TODO 10: Connect the publisher analysis port to the subscriber's
             // inherited analysis_export.
+            publisher.observed_ap.connect(coverage_subscriber.analysis_export);
         endfunction
     endclass
 
