@@ -21,9 +21,9 @@ run:
   command: ./run.ps1
   verified_with: AMD Vivado Simulator 2025.2, seed 1, known-good and faulty-DUT fixtures
 completion_evidence:
-  - Nine deterministic counter operations complete through the sequence/driver handshake.
-  - A passive monitor publishes nine observations, including reset of a nonzero sentinel.
-  - An independent scoreboard predicts and checks all nine results, including both wrap directions.
-  - Functional coverage closes all required operation and result-class bins.
+  - Thirteen deterministic counter operations complete through the sequence/driver handshake.
+  - A passive monitor publishes thirteen observations, including reset and two HOLD cycles.
+  - An independent scoreboard predicts and checks all thirteen results, including retention and both wrap directions.
+  - Functional coverage closes all required command/result and valid/result cross bins.
   - The decrement-as-increment faulty DUT fails for the intended scoreboard mismatch.
   - Learner completes the verification plan and reflection in their own words.

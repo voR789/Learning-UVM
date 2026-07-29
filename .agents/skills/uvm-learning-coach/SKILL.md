@@ -11,7 +11,8 @@ description: Create, select, coach, review, and assess practice-first SystemVeri
 2. Read `curriculum/roadmap.yaml` and `curriculum/progress.yaml`.
 3. For module creation or structural review, read `docs/module-standard.md`.
 4. Read only the relevant reference:
-   - Read `references/pedagogy.md` when coaching, hinting, grading, or changing progress.
+   - Read `references/pedagogy.md` when creating learner scaffolding, coaching,
+     hinting, grading, or changing progress.
    - Read `references/vivado-xsim.md` when creating runners, invoking simulation, or diagnosing compatibility.
 5. Read the target module's `module.yaml` and learner-owned files before acting.
 
@@ -31,7 +32,10 @@ Treat repository files as the source of truth. Do not duplicate roadmap facts in
 2. Prefer `current_focus` when it is eligible and unfinished.
 3. Prefer spaced retrieval when an older completed skill has not been reused.
 4. Do not skip an integration gate merely because later material looks more interesting.
-5. Explain the selection using prerequisites and evidence, then point to the module or propose creating it.
+5. If the objective is already evidenced and the remaining exercise would be
+   clerical, convert it to a read-only checkpoint as defined in
+   `references/pedagogy.md`.
+6. Explain the selection using prerequisites and evidence, then point to the module or propose creating it.
 
 ## Create
 
@@ -39,11 +43,16 @@ Treat repository files as the source of truth. Do not duplicate roadmap facts in
 2. Follow `docs/module-standard.md` exactly.
 3. Keep one primary concept in a micro-module.
 4. Define learner-owned and Codex-owned files in `module.yaml`.
-5. Create a behavioral specification, starter state, rubric, progressive hints, and reflection prompts.
-6. Create checks from the specification rather than DUT internals.
-7. Add a deterministic PowerShell run entry point.
-8. Verify correct behavior passes and a representative fault fails before setting `run.verified_with`.
-9. Leave progress at `not_started` until learner evidence exists.
+5. Calibrate the starter state from prior evidence and the learner's recorded
+   scaffolding preferences in `references/pedagogy.md`.
+6. For a read-only checkpoint, create a concise reading and executable
+   observation contract instead of a required learner artifact. Otherwise,
+   create a behavioral specification, starter state, rubric, progressive hints,
+   and reflection prompts.
+7. Create checks from the specification rather than DUT internals.
+8. Add a deterministic PowerShell run entry point.
+9. Verify correct behavior passes and a representative fault fails before setting `run.verified_with`.
+10. Leave progress at `not_started` until learner evidence exists.
 
 When the learner reports little or no prior knowledge of the module's primary
 concept, scaffold it as teach-first: provide a short reading and a complete,
@@ -53,6 +62,30 @@ scaffolding gradually across later modules rather than treating unfamiliar
 syntax as prerequisite knowledge.
 
 Do not include a complete solution in the starter tree. Keep any grader oracle independent from learner code.
+
+## Teach new prerequisites before assigning them
+
+Do not introduce a learner-facing TODO, required syntax, naming convention, or
+methodology rule that the learner has not explicitly learned in a prior module
+or conversation without first supplying a linked Markdown learning resource in
+the target module. Treat generated starter code and TODO prose as an assignment,
+not as teaching.
+
+For every such resource:
+
+1. Place it under the module's `resources/` directory with a descriptive
+   filename, and link it from the module README before the related TODO.
+2. Explain the observable problem, a compact mental model, key terms and
+   naming conventions, and one separate worked example that is not the learner's
+   final implementation.
+3. State the governing invariant or failure mode, then ask one prediction
+   question before asking the learner to edit code.
+4. Keep it scoped to what the next implementation task needs; link to an
+   authoritative local or official source when a deeper reference is useful.
+
+When uncertain whether a prerequisite was taught, assume it was not and add the
+resource. Record a short note in the module handoff whenever this rule causes a
+new resource to be added so later coaching can reuse it rather than reteach it.
 
 ## Coach
 

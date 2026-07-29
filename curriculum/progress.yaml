@@ -3,11 +3,19 @@ learner:
   weekly_study_hours: null
   vivado_version: "2025.2"
   uvm_version: "1.2"
-current_focus: UI-G1
-last_updated: "2026-07-23"
+  target_milestone: UA-04
+  target_focused_hours: 27
+  application_target: Apply UVM to the learner's systolic-array RTL
+  coaching_preferences:
+    - Pre-complete mature, time-consuming artifacts when they are not the lesson objective.
+    - Keep short mechanical UVM repetition such as registration and object instantiation.
+    - Provide lean structural skeletons with declarations and empty method signatures.
+    - Use broader outcome-based TODOs and reduce proactive implementation guidance.
+current_focus: UB-05
+last_updated: "2026-07-28"
 summary:
   state: guided
-  highest_gate_passed: FV-G1
+  highest_gate_passed: UI-G1
   notes:
     - Repository foundation created before exercise implementation.
     - Foundation micro-modules FV-00 through FV-07 are complete with guided evidence.
@@ -25,6 +33,12 @@ summary:
     - UI-07 completed with guided evidence; UI-08 is the next eligible module and current focus.
     - UI-08 completed with guided evidence; UI-09 is the next eligible module and current focus.
     - UI-09 and UI-11 completed with guided evidence; UI-G1 is the next integration gate and current focus.
+    - Learner selected UA-04 as the approximately 27-focused-hour milestone before applying UVM to systolic-array RTL.
+    - Future modules should reduce low-value repetition and use lean skeletons with broader TODOs.
+    - UI-G1 completed with guided evidence and passed the Introduction integration gate; UB-01 is next.
+    - UB-01 completed as a read-only checkpoint after the learner demonstrated its active/passive ownership objective; UB-02 is next.
+    - UB-02 completed with guided evidence; UB-03 was reduced to a reading checkpoint because UI-G1 already exercised virtual-interface and config_db wiring. UB-04 is next.
+    - UB-04 completed with independent evidence; UB-05 transaction objects is next.
 modules:
   FV-00:
     state: guided
@@ -624,6 +638,147 @@ modules:
       - Missing-child fixture timed out at 1 us as intended.
       - Score: leaf sequence 25/25, composite 25/25, driver 20/20, architecture 10/10, fault evidence 10/10, reflection 6/10.
       - Guided reflects multiple conceptual hints and direct trace repair; later independent reuse is unproven.
+  UI-G1:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-27"
+    score: 94
+    hints_used:
+      - Guiding questions for driver acknowledgment timing, active-low reset polarity, and interface clock scope.
+      - Monitor object-lifetime and post-NBA sampling guidance.
+      - Direct completion and later repair of the required command/result and valid/result cross bins.
+      - XSim diagnosis for a kernel crash caused by referencing a default coverpoint bin from binsof.
+      - Direct faulty-DUT invocation and exact real-number trace-format guidance.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-introduction/UI-G1-programmable-counter-integration/plan/verification-plan.md
+      - modules/uvm-introduction/UI-G1-programmable-counter-integration/tb/ui_g1_pkg.sv
+      - modules/uvm-introduction/UI-G1-programmable-counter-integration/reflection.md
+      - modules/uvm-introduction/UI-G1-programmable-counter-integration/implementation-handoff.md
+    strengths:
+      - Composed the required continuous thirteen-operation scenario from reusable leaf sequences.
+      - Implemented pin-level driving, passive post-NBA observation, independent prediction, analysis broadcast, and subscriber coverage.
+      - Proved reset, hold, clear, normal arithmetic, and both wrap directions with equal 13-operation completion counts.
+      - Closed all required command/result and valid/result coverage bins at 100 percent.
+      - Rejected the decrement-as-increment DUT at the independent scoreboard.
+    gaps:
+      - Monitor config_db retrieval is not checked and fataled on failure.
+      - Scoreboard mismatch reporting omits the expected, observed, command, and load fields.
+      - Reflection wording about equal transaction counts does not cleanly distinguish count agreement from transaction identity.
+      - Required substantial timing, coverage, XSim compatibility, and syntax guidance.
+    reviewer_notes:
+      - Learner source passed XSim 2025.2 at seed 1 on 2026-07-27 with exact trace driven=13 observed=13 checked=13 sampled=13 coverage=100.00 errors=0 fatals=0.
+      - The same saved learner source rejected the decrement-as-increment DUT at 115 ns with U1_G1_MISMATCH and a nonzero runner result.
+      - Score: stimulus/driver 20/20, passive observation 18/20, prediction/fault detection 18/20, coverage 15/15, architecture 10/10, completion/reporting 9/10, plan/reflection 4/5.
+      - Guided reflects direct cross-bin code plus multiple timing, object-lifetime, simulator-compatibility, and reporting interventions; later independent reuse remains unproven.
+  UB-01:
+    state: completed
+    attempts: 1
+    completed_on: "2026-07-28"
+    score: 95
+    hints_used:
+      - Clarified that the exercise was asking for reuse and ownership decisions rather than new implementation.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-01-uvm-reuse-test-flow/module.yaml
+      - modules/uvm-basics/UB-01-uvm-reuse-test-flow/implementation-handoff.md
+    strengths:
+      - Correctly assigned pin-driving ownership to the active block-level agent and retained passive monitoring at subsystem level.
+      - Explained that two active agents driving the same DUT pins introduce races and conflicting ownership.
+    gaps:
+      - Independent implementation transfer of configurable active/passive agents remains unproven.
+    reviewer_notes:
+      - Eligible after UI-G1 passed with guided evidence on 2026-07-27.
+      - Reduced-scaffolding module created with a supplied executable example, a lean learner decision skeleton, and no repeated verification-plan assignment.
+      - Active and passive XSim 2025.2 examples passed at seed 1; the valid decision fixture passed and the incomplete fixture failed as intended.
+      - Converted to a read-only checkpoint because the learner had already demonstrated the objective and the remaining worksheet was low-value clerical repetition.
+      - Read-only completion does not award mastery; later implementation reuse is required.
+  UB-02:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-28"
+    score: 84
+    hints_used:
+      - Direct explanation of timed state progression, condition-based waiting, and explicit null-handle guards.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-02-minimal-uvm-rebuild/module.yaml
+      - modules/uvm-basics/UB-02-minimal-uvm-rebuild/tb/ub02_pkg.sv
+      - modules/uvm-basics/UB-02-minimal-uvm-rebuild/implementation-handoff.md
+    strengths:
+      - Registered the test and worker, called parent constructors, and factory-created the worker in build_phase.
+      - Used test-owned objections, worker state progression, state-based waiting, and an explicit null-handle fatal.
+    gaps:
+      - Later independent reuse must show a completion condition that cannot end while associated worker work is still pending.
+    reviewer_notes:
+      - Reduced-scaffolding retrieval assessment created after UB-01 completion.
+      - XSim 2025.2 seed 1 passed the valid fixture at 3 ns and rejected the missing-worker fixture with UB02_STRUCTURE.
+      - The learner starter fails at its intentionally incomplete constructor TODOs.
+      - Learner submission passed XSim 2025.2 at seed 1 with three worker ticks and zero UVM errors/fatals.
+      - Guided state reflects direct explanation of timing and structural-check patterns; exact fixture trace and hierarchy wording were deliberately not graded.
+  UB-03:
+    state: completed
+    attempts: 0
+    completed_on: "2026-07-28"
+    score: 95
+    hints_used: []
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-03-connect-environment-safely/module.yaml
+      - modules/uvm-basics/UB-03-connect-environment-safely/resources/virtual-interface-boundary.md
+      - modules/uvm-introduction/UI-G1-programmable-counter-integration/tb/ui_g1_pkg.sv
+    strengths:
+      - UI-G1 driver and monitor retrieve virtual counter_if through uvm_config_db and use the retrieved handle in the correct component boundary.
+    gaps:
+      - Independent reuse of configuration scoping in a new multi-agent environment remains unproven.
+    reviewer_notes:
+      - Converted to a reading checkpoint: UI-G1 already passed with virtual interface/config_db integration evidence, so another standalone wiring task would be low-value repetition.
+      - The checkpoint runner reran UI-G1 successfully in XSim 2025.2 at seed 1 with 13 driven/observed/checked/sampled transactions and 100 percent functional coverage.
+      - Read-only completion does not award mastery.
+  UB-04:
+    state: independent
+    attempts: 1
+    completed_on: "2026-07-28"
+    score: 96
+    hints_used:
+      - Conceptual clarification that uvm_agent consumes is_active through inherited build behavior and exposes get_is_active().
+      - One diagnostic question identifying unconditional sequencer construction in passive mode.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-04-build-connect-agent/module.yaml
+      - modules/uvm-basics/UB-04-build-connect-agent/tb/ub04_pkg.sv
+      - modules/uvm-basics/UB-04-build-connect-agent/implementation-handoff.md
+    strengths:
+      - Independently registered and constructed the transaction, sequencer, driver, monitor, and agent classes.
+      - Created monitor-only passive topology and active driver/sequencer topology through get_is_active().
+      - Connected the active request path while guarding passive-mode handles.
+      - Explained passive observation, mode-safe connection, and reproducible active/passive tests.
+    gaps:
+      - Later multi-agent reuse should demonstrate configuration scoping without supplied tests.
+    reviewer_notes:
+      - Reduced-scaffolding agent package created with supplied active/passive tests and topology checks.
+      - XSim 2025.2 seed 1 passed valid active and passive fixtures and rejected the contradictory passive driving topology with UB04_PASSIVE_TOPOLOGY.
+      - The learner starter fails at its intentional constructor TODOs.
+      - Learner source passed active and passive XSim 2025.2 tests at seed 1 with zero UVM errors/fatals.
+      - Independent state reflects successful repair from one diagnostic question and only conceptual API clarification.
+  UB-05:
+    state: not_started
+    attempts: 0
+    completed_on: null
+    score: null
+    hints_used: []
+    seeds: []
+    artifacts:
+      - modules/uvm-basics/UB-05-robust-transaction-objects/module.yaml
+      - modules/uvm-basics/UB-05-robust-transaction-objects/resources/transaction-object-semantics.md
+      - modules/uvm-basics/UB-05-robust-transaction-objects/tb/ub05_pkg.sv
+      - modules/uvm-basics/UB-05-robust-transaction-objects/implementation-handoff.md
+    strengths: []
+    gaps: []
+    reviewer_notes:
+      - Teach-first transaction-object module created because field automation, copy/compare alignment, and convert2string are new prerequisite behavior.
+      - XSim 2025.2 seed 1 passed the valid fixture and rejected an omitted data field with UB05_COMPARE.
+      - The learner starter fails at its intentional registration/type factory TODO.
 evidence_schema:
   state: not_started
   attempts: 0

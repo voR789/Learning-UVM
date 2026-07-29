@@ -5,6 +5,7 @@ package ui_g1_pkg;
   class counter_txn extends uvm_sequence_item;
     `uvm_object_utils(counter_txn)
     bit is_reset;
+    bit cmd_valid;
     bit [1:0] cmd;
     bit [7:0] load_value, observed_count;
     function new(string name="counter_txn"); super.new(name); endfunction
@@ -15,13 +16,15 @@ package ui_g1_pkg;
     function new(string name="counter_scenario"); super.new(name); endfunction
     task body();
       counter_txn req;
-      bit resets[9] = '{0,1,0,0,0,0,0,0,0};
-      bit [1:0] commands[9] = '{0,0,0,1,1,2,3,2,1};
-      bit [7:0] loads[9] = '{255,0,5,0,0,0,0,0,0};
-      for (int i=0; i<9; i++) begin
+      bit resets[13] = '{0,1,0,0,0,0,0,0,0,0,0,0,0};
+      bit valids[13] = '{1,0,1,1,1,1,1,1,0,1,1,1,0};
+      bit [1:0] commands[13] = '{0,0,0,1,0,2,0,3,0,2,1,0,1};
+      bit [7:0] loads[13] = '{255,0,5,0,5,0,255,0,0,0,0,170,0};
+      for (int i=0; i<13; i++) begin
         req = counter_txn::type_id::create($sformatf("req_%0d",i));
         start_item(req);
         req.is_reset = resets[i];
+        req.cmd_valid = valids[i];
         req.cmd = commands[i];
         req.load_value = loads[i];
         finish_item(req);
@@ -46,18 +49,21 @@ package ui_g1_pkg;
     endfunction
     task run_phase(uvm_phase phase);
       counter_txn req;
-      vif.rst_n=1; vif.cmd_valid=0; vif.cmd=0; vif.load_value=0;
+      vif.rst_n=1; vif.cmd_valid=0; vif.sample_cycle=0;
+      vif.cmd=0; vif.load_value=0;
       forever begin
         seq_item_port.get_next_item(req);
         @(negedge vif.clk);
         vif.rst_n=!req.is_reset;
-        vif.cmd_valid=!req.is_reset;
+        vif.cmd_valid=req.cmd_valid;
+        vif.sample_cycle=1;
         vif.cmd=req.cmd;
         vif.load_value=req.load_value;
         @(posedge vif.clk);
         @(negedge vif.clk);
         vif.rst_n=1;
         vif.cmd_valid=0;
+        vif.sample_cycle=0;
         completed++;
         seq_item_port.item_done();
       end
@@ -82,10 +88,11 @@ package ui_g1_pkg;
       counter_txn observed;
       forever begin
         @(posedge vif.clk);
-        if (!vif.rst_n || vif.cmd_valid) begin
+        if (vif.sample_cycle) begin
           #1ps;
           observed=counter_txn::type_id::create("observed");
           observed.is_reset=!vif.rst_n;
+          observed.cmd_valid=vif.cmd_valid;
           observed.cmd=vif.cmd;
           observed.load_value=vif.load_value;
           observed.observed_count=vif.count;
@@ -108,7 +115,7 @@ package ui_g1_pkg;
     function void write(counter_txn observed);
       if (observed.is_reset)
         expected_count=0;
-      else
+      else if (observed.cmd_valid)
         case (observed.cmd)
           0: expected_count=observed.load_value;
           1: expected_count=expected_count+1;
@@ -128,14 +135,43 @@ package ui_g1_pkg;
     bit [1:0] sampled_cmd;
     bit [7:0] sampled_count;
     bit sampled_reset;
+    bit sampled_valid;
     int samples;
     covergroup counter_cg;
       option.per_instance=1;
-      cp_cmd: coverpoint sampled_cmd iff (!sampled_reset) {
+      cp_reset: coverpoint sampled_reset {
+        bins deasserted={0}; bins asserted={1};
+      }
+      cp_valid: coverpoint sampled_valid iff (!sampled_reset) {
+        bins low={0}; bins high={1};
+      }
+      cp_cmd: coverpoint sampled_cmd iff (!sampled_reset && sampled_valid) {
         bins load={0}; bins inc={1}; bins dec={2}; bins clear={3};
       }
       cp_count: coverpoint sampled_count {
         bins zero={0}; bins middle={[1:254]}; bins maximum={255};
+      }
+      cx_cmd_count: cross cp_cmd,cp_count {
+        bins load_middle=binsof(cp_cmd.load)&&binsof(cp_count.middle);
+        bins load_max=binsof(cp_cmd.load)&&binsof(cp_count.maximum);
+        bins inc_middle=binsof(cp_cmd.inc)&&binsof(cp_count.middle);
+        bins inc_zero=binsof(cp_cmd.inc)&&binsof(cp_count.zero);
+        bins dec_middle=binsof(cp_cmd.dec)&&binsof(cp_count.middle);
+        bins dec_max=binsof(cp_cmd.dec)&&binsof(cp_count.maximum);
+        bins clear_zero=binsof(cp_cmd.clear)&&binsof(cp_count.zero);
+        ignore_bins load_zero=binsof(cp_cmd.load)&&binsof(cp_count.zero);
+        ignore_bins inc_max=binsof(cp_cmd.inc)&&binsof(cp_count.maximum);
+        ignore_bins dec_zero=binsof(cp_cmd.dec)&&binsof(cp_count.zero);
+        ignore_bins clear_middle=binsof(cp_cmd.clear)&&binsof(cp_count.middle);
+        ignore_bins clear_max=binsof(cp_cmd.clear)&&binsof(cp_count.maximum);
+      }
+      cx_valid_count: cross cp_valid,cp_count {
+        bins hold_zero=binsof(cp_valid.low)&&binsof(cp_count.zero);
+        bins hold_middle=binsof(cp_valid.low)&&binsof(cp_count.middle);
+        ignore_bins hold_max=binsof(cp_valid.low)&&binsof(cp_count.maximum);
+        ignore_bins active_zero=binsof(cp_valid.high)&&binsof(cp_count.zero);
+        ignore_bins active_middle=binsof(cp_valid.high)&&binsof(cp_count.middle);
+        ignore_bins active_max=binsof(cp_valid.high)&&binsof(cp_count.maximum);
       }
     endgroup
     function new(string name,uvm_component parent);
@@ -146,6 +182,7 @@ package ui_g1_pkg;
       sampled_cmd=observed.cmd;
       sampled_count=observed.observed_count;
       sampled_reset=observed.is_reset;
+      sampled_valid=observed.cmd_valid;
       counter_cg.sample();
       samples++;
     endfunction
@@ -209,10 +246,10 @@ package ui_g1_pkg;
       server=uvm_report_server::get_server();
       errors=server.get_severity_count(UVM_ERROR);
       fatals=server.get_severity_count(UVM_FATAL);
-      if (env.agent.driver.completed != 9 ||
-          env.agent.monitor.published != 9 ||
-          env.scoreboard.checks != 9 ||
-          env.coverage.samples != 9 ||
+      if (env.agent.driver.completed != 13 ||
+          env.agent.monitor.published != 13 ||
+          env.scoreboard.checks != 13 ||
+          env.coverage.samples != 13 ||
           coverage_pct < 100.0 || errors != 0 || fatals != 0)
         `uvm_fatal("BAD_VERDICT","integration completion criteria not met")
       $display("INTEGRATION_TRACE: driven=%0d observed=%0d checked=%0d sampled=%0d coverage=%0.2f errors=%0d fatals=%0d",

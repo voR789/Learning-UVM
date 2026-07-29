@@ -67,3 +67,53 @@ Record why the state was chosen. A numeric score without evidence is insufficien
 - Do not create a replacement testbench during a review.
 - Do not conflate polished code with understanding.
 - When direct repair is requested, explain the invariant restored by each material change.
+
+## Scaffolding calibration
+
+Use progress evidence to decide what the starter supplies. Repetition must add
+implementation fluency, retrieval strength, debugging skill, or transfer to a
+new context; repetition that only recreates a mature, lengthy artifact is
+low-value.
+
+- Pre-complete established, time-consuming process work such as verification-plan
+  boilerplate when planning is not the module objective. Leave only new,
+  requirement-specific decisions for the learner.
+- Continue short mechanical retrieval practice such as UVM registration,
+  factory creation, constructor calls, and object instantiation until independent
+  fluency is visible.
+- For previously practiced architecture, provide names, parameters, declarations,
+  and empty required method signatures. Do not provide near-complete method bodies.
+- Phrase TODOs as bounded behavioral outcomes or invariants. Avoid prescribing
+  exact statements, ordering, API calls, or field-by-field steps unless the syntax
+  is genuinely new or XSim requires a fragile compatibility pattern.
+- Reduce hints across later modules. Start with the specification, executable
+  failure, and one diagnostic question; disclose location, pseudocode, or syntax
+  only through the hint ladder.
+- Preserve full learner ownership of the novel reasoning: timing, transaction
+  boundaries, reference modeling, checking, coverage intent, termination, and
+  debugging.
+- Do not make a simple exercise rigid through fixture-only requirements such as
+  an exact display string or a fixed hierarchy path unless that property is the
+  actual lesson objective. Check the behavioral invariant instead.
+
+The current learner explicitly prefers lean skeletons and broader TODOs over
+fill-in-the-blank implementations. Treat this as the default for modules after
+UI-G1 and revise only when executable evidence shows a prerequisite gap.
+
+## Read-only checkpoints
+
+Convert a module or module segment to reading-only when all of these are true:
+
+- its objective is already supported by prior executable or conversational
+  evidence;
+- the remaining work is mainly terminology, classification, transcription, or
+  another trivial artifact rather than implementation, debugging, or transfer;
+- skipping the artifact does not bypass an integration gate or a genuinely new
+  prerequisite.
+
+Supply the explanation and any executable example. Ask for at most one
+prediction or concise explanation, then record completion with the evidence
+that justified the conversion. Preserve unfinished learner files as optional
+notes rather than manufacturing answers. A read-only checkpoint may establish
+`completed`, but never `mastered`; require later implementation transfer for
+stronger evidence.

@@ -1,0 +1,38 @@
+id: UB-02
+title: Rebuild a minimal UVM test from memory
+phase: uvm-basics
+kind: assessment
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: UVM Basics
+  unit: UVM Hello World
+prerequisites: [UB-01]
+objectives:
+  primary: Rebuild the essential UVM component, factory, phase, and objection flow without a near-complete implementation.
+  supporting:
+    - Construct a child component through the factory during build_phase.
+    - Coordinate concurrent run phases and end the test deliberately.
+    - Produce a deterministic self-checking result.
+learner_owns:
+  - tb/ub02_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - dut/README.md
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid fixture passed at 3 ns, missing-worker fixture failed with UB02_STRUCTURE, and learner starter failed at its constructor TODOs on 2026-07-28"
+completion_evidence:
+  - The learner package compiles, elaborates, and runs through the UVM factory.
+  - The test factory-constructs one worker.
+  - Concurrent run phases produce and verify exactly three worker ticks.
+  - A missing worker is rejected deliberately before dereference.
+  - The test owns its completion condition and termination objection.

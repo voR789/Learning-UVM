@@ -1,0 +1,36 @@
+id: UB-03
+title: Connect an environment to the DUT safely
+phase: uvm-basics
+kind: micro
+delivery: read_only_checkpoint
+status: complete
+estimated_minutes: 15
+siemens_mapping:
+  track: UVM Basics
+  unit: Connecting Env to DUT
+prerequisites: [UB-02]
+objectives:
+  primary: Explain how a virtual interface crosses the static top-level boundary into reusable UVM components through config_db.
+  supporting:
+    - Identify the top-level owner of the physical interface.
+    - Identify the component-side failure policy for a missing interface.
+learner_owns: []
+codex_owns:
+  - README.md
+  - resources/virtual-interface-boundary.md
+  - dut/README.md
+  - tb/README.md
+  - tests/README.md
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - reflection.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; delegated UI-G1 run passed with 13 driven/observed/checked/sampled transactions, 100 percent functional coverage, and zero UVM errors/fatals on 2026-07-28"
+completion_evidence:
+  - UI-G1 passed with the top-level interface placed in config_db.
+  - The UI-G1 driver retrieved and guarded its virtual-interface handle.
+  - The learner previously explained the virtual-interface and config_db boundary.

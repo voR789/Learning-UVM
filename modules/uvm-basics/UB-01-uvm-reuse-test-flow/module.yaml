@@ -1,0 +1,38 @@
+id: UB-01
+title: Explain UVM reuse and test flow
+phase: uvm-basics
+kind: micro
+delivery: read_only_checkpoint
+status: ready
+estimated_minutes: 45
+siemens_mapping:
+  track: UVM Basics
+  unit: Introduction to UVM
+prerequisites: [UI-G1]
+objectives:
+  primary: Decide what a UVM environment should reuse and what a test should change when the same interface is used actively at block level and passively at subsystem level.
+  supporting:
+    - Trace configuration, construction, connection, execution, observation, and verdict ownership through a UVM test.
+    - Explain why passive reuse preserves monitoring and checking while removing signal-driving ownership.
+    - Distinguish reusable verification structure from test-specific scenario policy.
+learner_owns: []
+codex_owns:
+  - README.md
+  - resources/reuse-and-test-flow.md
+  - dut/README.md
+  - tb/ub01_pkg.sv
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; active and passive tests passed; valid decision fixture passed and incomplete fixture failed on 2026-07-27"
+completion_evidence:
+  - Active and passive example tests pass in XSim 2025.2 with distinct driver topology and a monitor in both modes.
+  - The learner identified that an active block agent owns pin driving while a reused subsystem agent must be passive.
+  - The learner explained that two active pin-driving agents introduce races and conflicting ownership.
+  - The original decision worksheet and reflection remain optional notes; no clerical artifact is required.

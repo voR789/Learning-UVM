@@ -71,6 +71,11 @@ Do not include the final implementation in the exercise README.
 - Require one focused artifact or repair.
 - Include at least one meaningful negative or fault case.
 
+An explicitly documented read-only checkpoint may replace the focused artifact
+when the objective is already evidenced and the remaining exercise would be
+clerical. It still needs an observable example and recorded learner evidence,
+and it cannot replace an integration gate.
+
 ### Integration module
 
 - Target 3 to 8 hours.
@@ -145,4 +150,3 @@ A review should produce:
 5. A proposed progress-state update.
 
 Do not modify learner code during a review-only request.
-

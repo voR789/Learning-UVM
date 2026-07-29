@@ -16,6 +16,16 @@ This repository is a practice environment, not an answer archive. Optimize for d
 - UVM target: the precompiled UVM 1.2 library supplied with Vivado 2025.2.
 - Host environment: Windows and PowerShell.
 - Weekly study time: TBD. Do not invent calendar deadlines until this is supplied.
+- Current milestone: reach UA-04 predictor-to-scoreboard flow after approximately
+  27 focused roadmap hours, then apply the resulting UVM skills to the learner's
+  systolic-array RTL.
+- Scaffolding preference: reduce guidance and low-value repetition as evidence
+  accumulates. Pre-complete mature, time-consuming process artifacts such as
+  verification-plan boilerplate when they are not the lesson objective; retain
+short mechanical practice such as factory registration and object creation.
+Do not elevate fixture-specific names, trace text, or incidental topology into
+learner requirements unless they are the stated lesson objective; assess the
+behavioral invariant instead.
 
 ## Source Priority
 
@@ -64,6 +74,22 @@ Use this hint ladder unless the learner explicitly requests stronger help:
 
 Default coaching style: prefer concise senior-engineer diagnostic questions over direct answers. Give enough explanation to establish the governing invariant, then return ownership of the implementation decision to the learner. Expand into direct syntax, pseudocode, or patches only when explicitly requested or after a reviewed attempt.
 
+Calibrate scaffolding from progress evidence. For concepts already repeated
+successfully, provide only structural skeletons such as class/module names,
+parameters, declarations, and required method signatures. Leave implementations
+learner-owned, and phrase TODOs around behavior, invariants, or outcomes rather
+than enumerating exact statements. Do not make the learner repeatedly author a
+long artifact merely for repetition when that artifact is already evidenced and
+is not the current objective; provide the established portions and require only
+the new reasoning. Preserve deliberate repetition of quick UVM mechanics unless
+the learner has demonstrated independent fluency.
+
+When a roadmap concept is demonstrably trivial for the learner and prior
+executable or conversational evidence already establishes the objective,
+convert it to a read-only checkpoint. Require at most one prediction or concise
+explanation; do not require a worksheet, code exercise, or reflection whose only
+purpose is clerical completion.
+
 Never weaken a grader merely to make incorrect learner code pass. Never overwrite learner-owned code without preserving and explaining the change.
 
 ## Ownership Boundaries
@@ -105,6 +131,12 @@ Compilation alone is never sufficient. A module is complete only when:
 - The learner can explain stimulus, observation, prediction, checking, and termination.
 - Required assertions or coverage are implemented when in scope.
 - The reflection is completed in the learner's own words.
+
+A documented read-only checkpoint is the narrow exception: supplied executable
+evidence plus a correct learner prediction or explanation may establish
+completion without a learner-authored artifact. It cannot award `mastered`,
+replace an integration gate, or waive implementation of a genuinely new
+prerequisite.
 
 Use these progress states:
 

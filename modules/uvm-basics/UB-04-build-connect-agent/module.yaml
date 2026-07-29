@@ -1,0 +1,38 @@
+id: UB-04
+title: Build and connect an agent
+phase: uvm-basics
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: UVM Basics
+  unit: Connecting Components
+prerequisites: [UB-03]
+objectives:
+  primary: Build one reusable agent whose topology and connections follow its active or passive configuration.
+  supporting:
+    - Create structural children in build_phase.
+    - Connect the driver and sequencer only in active mode.
+    - Preserve passive monitoring in both modes.
+learner_owns:
+  - tb/ub04_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - dut/README.md
+  - tb/ub04_check_pkg.sv
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid active and passive fixtures passed, contradictory passive driving topology failed with UB04_PASSIVE_TOPOLOGY, and starter failed at intentional constructor TODOs on 2026-07-28"
+completion_evidence:
+  - Active mode contains a monitor, driver, and sequencer with the request connection established.
+  - Passive mode retains the monitor and contains no driver or sequencer.
+  - Both supplied mode tests pass with zero UVM errors or fatals.
+  - A contradictory passive topology is rejected.
