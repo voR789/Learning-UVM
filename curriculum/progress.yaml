@@ -11,8 +11,10 @@ learner:
     - Keep short mechanical UVM repetition such as registration and object instantiation.
     - Provide lean structural skeletons with declarations and empty method signatures.
     - Use broader outcome-based TODOs and reduce proactive implementation guidance.
-current_focus: UB-05
-last_updated: "2026-07-28"
+    - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
+    - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
+current_focus: UB-08
+last_updated: "2026-07-29"
 summary:
   state: guided
   highest_gate_passed: UI-G1
@@ -762,6 +764,81 @@ modules:
       - Learner source passed active and passive XSim 2025.2 tests at seed 1 with zero UVM errors/fatals.
       - Independent state reflects successful repair from one diagnostic question and only conceptual API clarification.
   UB-05:
+    state: completed
+    attempts: 0
+    completed_on: "2026-07-28"
+    score: 95
+    hints_used: []
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-05-robust-transaction-objects/module.yaml
+      - modules/uvm-basics/UB-05-robust-transaction-objects/resources/transaction-object-semantics.md
+      - modules/uvm-basics/UB-05-robust-transaction-objects/tb/ub05_pkg.sv
+      - modules/uvm-basics/UB-05-robust-transaction-objects/implementation-handoff.md
+    strengths:
+      - Correctly recognized that UVM field automation may intentionally include selected fields rather than every member.
+      - Identified registration and transaction-object mechanics as already-understood low-value repetition.
+    gaps:
+      - Independent transfer of custom copy/compare policy to a larger transaction remains unproven.
+    reviewer_notes:
+      - Teach-first transaction-object module created because field automation, copy/compare alignment, and convert2string are new prerequisite behavior.
+      - XSim 2025.2 seed 1 passed the valid fixture and rejected an omitted data field with UB05_COMPARE.
+      - The learner starter fails at its intentional registration/type factory TODO.
+      - Converted to a read-only checkpoint because prior implementation and conversational evidence establish the objective; the remaining macro exercise was clerical.
+      - The supplied valid transaction passed and the omitted-data fixture failed with UB05_COMPARE at seed 1.
+      - Read-only completion does not award mastery.
+  UB-06:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-28"
+    score: 90
+    hints_used:
+      - Conceptual explanation of request completion versus response delivery and real pin-level response coordination.
+      - Review identified a false pass caused by deriving and checking the response against itself.
+      - Direct clarification that set_id_info preserves UVM routing identity but does not copy the user-defined tag.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-06-sequence-driver-responses/module.yaml
+      - modules/uvm-basics/UB-06-sequence-driver-responses/resources/request-response-flow.md
+      - modules/uvm-basics/UB-06-sequence-driver-responses/tb/ub06_pkg.sv
+      - modules/uvm-basics/UB-06-sequence-driver-responses/implementation-handoff.md
+    strengths:
+      - Returned a separate response with preserved UVM routing identity and request-derived result, operand, and tag.
+      - Retrieved and checked each response against its originating request.
+      - Explained how responses enable result-driven and error-recovery sequencing.
+    gaps:
+      - Initially implemented a self-consistent false pass by deriving and checking the response against its own default operand.
+      - Real pin-level delayed and pipelined response handling remains future integration practice.
+    reviewer_notes:
+      - Reduced-scaffolding module created around request/response behavior not previously exercised in UI-G1.
+      - Existing request handshake, component structure, connections, and test objection boundary are supplied.
+      - XSim 2025.2 seed 1 passed the valid three-response fixture and rejected the wrong-result fixture with UB06_RESPONSE.
+      - The learner starter compiles and fails at its intentional UB06_TODO.
+      - Learner source passed XSim 2025.2 at seed 1 with three verified responses and zero UVM errors/fatals.
+      - Guided reflects conceptual teaching plus direct review of the request/response relationship and tag-copy distinction.
+  UB-07:
+    state: completed
+    attempts: 0
+    completed_on: "2026-07-28"
+    score: 95
+    hints_used: []
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-07-passive-monitoring-subscribers/module.yaml
+      - modules/uvm-basics/UB-07-passive-monitoring-subscribers/resources/passive-analysis-broadcast.md
+      - modules/uvm-introduction/UI-G1-programmable-counter-integration/tb/ui_g1_pkg.sv
+      - modules/uvm-basics/UB-07-passive-monitoring-subscribers/implementation-handoff.md
+    strengths:
+      - UI-G1 independently separates passive observation from driving and prediction.
+      - UI-G1 broadcasts each observed operation to scoreboard and coverage consumers.
+      - Prior debugging established stable transaction-object publication semantics.
+    gaps:
+      - Independent transfer into a new reusable agent remains unproven.
+    reviewer_notes:
+      - Converted to a reading checkpoint because the full objective already has passing UI-G1 implementation evidence.
+      - Read-only completion does not award mastery; UB-G1 must reuse the architecture without supplied implementation.
+      - Delegated UI-G1 checkpoint validation passed XSim 2025.2 at seed 1 with 13 driven/observed/checked/sampled transactions, 100 percent coverage, and zero UVM errors/fatals.
+  UB-08:
     state: not_started
     attempts: 0
     completed_on: null
@@ -769,16 +846,19 @@ modules:
     hints_used: []
     seeds: []
     artifacts:
-      - modules/uvm-basics/UB-05-robust-transaction-objects/module.yaml
-      - modules/uvm-basics/UB-05-robust-transaction-objects/resources/transaction-object-semantics.md
-      - modules/uvm-basics/UB-05-robust-transaction-objects/tb/ub05_pkg.sv
-      - modules/uvm-basics/UB-05-robust-transaction-objects/implementation-handoff.md
+      - modules/uvm-basics/UB-08-reproducible-useful-reports/module.yaml
+      - modules/uvm-basics/UB-08-reproducible-useful-reports/resources/reproducible-diagnostics.md
+      - modules/uvm-basics/UB-08-reproducible-useful-reports/tb/ub08_pkg.sv
+      - modules/uvm-basics/UB-08-reproducible-useful-reports/implementation-handoff.md
     strengths: []
     gaps: []
     reviewer_notes:
-      - Teach-first transaction-object module created because field automation, copy/compare alignment, and convert2string are new prerequisite behavior.
-      - XSim 2025.2 seed 1 passed the valid fixture and rejected an omitted data field with UB05_COMPARE.
-      - The learner starter fails at its intentional registration/type factory TODO.
+      - Reduced-scaffolding reporting module created around reproducible mismatch context and report-phase accounting.
+      - Source generation, analysis wiring, fault injection, and transaction-recording lifecycle calls are supplied.
+      - XSim 2025.2 seed 1 passed the valid clean/fault pair and rejected a silent-mismatch implementation.
+      - XSim lacks get_initial_random_seed, so the runner passes the actual simulation seed through UB08_SEED.
+      - The learner starter compiles and fails at its intentional UB08_TODO.
+      - "New-chat handoff on 2026-07-29: learner work has not started; begin with the resource prediction, then implement the two audit TODOs."
 evidence_schema:
   state: not_started
   attempts: 0

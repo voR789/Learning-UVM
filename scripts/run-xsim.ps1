@@ -20,6 +20,8 @@ param(
 
     [int]$Seed = 1,
 
+    [string[]]$TestPlusargs = @(),
+
     [switch]$FunctionalCoverageReport,
 
     [string]$VivadoRoot = $(
@@ -126,6 +128,9 @@ try {
             '-sv_seed', $Seed.ToString(),
             '-testplusarg', "`"UVM_TESTNAME=$Test`""
         )
+        foreach ($testPlusarg in $TestPlusargs) {
+            $simulationArguments += @('-testplusarg', "`"$testPlusarg`"")
+        }
         if ($FunctionalCoverageReport) {
             $simulationArguments += @(
                 '-cov_db_dir', '.',

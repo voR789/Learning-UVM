@@ -2,8 +2,9 @@ id: UB-05
 title: Design robust transaction objects
 phase: uvm-basics
 kind: micro
-status: ready
-estimated_minutes: 90
+delivery: read_only_checkpoint
+status: complete
+estimated_minutes: 15
 siemens_mapping:
   track: UVM Basics
   unit: Introducing Transactions
@@ -14,9 +15,7 @@ objectives:
     - Constrain randomized fields to a small legal protocol space.
     - Make copy and compare include every meaningful field.
     - Produce a concise convert2string representation from live object state.
-learner_owns:
-  - tb/ub05_pkg.sv
-  - reflection.md
+learner_owns: []
 codex_owns:
   - README.md
   - resources/transaction-object-semantics.md
@@ -28,11 +27,14 @@ codex_owns:
   - hints.md
   - tests/
   - implementation-handoff.md
+  - tb/ub05_pkg.sv
+  - reflection.md
 run:
   shell: powershell
   command: ./run.ps1
   verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid constrained copy/compare/string fixture passed, omitted-data field fixture failed with UB05_COMPARE, and starter failed at intentional registration TODO on 2026-07-28"
 completion_evidence:
+  - Learner correctly explained that field automation can include selected meaningful fields and identified the remaining exercise as already-understood registration practice.
   - Randomization produces only legal address and write-data combinations.
   - Copy creates field-equivalent transaction state.
   - Compare detects a mutation to any meaningful field under test.

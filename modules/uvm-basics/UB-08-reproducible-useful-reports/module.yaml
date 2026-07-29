@@ -1,0 +1,38 @@
+id: UB-08
+title: Make failures reproducible and reports useful
+phase: uvm-basics
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: UVM Basics
+  unit: Reporting
+prerequisites: [UB-06, UB-07]
+objectives:
+  primary: Report a detected transaction mismatch with enough seed and transaction context to reproduce and localize it.
+  supporting:
+    - Maintain checked and mismatch counts and emit a final report-phase summary.
+    - Recognize transaction recording as lifecycle evidence distinct from textual reporting.
+learner_owns:
+  - tb/ub08_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/reproducible-diagnostics.md
+  - dut/README.md
+  - tb/ub08_check_pkg.sv
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid diagnostics passed clean and fault runs, silent-mismatch fixture was rejected, and learner starter failed at UB08_TODO on 2026-07-28"
+completion_evidence:
+  - A clean five-transaction run passes and reports seed, checked count, and zero mismatches.
+  - A one-transaction fault is rejected with UB08_MISMATCH and complete transaction context.
+  - The report-phase summary preserves the first failure and final counts.
+  - The learner explains the distinct purposes of the seed, transaction report, recording lifecycle, and final summary.

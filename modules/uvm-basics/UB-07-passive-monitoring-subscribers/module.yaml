@@ -1,0 +1,36 @@
+id: UB-07
+title: Implement passive monitoring and subscribers
+phase: uvm-basics
+kind: micro
+delivery: read_only_checkpoint
+status: complete
+estimated_minutes: 15
+siemens_mapping:
+  track: UVM Basics
+  unit: Monitors and Subscribers
+prerequisites: [UB-05]
+objectives:
+  primary: Explain how a passive monitor publishes stable observed transactions to independent analysis subscribers.
+  supporting:
+    - Distinguish observation ownership from driving and prediction.
+    - Explain analysis broadcast and transaction-handle lifetime.
+learner_owns: []
+codex_owns:
+  - README.md
+  - resources/passive-analysis-broadcast.md
+  - dut/README.md
+  - tb/README.md
+  - tests/README.md
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - reflection.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; delegated UI-G1 run passed with 13 driven/observed/checked/sampled transactions, 100 percent functional coverage, and zero UVM errors/fatals on 2026-07-28"
+completion_evidence:
+  - UI-G1 passed with a passive monitor publishing one observed transaction per sampled operation.
+  - Independent scoreboard and coverage subscribers consumed the monitor's analysis broadcast.
+  - The learner previously diagnosed monitor transaction-object reuse and implemented stable publication.

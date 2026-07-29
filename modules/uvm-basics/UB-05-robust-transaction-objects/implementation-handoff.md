@@ -4,15 +4,17 @@ Updated: 2026-07-28
 
 ## Status
 
-- UB-05 is the current focus and remains `not_started`.
-- The learner package is intentionally incomplete.
+- UB-05 is complete as a read-only checkpoint.
+- The learner package remains untouched as optional practice.
 
 ## Scaffolding
 
 - A prerequisite resource teaches field automation and aligned transaction
   semantics with an unrelated worked example.
+- Added an unrelated `$sformatf`/`convert2string()` syntax example after the
+  learner correctly identified that the original resource omitted it.
 - The checker, runner, and fault fixture are supplied.
-- The learner owns one transaction class and a short reflection.
+- No learner-authored implementation or reflection is required.
 - No verification plan or exact diagnostic-string format is required.
 
 ## Verification boundary
@@ -25,3 +27,6 @@ Updated: 2026-07-28
   field fixture with `UB05_COMPARE`.
 - The starter reaches elaboration and fails at its intentional missing
   registration/type factory TODO.
+- Conversion decision: the learner already understood selective field
+  registration, and completing another transaction macro exercise would add
+  clerical repetition rather than a new behavioral decision.

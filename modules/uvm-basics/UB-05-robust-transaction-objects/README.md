@@ -25,11 +25,13 @@ behavior exercised by the supplied test.
 
 Exact whitespace or label wording in the string is not graded.
 
-## Your work
+## Reading checkpoint
 
-Implement the behavioral TODOs in [tb/ub05_pkg.sv](tb/ub05_pkg.sv). The class,
-fields, constraint name, constructor signature, and string-method signature are
-supplied. You own their transaction semantics.
+Read the resource, answer the prediction mentally, and run the supplied example.
+There is no required implementation or reflection: your prior work already
+demonstrates registration, object construction, and the choice to automate a
+subset of fields. The unfinished [tb/ub05_pkg.sv](tb/ub05_pkg.sv) is preserved
+only as optional extra practice.
 
 Run:
 
@@ -38,17 +40,22 @@ cd "C:\Learning UVM\modules\uvm-basics\UB-05-robust-transaction-objects"
 .\run.ps1
 ```
 
-The supplied test randomizes a packet, copies and compares it, then mutates the
-copy and requires comparison to detect the change.
+The supplied example randomizes a packet, copies and compares it, then mutates
+the copy and requires comparison to detect the change.
 
 ## Constraints
 
 - Keep all three fields meaningful.
 - Use UVM field automation for copy/compare in this exercise.
 - Do not hard-code the randomized result or diagnostic string.
-- Expected time: about 90 minutes.
+- Expected time: about 15 minutes.
 
 ## Prediction
 
 If `data` is omitted from the transaction's field automation, what happens when
 only the copied packet's `data` value changes?
+
+## Completion
+
+The checkpoint is complete when the supplied example passes and the omitted-
+field fixture fails for the comparison invariant.

@@ -1,0 +1,37 @@
+id: UB-06
+title: Coordinate sequences, sequencers, drivers, and tests
+phase: uvm-basics
+kind: micro
+status: complete
+estimated_minutes: 120
+siemens_mapping:
+  track: UVM Basics
+  unit: Sequences and Tests
+prerequisites: [UB-05]
+objectives:
+  primary: Complete and validate a request/response exchange between a sequence and driver.
+  supporting:
+    - Preserve sequence and transaction identity on returned responses.
+    - Keep test lifetime around the complete response-checking sequence.
+learner_owns:
+  - tb/ub06_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/request-response-flow.md
+  - dut/README.md
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid fixture verified three responses, wrong-result fixture failed with UB06_RESPONSE, and learner starter failed with UB06_TODO on 2026-07-28"
+completion_evidence:
+  - Three requests each receive exactly one correctly routed response.
+  - The sequence rejects a response whose payload violates the specified transformation.
+  - The test objection remains raised until all responses are validated.
+  - The learner explains why request completion and response validation are different events.

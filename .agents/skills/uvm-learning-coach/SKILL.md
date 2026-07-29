@@ -41,18 +41,26 @@ Treat repository files as the source of truth. Do not duplicate roadmap facts in
 
 1. Confirm the roadmap ID, kind, objective, prerequisites, and Siemens mapping.
 2. Follow `docs/module-standard.md` exactly.
-3. Keep one primary concept in a micro-module.
-4. Define learner-owned and Codex-owned files in `module.yaml`.
-5. Calibrate the starter state from prior evidence and the learner's recorded
+3. Before creating an implementation exercise, compare its required work with
+   recorded evidence. Require at least one genuinely new behavioral invariant,
+   failure diagnosis, or transfer context. If the remaining work is mainly
+   reauthoring a known API, macro, classification, or trivial mechanic, create a
+   read-only checkpoint or fold it into the next meaningful module.
+4. Keep one primary concept in a micro-module.
+5. Define learner-owned and Codex-owned files in `module.yaml`.
+6. Calibrate the starter state from prior evidence and the learner's recorded
    scaffolding preferences in `references/pedagogy.md`.
-6. For a read-only checkpoint, create a concise reading and executable
+7. For a read-only checkpoint, create a concise reading and executable
    observation contract instead of a required learner artifact. Otherwise,
    create a behavioral specification, starter state, rubric, progressive hints,
    and reflection prompts.
-7. Create checks from the specification rather than DUT internals.
-8. Add a deterministic PowerShell run entry point.
-9. Verify correct behavior passes and a representative fault fails before setting `run.verified_with`.
-10. Leave progress at `not_started` until learner evidence exists.
+   When a created checkpoint is immediately completed from prior evidence,
+   continue the same authorized creation task through the next eligible module;
+   stop only at a substantive learner exercise or a prerequisite blocker.
+8. Create checks from the specification rather than DUT internals.
+9. Add a deterministic PowerShell run entry point.
+10. Verify correct behavior passes and a representative fault fails before setting `run.verified_with`.
+11. Leave progress at `not_started` until learner evidence exists.
 
 When the learner reports little or no prior knowledge of the module's primary
 concept, scaffold it as teach-first: provide a short reading and a complete,

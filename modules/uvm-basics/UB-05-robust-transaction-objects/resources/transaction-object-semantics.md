@@ -37,6 +37,19 @@ fields appear in its field automation, and `convert2string()` reports the source
 and asserted state. After copying it, changing only `source` must make
 `compare()` return false.
 
+The string method can use `$sformatf`, which formats values and returns the
+resulting string:
+
+```systemverilog
+function string convert2string();
+  return $sformatf("source=%0h asserted=%0b", source, asserted);
+endfunction
+```
+
+Common format specifiers are `%0h` for compact hexadecimal and `%0b` for binary.
+The expressions after the format string fill the placeholders from left to
+right.
+
 ## Invariant
 
 Every meaningful transaction field participates consistently in legality,
