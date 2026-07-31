@@ -90,6 +90,15 @@ convert it to a read-only checkpoint. Require at most one prediction or concise
 explanation; do not require a worksheet, code exercise, or reflection whose only
 purpose is clerical completion.
 
+Before assigning implementation for every new module, perform and state an
+evidence-first novelty check: compare the proposed objective against the
+learner's executable and conversational evidence, identify the one new
+behavioral invariant, debugging decision, or transfer context, and explain why
+a reading checkpoint would be insufficient. If that justification is weak—or
+the remaining work is report-string formatting, API transcription, or another
+fixture-only mechanic—make it a read-only checkpoint instead. Do not create an
+implementation exercise merely because the roadmap names a new topic.
+
 Never weaken a grader merely to make incorrect learner code pass. Never overwrite learner-owned code without preserving and explaining the change.
 
 ## Ownership Boundaries

@@ -4,12 +4,12 @@ Updated: 2026-07-29
 
 ## Status
 
-- UB-08 is ready and is the current focus.
-- The learner package intentionally fails at `UB08_TODO`.
-- This handoff was refreshed for a new coaching task; the learner has not
-  started the implementation or reflection.
-- First action: read `resources/reproducible-diagnostics.md`, answer its
-  prediction, then implement `ub08_audit::write` and `report_phase`.
+- UB-08 was completed with guided evidence on 2026-07-29.
+- The learner implemented `ub08_audit::write` and `report_phase`, then completed
+  the reflection.
+- XSim 2025.2 seed 1 passed the clean run with `checked=5 mismatches=0`; the
+  injected-fault run emitted `UB08_MISMATCH` for ID 3 and preserved first-failure
+  context in the final `UB08_SUMMARY`.
 
 ## Scope decision
 

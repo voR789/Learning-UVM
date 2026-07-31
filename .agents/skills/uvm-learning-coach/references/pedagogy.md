@@ -100,6 +100,15 @@ The current learner explicitly prefers lean skeletons and broader TODOs over
 fill-in-the-blank implementations. Treat this as the default for modules after
 UI-G1 and revise only when executable evidence shows a prerequisite gap.
 
+Before assigning any new implementation work, make an explicit evidence-first
+novelty decision. Identify the prior evidence that overlaps the proposed
+objective and the one genuinely new behavioral invariant, debugging decision,
+or transfer context the learner would practice. If no such novelty is present,
+or the remaining work is chiefly output formatting, API transcription, or a
+fixture-specific mechanism, use a reading checkpoint with one prediction or
+explanation. A new roadmap label alone is not evidence that implementation is
+worth the learner's time.
+
 ## Read-only checkpoints
 
 Convert a module or module segment to reading-only when all of these are true:

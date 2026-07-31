@@ -13,11 +13,12 @@ learner:
     - Use broader outcome-based TODOs and reduce proactive implementation guidance.
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
-current_focus: UB-08
-last_updated: "2026-07-29"
+    - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
+current_focus: UA-01
+last_updated: "2026-07-30"
 summary:
   state: guided
-  highest_gate_passed: UI-G1
+  highest_gate_passed: UB-G1
   notes:
     - Repository foundation created before exercise implementation.
     - Foundation micro-modules FV-00 through FV-07 are complete with guided evidence.
@@ -41,6 +42,7 @@ summary:
     - UB-01 completed as a read-only checkpoint after the learner demonstrated its active/passive ownership objective; UB-02 is next.
     - UB-02 completed with guided evidence; UB-03 was reduced to a reading checkpoint because UI-G1 already exercised virtual-interface and config_db wiring. UB-04 is next.
     - UB-04 completed with independent evidence; UB-05 transaction objects is next.
+    - Learner feedback after UB-08: require a serious evidence-first novelty decision before each future unit; reporting-string mechanics alone are low-value and should default to reading checkpoints.
 modules:
   FV-00:
     state: guided
@@ -839,19 +841,26 @@ modules:
       - Read-only completion does not award mastery; UB-G1 must reuse the architecture without supplied implementation.
       - Delegated UI-G1 checkpoint validation passed XSim 2025.2 at seed 1 with 13 driven/observed/checked/sampled transactions, 100 percent coverage, and zero UVM errors/fatals.
   UB-08:
-    state: not_started
-    attempts: 0
-    completed_on: null
-    score: null
-    hints_used: []
-    seeds: []
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-29"
+    score: 94
+    hints_used:
+      - Diagnostic-question coaching on nonfatal reporting and retained first-failure evidence.
+      - Direct formatting repair for fixture-required summary tokens and mismatch diagnostics.
+    seeds: [1]
     artifacts:
       - modules/uvm-basics/UB-08-reproducible-useful-reports/module.yaml
       - modules/uvm-basics/UB-08-reproducible-useful-reports/resources/reproducible-diagnostics.md
       - modules/uvm-basics/UB-08-reproducible-useful-reports/tb/ub08_pkg.sv
+      - modules/uvm-basics/UB-08-reproducible-useful-reports/reflection.md
       - modules/uvm-basics/UB-08-reproducible-useful-reports/implementation-handoff.md
-    strengths: []
-    gaps: []
+    strengths:
+      - Used a nonfatal UB08_MISMATCH report with reproducible seed and live transaction context.
+      - Preserved first-failure context while accounting for all five observations in report phase.
+      - Explained the distinct roles of seed, transaction recording, and final summary.
+    gaps:
+      - Diagnostic formatting and reporting-ID conventions required direct repair; independent reuse is unproven.
     reviewer_notes:
       - Reduced-scaffolding reporting module created around reproducible mismatch context and report-phase accounting.
       - Source generation, analysis wiring, fault injection, and transaction-recording lifecycle calls are supplied.
@@ -859,6 +868,37 @@ modules:
       - XSim lacks get_initial_random_seed, so the runner passes the actual simulation seed through UB08_SEED.
       - The learner starter compiles and fails at its intentional UB08_TODO.
       - "New-chat handoff on 2026-07-29: learner work has not started; begin with the resource prediction, then implement the two audit TODOs."
+      - Learner implementation passed the clean/fault XSim 2025.2 pair at seed 1 on 2026-07-29: clean summary reported checked=5 mismatches=0; injected fault emitted UB08_MISMATCH for id 3 and the final summary reported checked=5 mismatches=1.
+      - Score: observation accounting 20/20, reproducible mismatch diagnostics 30/30, retained first failure and counts 20/20, report-phase summary 15/15, reflection 9/15. Guided reflects direct diagnostic-formatting repair.
+  UB-G1:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-30"
+    score: 94
+    hints_used:
+      - Guiding questions and diagnosis for response-path stop completion, adaptive-loop bounds, and per-loop bound accounting.
+      - Review feedback on maintaining a passive monitor boundary and independent scoreboard acceptance model.
+    seeds: [1]
+    artifacts:
+      - modules/uvm-basics/UB-G1-reusable-fifo-environment/module.yaml
+      - modules/uvm-basics/UB-G1-reusable-fifo-environment/resources/status-driven-sequences.md
+      - modules/uvm-basics/UB-G1-reusable-fifo-environment/tb/ub_g1_pkg.sv
+      - modules/uvm-basics/UB-G1-reusable-fifo-environment/implementation-handoff.md
+    strengths:
+      - Implemented a response-driven bounded FIFO scenario with a separate stop response and no stop observation.
+      - Drove requests at the pin boundary, passively observed settled outputs, and used an independent queue model to check ordering and flags.
+      - Rejected the early-full FIFO through UBG1_MISMATCH at modeled occupancy three.
+      - Completed concise reflection and reproducible run evidence.
+    gaps:
+      - Current supplied coverage subscriber samples DUT status; a future coverage model should derive expected occupancy/boundary bins from an independent model.
+    reviewer_notes:
+      - Evidence-first novelty check retained this integration gate because it transfers the prior plain-SV FIFO model and UVM counter architecture into a reusable FIFO agent with real response-driven scenario control.
+      - Repeated planning, construction, connection, coverage, reporting, and verdict mechanics are supplied; learner work is limited to four behavioral TODO regions.
+      - XSim 2025.2 seed 1 passed the valid fixture with 26 driven/observed/checked operations and 100 percent functional coverage.
+      - The same valid package rejected an early-full FIFO through UBG1_MISMATCH, and the untouched learner starter failed intentionally at UBG1_TODO.
+      - Learner source passed XSim 2025.2 at seed 1 on 2026-07-30 with 23 responses (including stop), 22 driven/observed/checked DUT operations, 100 percent coverage, and zero UVM errors/fatals.
+      - The same saved learner source rejected the early-full FIFO at seed 1 with UBG1_MISMATCH; coverage later reported 95 percent because the supplied coverage subscriber samples DUT status.
+      - Score: behavior/fault detection 30/30, independent checking 20/20, response-driven timing and bounds 18/20, architecture 10/10, coverage/completion 8/10, evidence/reflection 8/10. Guided reflects iterative diagnostic coaching and compile/debug recovery.
 evidence_schema:
   state: not_started
   attempts: 0

@@ -1,0 +1,44 @@
+id: UB-G1
+title: Build a reusable UVM environment for a synchronous FIFO
+phase: uvm-basics
+kind: integration
+status: ready
+estimated_minutes: 300
+siemens_mapping:
+  track: UVM Basics
+  unit: UVM Basics integration gate
+prerequisites: [UB-08]
+objectives:
+  primary: Transfer previously demonstrated FIFO checking and UVM architecture into a reusable agent-based environment whose sequence reacts to observed DUT status.
+  supporting:
+    - Drive requests through a sequencer/driver response path while observing the interface independently.
+    - Predict FIFO contents and status from passive observations rather than driver intent or DUT flags.
+    - Reuse an active/passive agent, analysis broadcast, coverage, reproducible diagnostics, and deterministic completion.
+learner_owns:
+  - tb/ub_g1_pkg.sv
+  - reflection.md
+  - reports/evidence-summary.md
+codex_owns:
+  - README.md
+  - spec/fifo-spec.md
+  - plan/verification-plan.md
+  - resources/status-driven-sequences.md
+  - dut/sync_fifo.sv
+  - tb/fifo_if.sv
+  - tb/tb_top.sv
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - tests/
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid package passed 26 operations with 100% coverage, early-full DUT failed through UBG1_MISMATCH, and learner starter failed intentionally at UBG1_TODO on 2026-07-29"
+completion_evidence:
+  - A response-driven sequence fills to observed full, proves blocked-write recovery, and drains to observed empty without hard-coding the number of accepted operations.
+  - The driver and sequence complete every request/response handshake, while a passive monitor independently publishes each completed DUT operation.
+  - An independent queue-based scoreboard checks data ordering, count, empty, full, reset, and blocked operations.
+  - Functional coverage observes reset, empty/full boundaries, blocked requests, simultaneous requests, and every legal occupancy.
+  - The saved learner source rejects an early-full faulty DUT for a scoreboard mismatch at a reproducible seed.
+  - The learner explains stimulus, response feedback, passive observation, prediction, checking, coverage, and termination.
