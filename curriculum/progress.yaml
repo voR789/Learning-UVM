@@ -14,7 +14,7 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: UA-01
+current_focus: UA-02
 last_updated: "2026-07-30"
 summary:
   state: guided
@@ -43,6 +43,7 @@ summary:
     - UB-02 completed with guided evidence; UB-03 was reduced to a reading checkpoint because UI-G1 already exercised virtual-interface and config_db wiring. UB-04 is next.
     - UB-04 completed with independent evidence; UB-05 transaction objects is next.
     - Learner feedback after UB-08: require a serious evidence-first novelty decision before each future unit; reporting-string mechanics alone are low-value and should default to reading checkpoints.
+    - UA-01 completed as a read-only checkpoint because UI-05, UB-04, and UB-G1 already establish its architecture objective; UA-02 is the next substantive module.
 modules:
   FV-00:
     state: guided
@@ -899,6 +900,49 @@ modules:
       - Learner source passed XSim 2025.2 at seed 1 on 2026-07-30 with 23 responses (including stop), 22 driven/observed/checked DUT operations, 100 percent coverage, and zero UVM errors/fatals.
       - The same saved learner source rejected the early-full FIFO at seed 1 with UBG1_MISMATCH; coverage later reported 95 percent because the supplied coverage subscriber samples DUT status.
       - Score: behavior/fault detection 30/30, independent checking 20/20, response-driven timing and bounds 18/20, architecture 10/10, coverage/completion 8/10, evidence/reflection 8/10. Guided reflects iterative diagnostic coaching and compile/debug recovery.
+  UA-01:
+    state: completed
+    attempts: 0
+    completed_on: "2026-07-30"
+    score: 95
+    hints_used: []
+    seeds: [1]
+    artifacts:
+      - modules/advanced-uvm/UA-01-reusable-block-architecture/module.yaml
+      - modules/advanced-uvm/UA-01-reusable-block-architecture/resources/reusable-block-boundaries.md
+      - modules/uvm-introduction/UI-05-reusable-environment/tb/ui05_pkg.sv
+      - modules/uvm-basics/UB-04-build-connect-agent/tb/ub04_pkg.sv
+      - modules/uvm-basics/UB-G1-reusable-fifo-environment/tb/ub_g1_pkg.sv
+    strengths:
+      - Previously implemented configuration-driven active/passive environment structure.
+      - Independently rebuilt the active/passive agent boundary in UB-04.
+      - Transferred reusable agent and block-environment ownership into the UB-G1 FIFO gate.
+    gaps:
+      - Factory type and instance replacement remained unimplemented and is assigned in UA-02.
+    reviewer_notes:
+      - Evidence-first novelty review found no new UA-01 implementation invariant beyond UI-05, UB-04, and UB-G1.
+      - Converted to a read-only checkpoint instead of repeating architecture mapping or class construction.
+      - XSim 2025.2 seed 1 passed valid active and passive structures and rejected the always-driver passive topology.
+      - Read-only completion does not award mastery; later Advanced UVM reuse remains required.
+  UA-02:
+    state: not_started
+    attempts: 0
+    completed_on: null
+    score: null
+    hints_used: []
+    seeds: []
+    artifacts:
+      - modules/advanced-uvm/UA-02-factory-configuration/module.yaml
+      - modules/advanced-uvm/UA-02-factory-configuration/resources/factory-versus-configuration.md
+      - modules/advanced-uvm/UA-02-factory-configuration/tb/ua02_pkg.sv
+      - modules/advanced-uvm/UA-02-factory-configuration/implementation-handoff.md
+    strengths: []
+    gaps: []
+    reviewer_notes:
+      - Evidence-first novelty review retained implementation because factory type and instance overrides have only been discussed, not executed.
+      - Prior registration, factory creation, configuration-object, and config-db mechanics are supplied rather than reassigned.
+      - XSim 2025.2 seed 1 passed valid global and one-path override fixtures.
+      - The wrong-path fixture and untouched learner starter failed through UA02_OVERRIDE as intended.
 evidence_schema:
   state: not_started
   attempts: 0

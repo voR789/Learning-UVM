@@ -1,0 +1,39 @@
+id: UA-01
+title: Architect a reusable block-level testbench
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 20
+siemens_mapping:
+  track: Advanced UVM
+  unit: Architecting a UVM Testbench
+prerequisites: [UB-G1]
+objectives:
+  primary: Explain and recognize reusable block-level UVC, environment, test, and configuration ownership boundaries.
+  supporting:
+    - Keep protocol-facing roles inside a reusable agent or UVC.
+    - Keep block-level prediction, checking, and coordination in the environment.
+    - Carry structural policy through configuration rather than duplicated environments.
+learner_owns: []
+codex_owns:
+  - README.md
+  - resources/reusable-block-boundaries.md
+  - resources/config-db-worked-example.md
+  - dut/README.md
+  - tb/README.md
+  - tests/verify-checkpoint.ps1
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - reflection.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid active and passive UI-05 topology fixtures passed and the always-driver passive fixture failed as intended on 2026-07-30"
+completion_evidence:
+  - UI-05 uses one configuration object and one unchanged environment for active and passive agent structures.
+  - UB-04 independently implements active/passive agent construction and connection boundaries.
+  - UB-G1 transfers the reusable agent/environment boundary into a synchronous FIFO verification environment.
+  - The supplied executable checkpoint accepts valid active/passive topology and rejects a passive agent that contains a driver.
+  - The learner has already explained why protocol roles, block-level consumers, and configuration policy have different owners.

@@ -1,0 +1,40 @@
+id: UA-02
+title: Customize components with factory and configuration
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Advanced UVM
+  unit: Understanding the Factory and Configuration
+prerequisites: [UA-01]
+objectives:
+  primary: Replace component implementation globally or at one hierarchy instance while keeping per-instance data policy in configuration objects.
+  supporting:
+    - Distinguish a factory type override from an instance override.
+    - Preserve factory construction at the replacement boundary.
+    - Scope separate configuration objects to two instances of the same base component.
+learner_owns:
+  - tb/ua02_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/factory-versus-configuration.md
+  - dut/README.md
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; valid type and instance overrides passed, wrong instance path failed through UA02_OVERRIDE, and learner starter failed intentionally on 2026-07-30"
+completion_evidence:
+  - A type-override test replaces both base-policy instances with the add-policy implementation.
+  - An instance-override test replaces only the right policy while the left remains the registered base type.
+  - Both instances receive distinct configuration objects through correctly scoped config_db paths.
+  - The same environment source serves both tests without type branching or direct derived-class construction.
+  - A wrong instance path fails because the intended component is not replaced.
+  - The learner explains when to use factory replacement versus configuration data.
