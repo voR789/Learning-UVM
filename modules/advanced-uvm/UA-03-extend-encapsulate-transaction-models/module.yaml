@@ -1,0 +1,37 @@
+id: UA-03
+title: Extend and encapsulate transaction models
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 60
+siemens_mapping:
+  track: Advanced UVM
+  unit: Modeling Transactions
+prerequisites: [UA-02]
+objectives:
+  primary: Preserve base and subtype transaction state when copying and comparing an extended transaction through its public API.
+  supporting:
+    - Keep base transaction state encapsulated behind methods.
+    - Extend validation with a subtype-specific burst invariant.
+learner_owns:
+  - tb/ua03_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/extended-transaction-models.md
+  - dut/README.md
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; known-good fixture passed, extension-loss fixture failed through UA03_COPY, and learner starter failed intentionally through UA03_VALID on 2026-07-30"
+completion_evidence:
+  - A copied burst transaction retains both base command state and burst-specific state.
+  - Compare detects a mutation to either a base field or a burst field.
+  - Invalid base or burst state is rejected by the transaction's validation API.
+  - The extension-loss fixture fails through UA03_COPY.

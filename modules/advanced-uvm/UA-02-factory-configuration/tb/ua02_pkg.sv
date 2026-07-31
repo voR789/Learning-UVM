@@ -106,6 +106,7 @@ package ua02_pkg;
 
         function void install_configs(int unsigned left_operand,
                                       int unsigned right_operand);
+
             left_cfg = ua02_policy_cfg::type_id::create("left_cfg");
             right_cfg = ua02_policy_cfg::type_id::create("right_cfg");
             left_cfg.operand = left_operand;
@@ -176,6 +177,7 @@ package ua02_pkg;
 
             // TODO: Install one type override so every later factory request
             // for ua02_base_policy creates ua02_add_policy.
+            ua02_base_policy::type_id::set_type_override(ua02_add_policy::get_type());
         endfunction
     endclass
 
@@ -195,6 +197,10 @@ package ua02_pkg;
 
             // TODO: Install one instance override so only
             // uvm_test_top.env.right creates ua02_xor_policy.
+            ua02_base_policy::type_id::set_inst_override(
+                ua02_xor_policy::get_type(), // Type
+                "uvm_test_top.env.right" // Path string
+            );
         endfunction
     endclass
 endpackage

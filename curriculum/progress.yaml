@@ -14,8 +14,8 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: UA-02
-last_updated: "2026-07-30"
+current_focus: UA-04
+last_updated: "2026-07-31"
 summary:
   state: guided
   highest_gate_passed: UB-G1
@@ -44,6 +44,8 @@ summary:
     - UB-04 completed with independent evidence; UB-05 transaction objects is next.
     - Learner feedback after UB-08: require a serious evidence-first novelty decision before each future unit; reporting-string mechanics alone are low-value and should default to reading checkpoints.
     - UA-01 completed as a read-only checkpoint because UI-05, UB-04, and UB-G1 already establish its architecture objective; UA-02 is the next substantive module.
+    - UA-02 completed with guided evidence; UA-03 is the next eligible module and current focus.
+    - UA-03 completed with guided evidence; UA-04 is the next eligible module and current focus.
 modules:
   FV-00:
     state: guided
@@ -925,6 +927,67 @@ modules:
       - XSim 2025.2 seed 1 passed valid active and passive structures and rejected the always-driver passive topology.
       - Read-only completion does not award mastery; later Advanced UVM reuse remains required.
   UA-02:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-30"
+    score: 97
+    hints_used:
+      - Teach-first factory/configuration reading and worked example.
+      - Guiding questions on override scope, creation order, and configuration-versus-behavior decisions.
+      - Direct explanation of XSim UVM instance-override precedence while reviewing the factory source.
+    seeds: [1]
+    artifacts:
+      - modules/advanced-uvm/UA-02-factory-configuration/module.yaml
+      - modules/advanced-uvm/UA-02-factory-configuration/resources/factory-versus-configuration.md
+      - modules/advanced-uvm/UA-02-factory-configuration/tb/ua02_pkg.sv
+      - modules/advanced-uvm/UA-02-factory-configuration/implementation-handoff.md
+    strengths:
+      - Installed a global type override while retaining factory construction in the unchanged environment.
+      - Installed an exact instance override that replaced only the right policy component.
+      - Scoped distinct configuration objects to the left and right policy instances.
+      - Explained why factory replacement changes behavior whereas configuration provides per-instance data.
+    gaps:
+      - Later independent reuse is required before factory overrides can be considered independent or mastered.
+    reviewer_notes:
+      - Evidence-first novelty review retained implementation because factory type and instance overrides have only been discussed, not executed.
+      - Prior registration, factory creation, configuration-object, and config-db mechanics are supplied rather than reassigned.
+      - XSim 2025.2 seed 1 passed valid global and one-path override fixtures.
+      - The wrong-path fixture and untouched learner starter failed through UA02_OVERRIDE as intended.
+      - Learner package passed XSim 2025.2 at seed 1: type override produced left=add/21 and right=add/25; instance override produced left=base/18 and right=xor/21, both with zero UVM errors/fatals.
+      - The wrong-path fixture returned nonzero and reported UA02_OVERRIDE, demonstrating that the check rejects an override at the wrong hierarchy path.
+      - Reflection correctly distinguishes direct construction, type versus instance scope, configuration data, future factory creates, and the reproducing command.
+      - Score: global type behavior 25/25, instance behavior 25/25, factory/environment boundary 20/20, configuration scope 15/15, fault/reproducibility 10/10, reflection 2/5. Guided reflects substantial teach-first material and iterative conceptual coaching.
+  UA-03:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-31"
+    score: 98
+    hints_used:
+      - Teach-first extension and encapsulation reading with a separate worked example.
+      - Guiding questions on base versus subtype state and UVM object hierarchy.
+      - Direct explanation of generic rhs handles and safe down-casting in copy hooks.
+    seeds: [1]
+    artifacts:
+      - modules/advanced-uvm/UA-03-extend-encapsulate-transaction-models/module.yaml
+      - modules/advanced-uvm/UA-03-extend-encapsulate-transaction-models/resources/extended-transaction-models.md
+      - modules/advanced-uvm/UA-03-extend-encapsulate-transaction-models/tb/ua03_pkg.sv
+      - modules/advanced-uvm/UA-03-extend-encapsulate-transaction-models/implementation-handoff.md
+    strengths:
+      - Extended validation without bypassing the inherited command contract.
+      - Preserved inherited command state and burst-specific state during copy.
+      - Compared both inheritance layers and detected a subsequent burst-only mutation.
+      - Kept transaction state behind configuration and query methods.
+    gaps:
+      - Independent reuse of copy/compare layering in a predictor or real sequence path remains future evidence.
+    reviewer_notes:
+      - Evidence-first novelty review retained implementation: prior UB-05 work did not require a derived transaction to preserve both inherited and subtype-only state.
+      - XSim 2025.2 seed 1 passed an independent known-good extension fixture and rejected a subclass that drops burst state through UA03_COPY.
+      - The learner starter compiles and intentionally fails at UA03_VALID until its derived validation, copy, and compare TODOs are implemented.
+      - Learner source passed XSim 2025.2 seed 1 on 2026-07-31 with zero UVM errors/fatals and emitted UA03_TRACE plus TEST_RESULT: PASS.
+      - The same learner source rejected the extension-loss fixture at seed 1 through UA03_COPY when burst-only state was dropped.
+      - Reflection correctly explains lost base state, inherited validation, encapsulation, and the reproducible fault command.
+      - Score: validation 20/20, copy 30/30, compare 25/25, encapsulation 10/10, fault evidence 10/10, reflection 3/5. Guided reflects teach-first material and iterative conceptual coaching.
+  UA-04:
     state: not_started
     attempts: 0
     completed_on: null
@@ -932,17 +995,17 @@ modules:
     hints_used: []
     seeds: []
     artifacts:
-      - modules/advanced-uvm/UA-02-factory-configuration/module.yaml
-      - modules/advanced-uvm/UA-02-factory-configuration/resources/factory-versus-configuration.md
-      - modules/advanced-uvm/UA-02-factory-configuration/tb/ua02_pkg.sv
-      - modules/advanced-uvm/UA-02-factory-configuration/implementation-handoff.md
+      - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/module.yaml
+      - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/resources/predictor-scoreboard-flow.md
+      - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/tb/ua04_pkg.sv
+      - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/implementation-handoff.md
     strengths: []
     gaps: []
     reviewer_notes:
-      - Evidence-first novelty review retained implementation because factory type and instance overrides have only been discussed, not executed.
-      - Prior registration, factory creation, configuration-object, and config-db mechanics are supplied rather than reassigned.
-      - XSim 2025.2 seed 1 passed valid global and one-path override fixtures.
-      - The wrong-path fixture and untouched learner starter failed through UA02_OVERRIDE as intended.
+      - Evidence-first novelty review retained implementation because prior scoreboards combined prediction and checking; producing expected transactions in a separate component and pairing independent buffered streams is new.
+      - Repeated transaction definitions, source generation, environment construction, TLM connections, test control, and accounting are supplied; learner work is limited to predictor and scoreboard behavior.
+      - XSim 2025.2 seed 1 passed the independent reference flow with three emitted/predicted/checked transactions and zero UVM errors/fatals.
+      - The corrupt-actual fixture failed through UA04_MISMATCH for ID 1, and the untouched learner starter failed intentionally through UA04_COUNT.
 evidence_schema:
   state: not_started
   attempts: 0

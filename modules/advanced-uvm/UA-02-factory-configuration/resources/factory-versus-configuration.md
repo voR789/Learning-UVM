@@ -11,10 +11,10 @@ A reusable environment often needs to vary in two different ways:
 
 Those are deliberately separate mechanisms:
 
-| Question | UVM mechanism | Example |
-| --- | --- | --- |
-| Which class should the factory create? | Factory override | Replace `base_codec` with `crc_codec`. |
-| What values should this created instance use? | Configuration object and `config_db` | Give transmitter polynomial 7 and receiver polynomial 11. |
+| Question                                      | UVM mechanism                         | Example                                                   |
+| --------------------------------------------- | ------------------------------------- | --------------------------------------------------------- |
+| Which class should the factory create?        | Factory override                      | Replace`base_codec` with `crc_codec`.                 |
+| What values should this created instance use? | Configuration object and`config_db` | Give transmitter polynomial 7 and receiver polynomial 11. |
 
 If an environment uses an `if` statement to choose a derived class, the
 environment now knows every implementation option. If a new implementation is
@@ -243,11 +243,11 @@ before `env` creates `left` and `right`.
 
 The input value is `0x12`, which is decimal 18.
 
-| Run | `left` requested as | `right` requested as | Expected actual policy types | Config operands | Results |
-| --- | --- | --- | --- | --- | --- |
-| Starter type test | base | base | base, base | 3, 7 | 18, 18 — intentionally fails expected add behavior |
-| Type override test | base | base | add, add | 3, 7 | 21, 25 |
-| Instance override test | base | base | base, XOR | 3, 7 | 18, 21 |
+| Run                    | `left` requested as | `right` requested as | Expected actual policy types | Config operands | Results                                             |
+| ---------------------- | --------------------- | ---------------------- | ---------------------------- | --------------- | --------------------------------------------------- |
+| Starter type test      | base                  | base                   | base, base                   | 3, 7            | 18, 18 — intentionally fails expected add behavior |
+| Type override test     | base                  | base                   | add, add                     | 3, 7            | 21, 25                                              |
+| Instance override test | base                  | base                   | base, XOR                    | 3, 7            | 18, 21                                              |
 
 The important observation is that the factory request remains `base` in all
 three cases. Only the factory rules change the actual runtime type.
@@ -261,7 +261,8 @@ When an override seems ignored, ask these in order:
 3. Is the override type derived from, and therefore assignment-compatible with,
    the requested base type?
 4. For an instance override, is the path the exact future full instance path?
-5. Did another more-specific factory rule take precedence?
+5. Did an earlier matching instance rule take precedence, or did no instance
+   rule match and a type override apply?
 6. Is the reported behavior actually a configuration-data issue rather than a
    runtime-type issue?
 

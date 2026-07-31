@@ -55,6 +55,25 @@ cd "C:\Learning UVM\modules\advanced-uvm\UA-02-factory-configuration"
 
 The starter compiles and intentionally fails because no override is installed.
 
+## Fault check
+
+Run the seeded wrong-instance-path fixture directly:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\run-fixture.ps1 -Test ua02_wrong_path_test
+```
+
+Expected result: a nonzero exit and `UA02_OVERRIDE`. The fixture installs an
+override at a nonmatching future path, so `right` remains the base policy
+instead of becoming the XOR policy.
+
+To run the full fixture suite—both valid cases, the wrong-path fault, and the
+unfinished learner starter—use:
+
+```powershell
+.\tests\verify-fixtures.ps1
+```
+
 ## Prediction
 
 If a type override is installed for `ua02_base_policy`, but `env.right` is

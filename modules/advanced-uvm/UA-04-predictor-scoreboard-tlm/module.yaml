@@ -1,0 +1,39 @@
+id: UA-04
+title: Implement predictor-to-scoreboard TLM flow
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Advanced UVM
+  unit: How TLM Works
+prerequisites: [UA-03]
+objectives:
+  primary: Produce expected transactions in a predictor and compare them with independently observed actual transactions through buffered TLM channels.
+  supporting:
+    - Keep prediction separate from checking.
+    - Use analysis FIFOs to decouple expected and actual arrival timing.
+    - Preserve one-to-one transaction identity and ordering.
+learner_owns:
+  - tb/ua04_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/predictor-scoreboard-flow.md
+  - dut/README.md
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; independent reference flow passed, corrupt actual failed through UA04_MISMATCH, and learner starter failed intentionally through UA04_COUNT on 2026-07-31"
+completion_evidence:
+  - Every observed command produces one independent expected result.
+  - The scoreboard consumes expected and actual results through separate analysis FIFOs.
+  - Correct results pass even when actual delivery is not coupled to predictor execution.
+  - A corrupted actual result fails through UA04_MISMATCH.
+  - The learner explains prediction, observation, checking, and termination ownership.
