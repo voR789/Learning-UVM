@@ -13,10 +13,14 @@ if ($LASTEXITCODE -ne 0) { throw 'UA-04 valid fixture failed.' }
     -Test 'ua04_corrupt_actual_test' -VivadoRoot $VivadoRoot
 if ($LASTEXITCODE -eq 0) { throw 'UA-04 corrupt-actual fixture passed unexpectedly.' }
 
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File $fixtureRunner `
+    -Test 'ua04_learner_corrupt_actual_test' -VivadoRoot $VivadoRoot
+if ($LASTEXITCODE -eq 0) { throw 'UA-04 learner corrupt-actual test passed unexpectedly.' }
+
 & powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
     (Join-Path $moduleDirectory 'run.ps1') -Test 'ua04_test' -Seed 1 `
     -VivadoRoot $VivadoRoot
 if ($LASTEXITCODE -eq 0) { throw 'UA-04 learner starter passed unexpectedly.' }
 
-Write-Output 'FIXTURE_RESULT: PASS valid=passed corrupt_actual=failed starter=failed'
+Write-Output 'FIXTURE_RESULT: PASS valid=passed corrupt_actual=failed learner_corrupt=failed starter=failed'
 exit 0

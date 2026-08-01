@@ -97,6 +97,15 @@ package ua04_pkg;
             ua04_result expected;
             // TODO: Create one independent expected result, preserve command
             // identity, calculate the specified ADD/XOR value, and publish it.
+            expected = ua04_result::type_id::create();
+            expected.id = t.id;
+            if(t.op == UA04_ADD) begin
+                expected.value =  t.a + t.b; 
+            end else if (t.op == UA04_XOR) begin
+                expected.value = t.a ^ t.b;
+            end
+            predicted++;
+            expected_ap.write(expected);
         endfunction
     endclass
 
@@ -118,7 +127,16 @@ package ua04_pkg;
             ua04_result actual;
             // TODO: Repeatedly consume one object from each FIFO. Check both
             // identity and value, report UA04_MISMATCH, and count every pair.
-            forever #1ns;
+            forever begin
+                expected_fifo.get(expected);
+                actual_fifo.get(actual);
+
+                if(expected.id != actual.id || expected.value != actual.value) begin
+                    `uvm_error("UA04_MISMATCH", "Expected values not equal to actual")
+                    mismatches++;
+                end 
+                checked++;
+            end
         endtask
     endclass
 

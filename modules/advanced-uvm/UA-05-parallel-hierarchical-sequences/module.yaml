@@ -1,0 +1,39 @@
+id: UA-05
+title: Control sequential, parallel, and hierarchical sequences
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 60
+siemens_mapping:
+  track: Advanced UVM
+  unit: The Proper Care and Feeding of Sequences
+prerequisites: [UA-02]
+objectives:
+  primary: Start two distinct child sequences concurrently on one sequencer and wait for both lifecycles without assuming a fixed global item order.
+  supporting:
+    - Preserve hierarchical parent context.
+    - Preserve independent response routing for each child sequence.
+    - Distinguish concurrency from sequencer arbitration order.
+learner_owns:
+  - tb/ua05_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/parallel-sequence-lifecycle.md
+  - dut/README.md
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; parallel reference passed with two arrivals and six routed responses, sequential children failed through UA05_CONCURRENCY, and learner starter failed intentionally through UA05_COUNT on 2026-07-31"
+completion_evidence:
+  - Both child sequences reach the supplied rendezvous before either proceeds.
+  - Both children run on the shared sequencer with the parent sequence as context.
+  - Each child receives and validates three correctly routed responses.
+  - The checker accepts any legal arbitration order rather than one incidental trace.
+  - A sequential-child fixture fails through UA05_CONCURRENCY.

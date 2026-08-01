@@ -1,0 +1,39 @@
+id: UA-06
+title: Coordinate agents with virtual and layered sequences
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Advanced UVM
+  unit: Layered Sequences
+prerequisites: [UA-05]
+objectives:
+  primary: Coordinate control and data leaf sequences across two typed sequencers through one virtual sequencer and virtual sequence.
+  supporting:
+    - Wire physical sequencer handles into a virtual sequencer.
+    - Preserve leaf-sequence ownership of protocol items and responses.
+    - Distinguish multi-agent virtual coordination from protocol-layer translation.
+learner_owns:
+  - tb/ua06_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/virtual-versus-layered-sequences.md
+  - dut/README.md
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; reference virtual coordination passed with one control and three data responses, missing data handle failed through UA06_VSEQR, and learner starter failed intentionally through UA06_VSEQR on 2026-07-31"
+completion_evidence:
+  - The environment assigns both physical sequencer handles into the virtual sequencer.
+  - One virtual sequence starts control and data leaf sequences on their correct sequencers.
+  - Data traffic waits for successful control enable while both leaf lifecycles are active.
+  - Missing virtual-sequencer wiring fails through UA06_VSEQR.
+  - The learner explains when virtual coordination differs from protocol layering.

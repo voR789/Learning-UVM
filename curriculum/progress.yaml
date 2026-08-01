@@ -14,7 +14,7 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: UA-04
+current_focus: UA-07
 last_updated: "2026-07-31"
 summary:
   state: guided
@@ -46,6 +46,9 @@ summary:
     - UA-01 completed as a read-only checkpoint because UI-05, UB-04, and UB-G1 already establish its architecture objective; UA-02 is the next substantive module.
     - UA-02 completed with guided evidence; UA-03 is the next eligible module and current focus.
     - UA-03 completed with guided evidence; UA-04 is the next eligible module and current focus.
+    - UA-04 completed with guided evidence; UA-05 is the next eligible module and current focus.
+    - UA-05 completed with guided evidence; UA-06 is the next eligible module and current focus.
+    - UA-06 completed with guided evidence; UA-07 is the next eligible module and current focus.
 modules:
   FV-00:
     state: guided
@@ -988,24 +991,97 @@ modules:
       - Reflection correctly explains lost base state, inherited validation, encapsulation, and the reproducible fault command.
       - Score: validation 20/20, copy 30/30, compare 25/25, encapsulation 10/10, fault evidence 10/10, reflection 3/5. Guided reflects teach-first material and iterative conceptual coaching.
   UA-04:
-    state: not_started
-    attempts: 0
-    completed_on: null
-    score: null
-    hints_used: []
-    seeds: []
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-31"
+    score: 100
+    hints_used:
+      - Teach-first reading and separate worked example for predictor, checker, and analysis-FIFO responsibilities.
+      - Guiding questions and direct syntax explanations for analysis ports, FIFO exports, blocking get, and timing decoupling.
+    seeds: [1]
     artifacts:
       - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/module.yaml
       - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/resources/predictor-scoreboard-flow.md
       - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/tb/ua04_pkg.sv
       - modules/advanced-uvm/UA-04-predictor-scoreboard-tlm/implementation-handoff.md
-    strengths: []
-    gaps: []
+    strengths:
+      - Published an independent expected result for each observed command.
+      - Used separate expected and actual analysis FIFOs to decouple stream arrival timing.
+      - Checked both transaction identity and value, then accounted for each pair.
+      - Explained the predictor/checker boundary and the limits of FIFO-order pairing.
+    gaps:
+      - Out-of-order correlation with ID-keyed storage and delayed pipeline response matching remains future work.
     reviewer_notes:
       - Evidence-first novelty review retained implementation because prior scoreboards combined prediction and checking; producing expected transactions in a separate component and pairing independent buffered streams is new.
       - Repeated transaction definitions, source generation, environment construction, TLM connections, test control, and accounting are supplied; learner work is limited to predictor and scoreboard behavior.
       - XSim 2025.2 seed 1 passed the independent reference flow with three emitted/predicted/checked transactions and zero UVM errors/fatals.
       - The corrupt-actual fixture failed through UA04_MISMATCH for ID 1, and the untouched learner starter failed intentionally through UA04_COUNT.
+      - Learner source passed XSim 2025.2 at seed 1 on 2026-07-31 with three emitted, predicted, and checked transactions; zero UVM errors/fatals.
+      - An assessment-only corrupt-result test using the learner predictor and scoreboard failed through UA04_MISMATCH at ID 1, proving the learner checker rejects incorrect actual data.
+      - Reflection correctly distinguishes independent prediction, FIFO timing decoupling, FIFO-order limits, identity checking, and the reproducing command.
+      - Score: prediction 25/25, stream pairing 25/25, identity/value checking 20/20, responsibility boundaries 15/15, fault evidence 10/10, reflection 5/5. Guided reflects teach-first and iterative TLM coaching.
+  UA-05:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-31"
+    score: 100
+    hints_used:
+      - Teach-first explanation of concurrent child lifecycles, arbitration, parent context, and distinct sequence ownership.
+      - Guiding questions connecting a blocking start call to the rendezvous failure.
+      - Direct confirmation of fork...join after the learner identified fork.
+    seeds: [1]
+    artifacts:
+      - modules/advanced-uvm/UA-05-parallel-hierarchical-sequences/module.yaml
+      - modules/advanced-uvm/UA-05-parallel-hierarchical-sequences/resources/parallel-sequence-lifecycle.md
+      - modules/advanced-uvm/UA-05-parallel-hierarchical-sequences/tb/ua05_pkg.sv
+      - modules/advanced-uvm/UA-05-parallel-hierarchical-sequences/implementation-handoff.md
+    strengths:
+      - Started distinct child sequences concurrently and waited for both lifecycles.
+      - Preserved the shared sequencer and hierarchical parent context.
+      - Allowed legal arbitration variation while verifying per-child response completion.
+      - Explained why sequence identity and response ownership must remain independent.
+    gaps:
+      - Priority control, locks/grabs, and multi-agent virtual-sequence coordination remain future practice.
+    reviewer_notes:
+      - Evidence-first novelty review removed repeated sequence, driver, response, and test mechanics; only concurrent child lifecycle management remains learner-owned.
+      - UI-11 already proves sequential hierarchical composition, while UB-06 and UB-G1 prove identified response routing.
+      - XSim 2025.2 seed 1 passed the independent parallel reference with two arrivals, three verified responses per child, and six driven items.
+      - Sequential child starts failed through UA05_CONCURRENCY, and the untouched learner starter failed intentionally through UA05_COUNT.
+      - Learner source passed XSim 2025.2 at seed 1 on 2026-07-31 with two arrivals, three verified responses per child, six driven items, and zero UVM errors/fatals.
+      - The sequential-child fixture failed through UA05_CONCURRENCY after the first child waited for the inactive second child.
+      - Reflection correctly distinguishes blocking starts, distinct sequence lifecycle state, per-child completion, arbitration variation, and the reproducible fault command.
+      - Score: concurrent lifecycle 35/35, hierarchy context 20/20, response completion 20/20, arbitration-independent checking 10/10, fault evidence 10/10, reflection 5/5. Guided reflects teach-first lifecycle and concurrency coaching.
+  UA-06:
+    state: guided
+    attempts: 1
+    completed_on: "2026-07-31"
+    score: 100
+    hints_used:
+      - Direct distinction between TLM driver-to-sequencer connections and physical-sequencer handle assignment into a virtual sequencer.
+      - Focused conceptual correction on virtual sequencer versus virtual sequence ownership and virtual coordination versus protocol-layer translation.
+    seeds:
+      - 1
+    artifacts:
+      - modules/advanced-uvm/UA-06-virtual-sequence-coordination/module.yaml
+      - modules/advanced-uvm/UA-06-virtual-sequence-coordination/resources/virtual-versus-layered-sequences.md
+      - modules/advanced-uvm/UA-06-virtual-sequence-coordination/tb/ua06_pkg.sv
+      - modules/advanced-uvm/UA-06-virtual-sequence-coordination/reflection.md
+      - modules/advanced-uvm/UA-06-virtual-sequence-coordination/implementation-handoff.md
+    strengths:
+      - Correctly assigned both typed physical sequencer handles into the virtual sequencer.
+      - Started each typed leaf on its matching p_sequencer handle concurrently while preserving parent sequence context.
+      - Explained the immediate topology diagnostic advantage of UA06_VSEQR over a later timeout.
+    gaps:
+      - Virtual-versus-layered responsibility required guided conceptual refinement; independent reuse remains unproven.
+    reviewer_notes:
+      - Evidence-first novelty review retained virtual-sequencer topology and multi-agent coordination as new implementation behavior.
+      - Protocol-layer translation is a reading checkpoint because no current target needs an upper-to-lower protocol adapter.
+      - Repeated item, sequencer, driver, response, leaf-sequence, and test mechanics are supplied; learner work is two bounded coordination TODOs.
+      - XSim 2025.2 seed 1 passed the reference flow with one acknowledged control item and three verified data items.
+      - The missing-data-handle fixture and untouched learner starter failed immediately through UA06_VSEQR.
+      - Learner XSim 2025.2 run passed at seed 1 on 2026-07-31 with control_verified=1, data_verified=3, control_driven=1, and data_driven=3; zero UVM errors or fatals.
+      - Documented missing-data-handle fixture returned nonzero at time 0 through UA06_VSEQR on 2026-07-31.
+      - Score: wiring 25/25, routing 25/25, coordination 20/20, virtual versus layered responsibility 15/15, fault evidence 10/10, reflection 5/5. Guided reflects direct wiring and conceptual coaching.
 evidence_schema:
   state: not_started
   attempts: 0

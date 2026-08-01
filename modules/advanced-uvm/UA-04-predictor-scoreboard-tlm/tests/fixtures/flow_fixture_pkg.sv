@@ -65,4 +65,14 @@ package ua04_fixture_pkg;
             uvm_config_db #(int)::set(this, "env.source", "fault_index", 1);
         endfunction
     endclass
+
+    class ua04_learner_corrupt_actual_test extends ua04_test;
+        `uvm_component_utils(ua04_learner_corrupt_actual_test)
+        function new(string name, uvm_component parent);
+            super.new(name, parent);
+        endfunction
+        virtual function void configure();
+            uvm_config_db #(int)::set(this, "env.source", "fault_index", 1);
+        endfunction
+    endclass
 endpackage

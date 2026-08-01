@@ -4,11 +4,11 @@ Updated: 2026-07-31
 
 ## Status
 
-- UA-04 is the current substantive module after completed UA-03.
+- UA-04 is complete with guided evidence; UA-05 is now the next eligible module.
 - UB-G1 already established independent specification modeling inside a
   scoreboard. UA-04 retains implementation because moving prediction into a
   separate producer and pairing two buffered TLM streams is new behavior.
-- Learner work is limited to `ua04_predictor::write()`,
+- The learner completed `ua04_predictor::write()`,
   `ua04_scoreboard::run_phase()`, and the reflection.
 
 ## First action
@@ -28,6 +28,10 @@ editing.
   `UA04_MISMATCH` for ID 1 (`0x99` expected versus `0x98` actual).
 - The untouched learner starter compiles and intentionally fails through
   `UA04_COUNT` with three emitted, zero predicted, and zero checked.
+- Learner source passed XSim 2025.2 at seed 1 with three emitted, predicted,
+  and checked transactions and zero UVM errors/fatals.
+- The learner predictor and scoreboard rejected the corrupt actual result at
+  ID 1 through `UA04_MISMATCH` in the assessment-only negative test.
 
 ## Ownership
 
