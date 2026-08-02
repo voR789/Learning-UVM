@@ -1,0 +1,41 @@
+id: UA-07
+title: Build a maintainable test hierarchy and regression set
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 60
+siemens_mapping:
+  track: Advanced UVM
+  unit: Writing and Managing Tests
+prerequisites: [UA-04, UA-06]
+objectives:
+  primary: Centralize the shared execution and completion contract in one base test while derived tests vary only scenario selection.
+  supporting:
+    - Keep objection ownership and result accounting out of derived tests.
+    - Select tests and seeds externally through a small regression matrix.
+    - Reproduce a failure with the exact test and seed.
+learner_owns:
+  - tb/ua07_tests_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/base-tests-and-regressions.md
+  - dut/README.md
+  - tb/ua07_support_pkg.sv
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - run-regression.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run-regression.ps1
+  verified_with: "AMD Vivado/XSim 2025.2; reference smoke seed 1 and stress seeds 1 and 17 passed with zero UVM errors/fatals, bypass-common-run failed through UA07_CONTRACT, and learner starter failed intentionally through UA07_CONTRACT on 2026-08-02"
+completion_evidence:
+  - Smoke and stress tests inherit one base-test execution and completion contract.
+  - Derived tests vary scenario selection without overriding run_phase.
+  - The regression passes its documented test/seed matrix.
+  - A derived test that bypasses the shared lifecycle fails through UA07_CONTRACT.
+  - The learner explains how test name and seed reproduce one regression row.

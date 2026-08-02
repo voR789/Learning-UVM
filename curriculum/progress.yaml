@@ -14,8 +14,8 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: UA-07
-last_updated: "2026-07-31"
+current_focus: UA-08
+last_updated: "2026-08-02"
 summary:
   state: guided
   highest_gate_passed: UB-G1
@@ -48,7 +48,8 @@ summary:
     - UA-03 completed with guided evidence; UA-04 is the next eligible module and current focus.
     - UA-04 completed with guided evidence; UA-05 is the next eligible module and current focus.
     - UA-05 completed with guided evidence; UA-06 is the next eligible module and current focus.
-    - UA-06 completed with guided evidence; UA-07 is the next eligible module and current focus.
+    - UA-06 completed with guided evidence; UA-07 was the next eligible module and current focus.
+    - UA-07 completed with guided evidence; UA-08 is the next eligible module and current focus.
 modules:
   FV-00:
     state: guided
@@ -1082,6 +1083,39 @@ modules:
       - Learner XSim 2025.2 run passed at seed 1 on 2026-07-31 with control_verified=1, data_verified=3, control_driven=1, and data_driven=3; zero UVM errors or fatals.
       - Documented missing-data-handle fixture returned nonzero at time 0 through UA06_VSEQR on 2026-07-31.
       - Score: wiring 25/25, routing 25/25, coordination 20/20, virtual versus layered responsibility 15/15, fault evidence 10/10, reflection 5/5. Guided reflects direct wiring and conceptual coaching.
+  UA-07:
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-02"
+    score: 99
+    hints_used:
+      - Teach-first reading and worked example for base-test ownership and regression taxonomy.
+      - Direct syntax clarification for explicit null checking and sequence start on an environment sequencer.
+      - Direct conceptual coaching on response synchronization, downstream drain conditions, and objection ownership.
+    seeds: [1, 17]
+    artifacts:
+      - modules/advanced-uvm/UA-07-maintainable-test-hierarchy/module.yaml
+      - modules/advanced-uvm/UA-07-maintainable-test-hierarchy/resources/base-tests-and-regressions.md
+      - modules/advanced-uvm/UA-07-maintainable-test-hierarchy/tb/ua07_tests_pkg.sv
+      - modules/advanced-uvm/UA-07-maintainable-test-hierarchy/implementation-handoff.md
+    strengths:
+      - Centralized scenario selection, objection scope, execution, completion accounting, and the final pass marker in the base test.
+      - Preserved derived tests as scenario-selection-only policy classes.
+      - Rejected a missing scenario before dereferencing it and used the environment's typed sequencer to start it.
+      - Checked nonzero verified work and driver/scenario count agreement before completing the base contract.
+      - Explained test/seed selection and the inherited completion-contract failure.
+    gaps:
+      - Later independent use of an explicit downstream scoreboard-drain condition remains required before lifecycle control can be considered independent.
+    reviewer_notes:
+      - Evidence-first novelty review retained only the base-owned execution and completion contract as learner implementation work.
+      - Repeated environment, transaction, sequence, response, derived-test, runner, and regression-matrix mechanics are supplied.
+      - Regression taxonomy is a reading and executable checkpoint rather than a learner-authored process artifact.
+      - XSim 2025.2 reference smoke seed 1 and stress seeds 1 and 17 passed with zero UVM errors/fatals.
+      - The bypass-common-run fixture and untouched learner starter failed through UA07_CONTRACT as intended.
+      - Learner regression passed XSim 2025.2 on 2026-08-02: smoke seed 1 and stress seeds 1 and 17, all with zero UVM errors/fatals.
+      - Learner package rejected the direct bypass-common-run fixture through UA07_CONTRACT at seed 1.
+      - Reflection correctly explains base-test ownership, nonzero/count checks, bypass-contract detection, and test/seed reproduction.
+      - Score: shared lifecycle 30/30, hierarchy boundary 20/20, accounting 20/20, regression/reproduction 15/15, fault evidence 10/10, reflection 4/5. Guided reflects direct syntax and lifecycle coaching.
 evidence_schema:
   state: not_started
   attempts: 0
