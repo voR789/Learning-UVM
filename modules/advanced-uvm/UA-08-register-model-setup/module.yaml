@@ -1,0 +1,40 @@
+id: UA-08
+title: Construct and connect a UVM register model
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 90
+siemens_mapping:
+  track: Advanced UVM
+  unit: Setting Up the Register Layer
+prerequisites: [UA-04]
+objectives:
+  primary: Build a register block and connect its frontdoor map, adapter, and predictor to a supplied bus path.
+  supporting:
+    - Map a register at the DUT-specified byte offset.
+    - Translate generic register operations into bus items.
+    - Update the register mirror from observed completed bus traffic.
+learner_owns:
+  - tb/ua08_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/ral-setup-flow.md
+  - dut/register-spec.md
+  - tb/ua08_support_pkg.sv
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; one reference frontdoor/predictor flow passed with stored=0x5 and mirrored=0x5, wrong offset failed through UA08_STATUS, and learner starter failed through UA08_MODEL on 2026-08-02"
+completion_evidence:
+  - The control register is built and mapped at byte offset 0x0.
+  - Frontdoor writes travel through the supplied adapter, sequencer, and driver.
+  - The predictor updates the control-register mirror from completed bus traffic.
+  - A wrong register offset fails through UA08_STATUS.
+  - The learner explains the model, adapter, map, and predictor boundaries.

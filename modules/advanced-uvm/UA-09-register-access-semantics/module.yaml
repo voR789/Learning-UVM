@@ -1,0 +1,40 @@
+id: UA-09
+title: Exercise frontdoor and backdoor register access
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 60
+siemens_mapping:
+  track: Advanced UVM
+  unit: Register access methods and model state
+prerequisites: [UA-08]
+objectives:
+  primary: Keep actual, mirrored, and desired register state coherent while choosing frontdoor or backdoor access intentionally.
+  supporting:
+    - Resynchronize a stale mirror by observing the implemented value through a supplied transaction-level backdoor and predicting the observed value.
+    - Stage a desired value with set and commit it with update.
+    - Distinguish observation with mirror from assertion with predict.
+learner_owns:
+  - tb/ua09_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/register-state-and-access.md
+  - dut/register-spec.md
+  - tb/ua09_support_pkg.sv
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; reference flow passed with actual=0x3, mirrored=0x3, desired=0x3, two frontdoor operations, and one backdoor read; predict-without-observation and untouched starter failed through UA09_SYNC on 2026-08-03"
+completion_evidence:
+  - A frontdoor write updates the implementation and mirror through the supplied bus path.
+  - A direct backdoor observation followed by predict resynchronizes the model after an external implementation-side change.
+  - Set changes desired state without bus traffic, and update commits it through the frontdoor.
+  - A predict-without-observation fixture fails because no backdoor evidence was obtained.
+  - The learner explains actual, mirrored, and desired state transitions.

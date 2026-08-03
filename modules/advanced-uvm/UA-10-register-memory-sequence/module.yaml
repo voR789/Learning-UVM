@@ -1,0 +1,39 @@
+id: UA-10
+title: Build register-level tests, scoreboards, and coverage
+phase: advanced-uvm
+kind: micro
+status: ready
+estimated_minutes: 75
+siemens_mapping:
+  track: Advanced UVM
+  unit: Register-Based Testing
+prerequisites: [UA-09]
+objectives:
+  primary: Implement a reusable register sequence that detects aliased memory locations through independent readback checking.
+  supporting:
+    - Access a supplied uvm_mem by logical index through its frontdoor map.
+    - Keep expected values independent from returned bus data.
+    - Explain why RAL coverage intent requires an implemented sampling model rather than only enabling a coverage flag.
+learner_owns:
+  - tb/ua10_pkg.sv
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/register-sequences-memory-coverage.md
+  - dut/memory-spec.md
+  - tb/ua10_support_pkg.sv
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; reference sequence passed with two distinct memory values, two verified readbacks, and four frontdoor operations; address alias failed through UA10_DATA; untouched starter failed through UA10_RESULT on 2026-08-03"
+completion_evidence:
+  - One reusable uvm_reg_sequence writes distinct values to two memory indices and reads both back.
+  - Status and returned data are checked against independent expectations.
+  - An address-alias fixture fails because two logical indices reach one implemented location.
+  - The learner distinguishes indexed uvm_mem access, readback checking, and coverage intent.

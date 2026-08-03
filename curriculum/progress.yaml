@@ -14,8 +14,8 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: UA-08
-last_updated: "2026-08-02"
+current_focus: UA-10
+last_updated: "2026-08-03"
 summary:
   state: guided
   highest_gate_passed: UB-G1
@@ -1116,6 +1116,90 @@ modules:
       - Learner package rejected the direct bypass-common-run fixture through UA07_CONTRACT at seed 1.
       - Reflection correctly explains base-test ownership, nonzero/count checks, bypass-contract detection, and test/seed reproduction.
       - Score: shared lifecycle 30/30, hierarchy boundary 20/20, accounting 20/20, regression/reproduction 15/15, fault evidence 10/10, reflection 4/5. Guided reflects direct syntax and lifecycle coaching.
+  UA-08:
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-03"
+    score: 100
+    hints_used:
+      - Teach-first RAL resource expanded with API details and frontdoor/observation mechanics.
+      - Direct conceptual coaching on register construction, mapping, adapter translation, prediction, and sequencer binding.
+    seeds: [1]
+    artifacts:
+      - modules/advanced-uvm/UA-08-register-model-setup/module.yaml
+      - modules/advanced-uvm/UA-08-register-model-setup/resources/ral-setup-flow.md
+      - modules/advanced-uvm/UA-08-register-model-setup/tb/ua08_pkg.sv
+      - modules/advanced-uvm/UA-08-register-model-setup/reflection.md
+      - modules/advanced-uvm/UA-08-register-model-setup/implementation-handoff.md
+    strengths:
+      - Built, configured, mapped, and locked the control-register model at byte offset 0x0.
+      - Bound the frontdoor map to the supplied sequencer and adapter.
+      - Disabled auto-predict and updated the mirror through completed bus traffic and the UVM predictor.
+      - Explained the separate block/map, adapter, and observed-prediction responsibilities.
+    gaps:
+      - Backdoor access, mirror/predict/update semantics, register sequences, and memory modeling remain future work.
+    reviewer_notes:
+      - Evidence-first novelty review retained register-block construction and frontdoor/predictor integration as new learner implementation behavior.
+      - Field definitions, bus components, adapter implementation, test lifecycle, and verdict checks are supplied to avoid repeated mechanics.
+      - Minimal XSim 2025.2 verification used one known-good reference run, one wrong-offset fault, and one untouched starter run.
+      - Reference seed 1 passed with stored=0x5, mirrored=0x5, one completed operation, and zero UVM errors/fatals.
+      - Wrong offset failed through UA08_STATUS; learner starter failed through UA08_MODEL.
+      - Learner XSim 2025.2 run passed at seed 1 on 2026-08-03 with stored=0x5, mirrored=0x5, one completed operation, and zero UVM errors/fatals.
+      - Documented wrong-offset fixture returned nonzero through UA08_STATUS on 2026-08-03.
+      - Reflection correctly explains register-block/map ownership, adapter directions, observed prediction, the wrong-offset failure, and reproduction.
+      - Score: register block 25/25, frontdoor integration 25/25, observed prediction 20/20, functional result 15/15, fault evidence 10/10, reflection 5/5. Guided reflects detailed RAL coaching.
+  UA-09:
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-03"
+    score: 100
+    hints_used:
+      - Teach-first explanation of RAL actual, desired, and mirrored state plus frontdoor and backdoor responsibilities.
+      - Direct conceptual and syntax coaching for inherited environment access, backdoor observation, predict, set, and update.
+    seeds: [1]
+    artifacts:
+      - modules/advanced-uvm/UA-09-register-access-semantics/module.yaml
+      - modules/advanced-uvm/UA-09-register-access-semantics/resources/register-state-and-access.md
+      - modules/advanced-uvm/UA-09-register-access-semantics/tb/ua09_pkg.sv
+      - modules/advanced-uvm/UA-09-register-access-semantics/reflection.md
+      - modules/advanced-uvm/UA-09-register-access-semantics/implementation-handoff.md
+    strengths:
+      - Used direct implementation observation before predicting RAL state after an external update.
+      - Kept staging separate from committing, proving set generated no frontdoor bus traffic.
+      - Committed desired state through the supplied frontdoor update path.
+      - Explained why observed evidence must precede prediction and why hardware-only updates can stale a mirror.
+    gaps:
+      - Standard UVM custom backdoor registration and full mirror semantics remain constrained by the Vivado packaged-library compatibility defect.
+    reviewer_notes:
+      - Evidence-first novelty review supplied all repeated register-model, bus, adapter, predictor, and test-lifecycle architecture.
+      - Learner work is restricted to backdoor resynchronization and desired-state staging/frontdoor commit.
+      - XSim 2025.2 seed 1 passed the reference flow with actual=0x3, mirrored=0x3, desired=0x3, two frontdoor operations, one backdoor read, and zero UVM errors/fatals.
+      - Predict-without-observation and untouched learner starter both failed through UA09_SYNC.
+      - XSim 2025.2's packaged uvm_reg_backdoor read path did not dispatch a derived read override, so the module exposes direct observation followed by predict as separate responsibilities.
+      - Learner XSim 2025.2 run passed at seed 1 on 2026-08-03 with actual=0x3, mirrored=0x3, desired=0x3, two frontdoor operations, one backdoor read, and zero UVM errors/fatals.
+      - Documented predict-without-observation fixture returned nonzero through UA09_SYNC on 2026-08-03.
+      - Reflection correctly explains stale actual/mirrored/desired state, observation before prediction, staging without bus traffic, frontdoor update, and the reproducing command.
+      - Score: backdoor synchronization 30/30, desired-state staging 20/20, frontdoor commit 25/25, fault evidence 15/15, reflection 10/10. Guided reflects detailed RAL conceptual and syntax coaching.
+  UA-10:
+    state: not_started
+    attempts: 0
+    completed_on: null
+    score: null
+    hints_used: []
+    seeds: []
+    artifacts:
+      - modules/advanced-uvm/UA-10-register-memory-sequence/module.yaml
+      - modules/advanced-uvm/UA-10-register-memory-sequence/resources/register-sequences-memory-coverage.md
+      - modules/advanced-uvm/UA-10-register-memory-sequence/tb/ua10_pkg.sv
+      - modules/advanced-uvm/UA-10-register-memory-sequence/implementation-handoff.md
+    strengths: []
+    gaps: []
+    reviewer_notes:
+      - Evidence-first novelty review supplied repeated RAL construction, map, adapter, environment, and test-lifecycle mechanics.
+      - Learner implementation is one reusable memory-check sequence body with independent readback expectations.
+      - RAL coverage configuration is a reading checkpoint because enabling flags without an implemented sampling model is clerical and produces no useful coverage.
+      - XSim 2025.2 seed 1 passed the reference flow with mem0=0xD00D0001, mem1=0xC0DE0002, two verified readbacks, four frontdoor operations, and zero UVM errors/fatals.
+      - The address-alias fixture failed through UA10_DATA on the index-0 readback; the untouched starter failed through UA10_RESULT.
 evidence_schema:
   state: not_started
   attempts: 0
