@@ -64,11 +64,11 @@ mapped address = memory base + index * bus bytes per location
 For this module, base `0x10` and four bytes per location mean:
 
 | Logical index | Frontdoor byte address |
-|---:|---:|
-| 0 | `0x10` |
-| 1 | `0x14` |
-| 2 | `0x18` |
-| 3 | `0x1C` |
+| ------------: | ---------------------: |
+|             0 |               `0x10` |
+|             1 |               `0x14` |
+|             2 |               `0x18` |
+|             3 |               `0x1C` |
 
 ## 3. Check status and data separately
 

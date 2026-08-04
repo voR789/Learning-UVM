@@ -4,7 +4,7 @@ Updated: 2026-08-03
 
 ## Status
 
-- UA-10 is scaffolded and remains `not_started`.
+- UA-10 was completed as `guided` on 2026-08-03 with a score of 100/100.
 - UA-08/09 already prove RAL construction, routing, prediction, access paths,
   and state coherence.
 - Evidence-first novelty review supplies all repeated model, bus, adapter,
@@ -35,6 +35,12 @@ integration environment.
   frontdoor operations, and zero UVM errors/fatals.
 - The address-alias fixture failed through `UA10_DATA` on the index-0
   readback, and the untouched starter failed through `UA10_RESULT`.
+- The learner run passed at seed 1 with `mem0=0xD00D0001`,
+  `mem1=0xC0DE0002`, `verified=2`, and `completed=4`, with zero UVM
+  errors/fatals.
+- The alias fixture now runs the learner sequence directly and fails through
+  learner-owned `UA10_DATA`; it records `verified=1` for the non-aliased
+  index.
 
 ## Ownership
 

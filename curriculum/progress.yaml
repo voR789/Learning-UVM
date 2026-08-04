@@ -14,7 +14,7 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: UA-10
+current_focus: UA-G1
 last_updated: "2026-08-03"
 summary:
   state: guided
@@ -1181,6 +1181,37 @@ modules:
       - Reflection correctly explains stale actual/mirrored/desired state, observation before prediction, staging without bus traffic, frontdoor update, and the reproducing command.
       - Score: backdoor synchronization 30/30, desired-state staging 20/20, frontdoor commit 25/25, fault evidence 15/15, reflection 10/10. Guided reflects detailed RAL conceptual and syntax coaching.
   UA-10:
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-03"
+    score: 100
+    hints_used:
+      - Focused coaching on independently accounting for each read status, data comparison, and verified count.
+      - Direct correction that a supplied fault fixture must execute learner-owned sequence behavior to count as learner evidence.
+    seeds: [1]
+    artifacts:
+      - modules/advanced-uvm/UA-10-register-memory-sequence/module.yaml
+      - modules/advanced-uvm/UA-10-register-memory-sequence/resources/register-sequences-memory-coverage.md
+      - modules/advanced-uvm/UA-10-register-memory-sequence/tb/ua10_pkg.sv
+      - modules/advanced-uvm/UA-10-register-memory-sequence/implementation-handoff.md
+    strengths:
+      - Used a reusable uvm_reg_sequence to access two distinct uvm_mem indices through the supplied frontdoor map.
+      - Preserved independent per-index readback comparisons and incremented verified only for matching successful reads.
+      - Distinguished transport status failures from returned-data mismatches.
+      - Explained why a RAL coverage flag requires an implemented monitor-sampled coverage model.
+    gaps:
+      - Passive monitor-driven memory-index coverage and scoreboard integration remain required transfer evidence in UA-G1.
+    reviewer_notes:
+      - Evidence-first novelty review supplied repeated RAL construction, map, adapter, environment, and test-lifecycle mechanics.
+      - Learner implementation is one reusable memory-check sequence body with independent readback expectations.
+      - RAL coverage configuration is a reading checkpoint because enabling flags without an implemented sampling model is clerical and produces no useful coverage.
+      - XSim 2025.2 seed 1 passed the reference flow with mem0=0xD00D0001, mem1=0xC0DE0002, two verified readbacks, four frontdoor operations, and zero UVM errors/fatals.
+      - The address-alias fixture failed through UA10_DATA on the index-0 readback; the untouched starter failed through UA10_RESULT.
+      - Learner XSim 2025.2 run passed at seed 1 on 2026-08-03 with mem0=0xD00D0001, mem1=0xC0DE0002, verified=2, completed=4, and zero UVM errors/fatals.
+      - The corrected address-alias fixture exercised the learner sequence and failed through learner-owned UA10_DATA at index 0; the final result also recorded verified=1 for the surviving index.
+      - Reflection correctly explains distinct patterns, status-versus-data proof, independent expectations, and the coverage-model limitation.
+      - Score: reusable sequence 20/20, indexed stimulus 20/20, independent checking 30/30, fault/access evidence 20/20, reflection/coverage reasoning 10/10. Guided reflects iterative checking-boundary coaching.
+  UA-G1:
     state: not_started
     attempts: 0
     completed_on: null
@@ -1188,18 +1219,20 @@ modules:
     hints_used: []
     seeds: []
     artifacts:
-      - modules/advanced-uvm/UA-10-register-memory-sequence/module.yaml
-      - modules/advanced-uvm/UA-10-register-memory-sequence/resources/register-sequences-memory-coverage.md
-      - modules/advanced-uvm/UA-10-register-memory-sequence/tb/ua10_pkg.sv
-      - modules/advanced-uvm/UA-10-register-memory-sequence/implementation-handoff.md
+      - modules/advanced-uvm/UA-G1-apb-register-peripheral/module.yaml
+      - modules/advanced-uvm/UA-G1-apb-register-peripheral/spec/peripheral-spec.md
+      - modules/advanced-uvm/UA-G1-apb-register-peripheral/resources/integration-flow.md
+      - modules/advanced-uvm/UA-G1-apb-register-peripheral/tb/ua_g1_pkg.sv
+      - modules/advanced-uvm/UA-G1-apb-register-peripheral/implementation-handoff.md
     strengths: []
     gaps: []
     reviewer_notes:
-      - Evidence-first novelty review supplied repeated RAL construction, map, adapter, environment, and test-lifecycle mechanics.
-      - Learner implementation is one reusable memory-check sequence body with independent readback expectations.
-      - RAL coverage configuration is a reading checkpoint because enabling flags without an implemented sampling model is clerical and produces no useful coverage.
-      - XSim 2025.2 seed 1 passed the reference flow with mem0=0xD00D0001, mem1=0xC0DE0002, two verified readbacks, four frontdoor operations, and zero UVM errors/fatals.
-      - The address-alias fixture failed through UA10_DATA on the index-0 readback; the untouched starter failed through UA10_RESULT.
+      - Evidence-first novelty review supplies repeated APB, RAL, adapter, construction, wiring, and base-test mechanics.
+      - Learner implementation is limited to passive observation, independent prediction/checking, monitor-driven coverage, and one response-driven RAL scenario.
+      - Short plan decisions and evidence reporting remain learner-owned because this is an integration gate, while boilerplate planning is supplied.
+      - XSim 2025.2 seed 1 reference passed with 10 observed/driven transfers, two independently checked results, two status polls, complete required coverage flags, and zero UVM errors/fatals.
+      - The faulty result DUT failed first through passive UAG1_MISMATCH with expected 0x60 and observed 0x61; the untouched starter failed through UAG1_TODO.
+      - Fixture validation corrected supplied APB response sampling to occur on the completion edge rather than after DUT state changed.
 evidence_schema:
   state: not_started
   attempts: 0

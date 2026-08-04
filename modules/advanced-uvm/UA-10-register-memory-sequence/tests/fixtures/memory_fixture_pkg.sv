@@ -82,7 +82,7 @@ package memory_fixture_pkg;
         endfunction
     endclass
 
-    class ua10_alias_memory_test extends ua10_reference_test;
+    class ua10_alias_memory_test extends ua10_test;
         `uvm_component_utils(ua10_alias_memory_test)
         function new(string name, uvm_component parent);
             super.new(name, parent);

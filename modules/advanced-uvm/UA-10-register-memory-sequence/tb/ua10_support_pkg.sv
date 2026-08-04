@@ -106,7 +106,7 @@ package ua10_support_pkg;
         endfunction
 
         virtual function void build();
-            scratch = new("scratch", 4, 32, "RW", UVM_NO_COVERAGE);
+            scratch = new("scratch", 4, 32, "RW", UVM_NO_COVERAGE); // KEY idea: use basic instantiation (new()) because block "owns" the mem. Only use factory when replacement is a real goal
             scratch.configure(this, "");
             default_map = create_map("default_map", 'h0, 4,
                 UVM_LITTLE_ENDIAN, 1);

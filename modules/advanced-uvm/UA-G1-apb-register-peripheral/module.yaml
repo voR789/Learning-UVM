@@ -1,0 +1,46 @@
+id: UA-G1
+title: Verify an APB-style register-controlled peripheral
+phase: advanced-uvm
+kind: integration
+status: ready
+estimated_minutes: 360
+siemens_mapping:
+  track: Advanced UVM
+  unit: Advanced UVM integration gate
+prerequisites: [UA-07, UA-10]
+objectives:
+  primary: Integrate a reusable APB agent, RAL frontdoor flow, passive prediction and checking, response-driven sequencing, and functional coverage around one register-controlled peripheral.
+  supporting:
+    - Keep scenario decisions separate from passive correctness checking.
+    - Detect a result-path fault from monitor observations rather than driver intent.
+    - End the test from an explicit scoreboard drain condition.
+    - Close requirement-level address, operation, error, and result-class coverage.
+learner_owns:
+  - tb/ua_g1_pkg.sv
+  - plan/verification-plan.md
+  - reports/evidence-summary.md
+  - reflection.md
+codex_owns:
+  - README.md
+  - spec/peripheral-spec.md
+  - resources/integration-flow.md
+  - dut/apb_math_peripheral.sv
+  - tb/apb_if.sv
+  - tb/ua_g1_support_pkg.sv
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1; reference passed with 10 observed/driven transfers, two checked results, two status polls, complete required coverage flags, and zero UVM errors/fatals; faulty result failed first through passive UAG1_MISMATCH with expected 0x60 and observed 0x61; untouched starter failed through UAG1_TODO on 2026-08-03"
+completion_evidence:
+  - The learner scenario rejects a disabled command, configures the peripheral through RAL, polls observed status, and checks normal and saturated results.
+  - A passive APB monitor is the sole source for the RAL predictor, independent scoreboard, and coverage subscriber.
+  - The scoreboard detects a faulty result implementation using state derived only from monitored bus traffic.
+  - Coverage proves all five register addresses, reads and writes, an error response, and both normal and saturated result classes were observed.
+  - Test termination waits for two scoreboard-checked results rather than a fixed drain delay.
+  - The learner completes the bounded plan decisions, evidence summary, and reflection.
