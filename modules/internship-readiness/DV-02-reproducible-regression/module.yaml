@@ -1,0 +1,40 @@
+id: DV-02
+title: Plan and run a reproducible regression
+phase: internship-readiness
+kind: assessment
+status: ready
+estimated_minutes: 180
+siemens_mapping:
+  track: Independent application
+  unit: Independent regression practice
+prerequisites: [DV-01]
+objectives:
+  primary: Design and execute a reproducible regression, then bucket failures by evidence-backed root-cause hypothesis rather than by superficial message text.
+  supporting:
+    - Preserve test, seed, status, first decisive signature, and rerun evidence for every failure.
+    - Continue the matrix after failures without converting expected failures into passes.
+    - Distinguish repeated manifestations of one cause from genuinely separate failure buckets.
+learner_owns:
+  - plan/regression-matrix.csv
+  - reports/triage-ledger.md
+codex_owns:
+  - README.md
+  - resources/regression-triage.md
+  - tb/
+  - tests/
+  - run.ps1
+  - run-regression.ps1
+  - rubric.md
+  - hints.md
+  - reflection.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run-regression.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 on 2026-08-05: reference arithmetic seed 17 passed with checked=8 and zero UVM errors/fatals; smoke seed 1 passed; flawed arithmetic seed 17 failed through DV02_DATA; flawed completion seed 17 failed through DV02_MISSING; pass-fail-pass wrapper probe executed all three rows, preserved the failure signature, wrote results CSV, and returned nonzero"
+completion_evidence:
+  - The matrix includes a deterministic smoke anchor and multiple seeds for each randomized scenario.
+  - The regression continues after failures and records every test/seed outcome.
+  - Each failure is reproduced individually with the same test and seed.
+  - The learner groups failures into cause-oriented buckets using signatures and cross-run evidence.
+  - The triage ledger identifies the smallest next experiment for each unresolved bucket.

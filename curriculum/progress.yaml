@@ -14,7 +14,8 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: DV-01
+    - After DV-01, do not require generic reflections or duplicate evidence summaries; require only concise engineering artifacts whose decisions are themselves the lesson objective.
+current_focus: DV-02
 last_updated: "2026-08-05"
 summary:
   state: guided
@@ -1247,6 +1248,28 @@ modules:
       - Learner evidence summary and reflection accurately record the response-driven scenario, monitor fanout, independent model, drain condition, commands, and fault diagnostic.
       - Score: passive observation 15/15, independent prediction/checking 25/25, RAL scenario 20/20, integration/termination 15/15, coverage 10/10, fault/reproduction 10/10, artifacts/reflection 3/5. Guided reflects iterative architecture and RAL-flow coaching.
   DV-01:
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-05"
+    score: 96
+    hints_used:
+      - Teaching resource and focused clarification distinguishing symptom from root cause.
+    seeds: [1]
+    artifacts:
+      - modules/internship-readiness/DV-01-review-repair-flawed-uvm-environment/module.yaml
+      - modules/internship-readiness/DV-01-review-repair-flawed-uvm-environment/implementation-handoff.md
+    strengths:
+      - Repaired the publisher boundary by allocating a distinct observation object for each analysis publication.
+      - Preserved the independent FIFO scoreboard and its expected sequence rather than weakening checking.
+      - Demonstrated the repaired pass and the independent reused-handle fault at seed 1.
+    gaps:
+      - Revisit the publisher snapshot-ownership rule when the concept is reused in a less isolated environment.
+    reviewer_notes:
+      - Learner recorded the initial deterministic mismatch, repaired learner-owned publisher code, and completed the evidence summary and reflection.
+      - XSim 2025.2 learner run passed at seed 1 with checked=2, mismatches=0, distinct handles, and zero UVM errors/fatals.
+      - Independent direct fault run returned nonzero through DV01_MISMATCH at index 0, followed by DV01_RESULT with mismatches=1.
+      - Score: initial evidence 20/20, root-cause boundary 24/25, minimal repair 25/25, pass/fault proof 15/15, debug artifacts 10/10, reflection/ownership rule 2/5. Guided reflects supplied teaching plus clarification on symptom versus root cause; concise reflection wording was treated as a minor communication gap, not a material assessment failure.
+  DV-02:
     state: not_started
     attempts: 0
     completed_on: null
@@ -1254,13 +1277,13 @@ modules:
     hints_used: []
     seeds: []
     artifacts:
-      - modules/internship-readiness/DV-01-review-repair-flawed-uvm-environment/module.yaml
-      - modules/internship-readiness/DV-01-review-repair-flawed-uvm-environment/implementation-handoff.md
+      - modules/internship-readiness/DV-02-reproducible-regression/module.yaml
+      - modules/internship-readiness/DV-02-reproducible-regression/implementation-handoff.md
     strengths: []
     gaps: []
     reviewer_notes:
-      - Module scaffold and fixture validation exist, but no learner executable evidence or reflection has been submitted.
-      - Progress must remain not_started until the learner records the initial failure, repairs learner-owned code, proves the pass and direct fault, and completes the reflection.
+      - Module scaffold and XSim 2025.2 fixture validation exist, but no learner regression or triage evidence has been submitted.
+      - Learner work is limited to matrix rationale and the causal triage ledger; there is no separate reflection or generic evidence summary.
 evidence_schema:
   state: not_started
   attempts: 0

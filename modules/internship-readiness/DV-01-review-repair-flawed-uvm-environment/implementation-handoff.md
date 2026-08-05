@@ -10,4 +10,12 @@
 - XSim 2025.2 seed-1 reference validation passed with `checked=2`, `mismatches=0`, distinct handles, and zero UVM errors/fatals.
 - The direct reused-handle fixture failed nonzero through `DV01_MISMATCH` at index 0 and `DV01_RESULT` with `mismatches=1`.
 - The fault fixture is independent of learner edits: it selects the known-bad publisher behavior inside the Codex-owned reference package.
-- Curriculum progress remains unchanged at `current_focus: DV-01`; no DV-01 completion evidence exists.
+- At creation, progress remained at `current_focus: DV-01` pending learner evidence.
+
+## 2026-08-05 — learner assessment milestone
+
+- Learner repaired `tb/dv01_pkg.sv` by creating separate observation objects before each analysis publication.
+- Learner XSim 2025.2 seed-1 run passed with `checked=2`, `mismatches=0`, distinct handles, and zero UVM errors/fatals.
+- The independent direct-fault fixture still failed nonzero through `DV01_MISMATCH` and `DV01_RESULT` with one mismatch.
+- Assessment: 96/100, `guided`. The repair and executable proof are correct. The concise reflection is acceptable for this isolated defect; revisit publisher ownership of stable published transaction snapshots when the concept reappears in a larger environment.
+- DV-02 is now the eligible current focus because DV-01 is complete.

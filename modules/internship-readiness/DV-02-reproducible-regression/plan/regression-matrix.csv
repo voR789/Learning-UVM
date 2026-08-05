@@ -1,0 +1,8 @@
+test,seed,rationale
+dv02_smoke_test,1,deterministic health anchor
+dv02_arithmetic_test,1,randomized baseline
+dv02_arithmetic_test,17,randomized diversity
+dv02_arithmetic_test,31,randomized diversity
+dv02_completion_test,1,randomized baseline
+dv02_completion_test,17,randomized diversity
+dv02_completion_test,31,randomized diversity

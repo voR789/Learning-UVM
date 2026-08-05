@@ -1,0 +1,4 @@
+test,seed,rationale
+dv02_smoke_test,1,pre-failure anchor
+dv02_arithmetic_test,17,representative failure
+dv02_smoke_test,1,post-failure continuation proof

@@ -15,9 +15,9 @@ This is an implementation assessment because the supplied failure crosses a publ
 The environment publishes two completed observations in order:
 
 | Observation | `result` |
-|---|---:|
-| 0 | `3` |
-| 1 | `7` |
+| ----------- | ---------: |
+| 0           |      `3` |
+| 1           |      `7` |
 
 The scoreboard independently expects `3`, then `7`. It receives observations through a `uvm_tlm_analysis_fifo` and compares in arrival order. A correct environment reports `checked=2`, `mismatches=0`, and no UVM errors or fatals.
 
@@ -70,3 +70,5 @@ The runner prints module ID, test, seed, result, and UVM counts. Generated simul
 ## Pre-edit prediction
 
 If a producer publishes an object and later changes that same object, what will a FIFO consumer observe: the fields at publication time or the fields when it retrieves the handle?
+
+- The FIFO consumer will read the field at the time it recieves the handle, and since the publisher sends a alias, not a copy, it will cause issues.
