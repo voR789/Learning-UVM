@@ -125,32 +125,13 @@ package ua_g1_reference_pkg;
             sampled_error = t.error;
             sampled_result_class = 0;
 
-            case (t.addr)
-                CTRL_ADDR: address_mask[0] = 1;
-                GAIN_ADDR: address_mask[1] = 1;
-                DATA_ADDR: address_mask[2] = 1;
-                STATUS_ADDR: address_mask[3] = 1;
-                RESULT_ADDR: address_mask[4] = 1;
-                default: begin
-                end
-            endcase
-
-            if (t.write)
-                saw_write = 1;
-            else
-                saw_read = 1;
-            if (t.error)
-                saw_error = 1;
-            else
-                saw_success = 1;
-
+            if (!t.write && !t.error && (t.addr == STATUS_ADDR) && t.rdata[1])
+                saw_saturated_result = t.rdata[2];
             if (!t.write && !t.error && (t.addr == RESULT_ADDR)) begin
-                if (t.rdata[7:0] == 8'hFF) begin
+                if (saw_saturated_result) begin
                     sampled_result_class = 2;
-                    saw_saturated_result = 1;
                 end else begin
                     sampled_result_class = 1;
-                    saw_normal_result = 1;
                 end
             end
 

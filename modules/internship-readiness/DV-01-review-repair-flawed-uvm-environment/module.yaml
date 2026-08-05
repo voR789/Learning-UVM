@@ -1,0 +1,40 @@
+id: DV-01
+title: Review and repair a flawed UVM environment
+phase: internship-readiness
+kind: assessment
+status: ready
+estimated_minutes: 180
+siemens_mapping:
+  track: Independent application
+  unit: Independent debug practice
+prerequisites: [UA-G1]
+objectives:
+  primary: Use reproducible evidence to identify the root cause of a flawed UVM analysis path, make the smallest correct repair, and prove it.
+  supporting:
+    - Distinguish an object-handle lifetime defect from a scoreboard algorithm defect.
+    - Preserve stable observation snapshots across an analysis boundary.
+    - Report a concise evidence chain from symptom through repair and fault reproduction.
+learner_owns:
+  - tb/dv01_pkg.sv
+  - plan/debug-plan.md
+  - reports/evidence-summary.md
+  - reflection.md
+codex_owns:
+  - README.md
+  - resources/analysis-handle-lifetime.md
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1 on 2026-08-05: reference passed with checked=2, mismatches=0, distinct observation handles, and zero UVM errors/fatals; independent reused-handle fault failed through DV01_MISMATCH and DV01_RESULT with mismatches=1"
+completion_evidence:
+  - The learner records the initial deterministic failure before editing.
+  - The diagnosis identifies the violated analysis-boundary invariant using object identity and field-state evidence.
+  - The smallest correct repair makes the default run pass without weakening the scoreboard.
+  - The direct fault command still fails through DV01_MISMATCH and a nonzero runner result.
+  - The learner evidence summary and reflection explain symptom, root cause, repair, and reproduction.

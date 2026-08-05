@@ -32,13 +32,13 @@ expected behavior.
 
 The peripheral has five 32-bit APB-style registers:
 
-| Address | Name | Purpose |
-|---:|---|---|
-| `0x00` | `CTRL` | bit 0 enables command acceptance |
-| `0x04` | `GAIN` | 8-bit unsigned multiplier |
-| `0x08` | `DATA` | write-only command input |
-| `0x0C` | `STATUS` | busy, done, and overflow |
-| `0x10` | `RESULT` | saturated 8-bit result |
+|  Address | Name       | Purpose                          |
+| -------: | ---------- | -------------------------------- |
+| `0x00` | `CTRL`   | bit 0 enables command acceptance |
+| `0x04` | `GAIN`   | 8-bit unsigned multiplier        |
+| `0x08` | `DATA`   | write-only command input         |
+| `0x0C` | `STATUS` | busy, done, and overflow         |
+| `0x10` | `RESULT` | saturated 8-bit result           |
 
 Writing `DATA` while disabled must return an error. When enabled, the DUT
 eventually produces `min(DATA * GAIN, 255)` and records overflow.

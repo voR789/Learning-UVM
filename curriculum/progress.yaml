@@ -14,8 +14,8 @@ learner:
     - In integration (G-level) modules from UVM Basics onward, include realistic response-driven scenarios: delayed or out-of-order completion where applicable, status/error recovery, and sequence decisions based on observed DUT results. Teach the required response path before assigning it.
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
-current_focus: UA-G1
-last_updated: "2026-08-03"
+current_focus: DV-01
+last_updated: "2026-08-05"
 summary:
   state: guided
   highest_gate_passed: UB-G1
@@ -1212,20 +1212,29 @@ modules:
       - Reflection correctly explains distinct patterns, status-versus-data proof, independent expectations, and the coverage-model limitation.
       - Score: reusable sequence 20/20, indexed stimulus 20/20, independent checking 30/30, fault/access evidence 20/20, reflection/coverage reasoning 10/10. Guided reflects iterative checking-boundary coaching.
   UA-G1:
-    state: not_started
-    attempts: 0
-    completed_on: null
-    score: null
-    hints_used: []
-    seeds: []
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-05"
+    score: 98
+    hints_used:
+      - Guided implementation reviews for passive monitor sampling, independent scoreboard state, coverage classification, and response-driven RAL polling.
+      - Direct RAL API and do-while syntax clarification.
+      - Focused correction of scenario-versus-scoreboard checking responsibility and drain-based termination.
+    seeds: [1]
     artifacts:
       - modules/advanced-uvm/UA-G1-apb-register-peripheral/module.yaml
       - modules/advanced-uvm/UA-G1-apb-register-peripheral/spec/peripheral-spec.md
       - modules/advanced-uvm/UA-G1-apb-register-peripheral/resources/integration-flow.md
       - modules/advanced-uvm/UA-G1-apb-register-peripheral/tb/ua_g1_pkg.sv
       - modules/advanced-uvm/UA-G1-apb-register-peripheral/implementation-handoff.md
-    strengths: []
-    gaps: []
+    strengths:
+      - Published exactly one pin-sampled completed APB transaction per observed transfer and fanned it out to the RAL predictor, scoreboard, and coverage.
+      - Reconstructed enable, gain, accepted DATA, pending expected result, and overflow independently from monitor traffic.
+      - Used a response-driven RAL scenario with expected rejection, bounded STATUS polling, and result-read gating on done.
+      - Closed the required coverage bins directly and used a scoreboard event for drain-based termination.
+      - Demonstrated learner-owned passive result checking against the faulty DUT.
+    gaps:
+      - Scenario and reflection wording required guided refinement around the distinction between RAL response flow and scoreboard functional ownership.
     reviewer_notes:
       - Evidence-first novelty review supplies repeated APB, RAL, adapter, construction, wiring, and base-test mechanics.
       - Learner implementation is limited to passive observation, independent prediction/checking, monitor-driven coverage, and one response-driven RAL scenario.
@@ -1233,6 +1242,25 @@ modules:
       - XSim 2025.2 seed 1 reference passed with 10 observed/driven transfers, two independently checked results, two status polls, complete required coverage flags, and zero UVM errors/fatals.
       - The faulty result DUT failed first through passive UAG1_MISMATCH with expected 0x60 and observed 0x61; the untouched starter failed through UAG1_TODO.
       - Fixture validation corrected supplied APB response sampling to occur on the completion edge rather than after DUT state changed.
+      - Learner XSim 2025.2 run passed at seed 1 on 2026-08-05 with checked=2, mismatches=0, observed=10, driven=10, coverage_samples=10, and zero UVM errors/fatals.
+      - Assessment-only learner/fault run at seed 1 failed through learner-owned UAG1_MISMATCH on RESULT, followed by UAG1_RESULT with mismatches=1.
+      - Learner evidence summary and reflection accurately record the response-driven scenario, monitor fanout, independent model, drain condition, commands, and fault diagnostic.
+      - Score: passive observation 15/15, independent prediction/checking 25/25, RAL scenario 20/20, integration/termination 15/15, coverage 10/10, fault/reproduction 10/10, artifacts/reflection 3/5. Guided reflects iterative architecture and RAL-flow coaching.
+  DV-01:
+    state: not_started
+    attempts: 0
+    completed_on: null
+    score: null
+    hints_used: []
+    seeds: []
+    artifacts:
+      - modules/internship-readiness/DV-01-review-repair-flawed-uvm-environment/module.yaml
+      - modules/internship-readiness/DV-01-review-repair-flawed-uvm-environment/implementation-handoff.md
+    strengths: []
+    gaps: []
+    reviewer_notes:
+      - Module scaffold and fixture validation exist, but no learner executable evidence or reflection has been submitted.
+      - Progress must remain not_started until the learner records the initial failure, repairs learner-owned code, proves the pass and direct fault, and completes the reflection.
 evidence_schema:
   state: not_started
   attempts: 0
