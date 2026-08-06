@@ -1,0 +1,42 @@
+id: DV-03
+title: Close functional coverage without gaming metrics
+phase: internship-readiness
+kind: assessment
+status: ready
+estimated_minutes: 240
+siemens_mapping:
+  track: Independent application
+  unit: Independent coverage practice
+prerequisites: [DV-02]
+objectives:
+  primary: Close requirement-level functional coverage using targeted legal stimulus and evidence-backed unreachable-bin disposition.
+  supporting:
+    - Distinguish reachable holes from combinations prohibited by the specification.
+    - Add the smallest targeted stimulus that closes reachable holes.
+    - Preserve passive observation as the authority for coverage completion.
+learner_owns:
+  - tb/dv03_target_pkg.sv
+  - reports/coverage-disposition.md
+codex_owns:
+  - README.md
+  - spec/scenario-spec.md
+  - resources/honest-coverage-closure.md
+  - tb/dv03_support_pkg.sv
+  - tb/dv03_test_pkg.sv
+  - tb/tb_top.sv
+  - tests/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - reflection.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1 -Seed 1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1 on 2026-08-06: reference passed with observed_required=6/6, six passive samples, generated functional-coverage report, and zero UVM errors/fatals; independent baseline-only fixture failed nonzero through DV03_HOLE for required scenarios 4 and 5 and DV03_RESULT with observed_required=4/6"
+completion_evidence:
+  - Passive coverage observes all six required legal scenarios.
+  - The learner adds only the targeted legal scenarios needed to close reachable holes.
+  - The disposition table distinguishes reachable holes from specification-prohibited combinations.
+  - An independent baseline-only fixture still fails through DV03_HOLE.
+  - The learner can explain why excluding a reachable bin would be metric gaming.

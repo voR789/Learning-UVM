@@ -15,8 +15,8 @@ learner:
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
     - After DV-01, do not require generic reflections or duplicate evidence summaries; require only concise engineering artifacts whose decisions are themselves the lesson objective.
-current_focus: DV-02
-last_updated: "2026-08-05"
+current_focus: DV-03
+last_updated: "2026-08-06"
 summary:
   state: guided
   highest_gate_passed: UB-G1
@@ -1270,6 +1270,31 @@ modules:
       - Independent direct fault run returned nonzero through DV01_MISMATCH at index 0, followed by DV01_RESULT with mismatches=1.
       - Score: initial evidence 20/20, root-cause boundary 24/25, minimal repair 25/25, pass/fault proof 15/15, debug artifacts 10/10, reflection/ownership rule 2/5. Guided reflects supplied teaching plus clarification on symptom versus root cause; concise reflection wording was treated as a minor communication gap, not a material assessment failure.
   DV-02:
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-06"
+    score: 92
+    hints_used:
+      - Focused coaching on distinguishing report IDs from root-cause evidence.
+      - Focused coaching on first decisive signatures, closest passing contrasts, and falsifiable bucket fields.
+    seeds: [1, 17, 31]
+    artifacts:
+      - modules/internship-readiness/DV-02-reproducible-regression/module.yaml
+      - modules/internship-readiness/DV-02-reproducible-regression/implementation-handoff.md
+    strengths:
+      - Designed a seven-run matrix with a deterministic smoke anchor and three seeds for each randomized scenario.
+      - Preserved all run identities and correctly recorded one pass and six failures after the matrix continued through failures.
+      - Reduced the six runs to two behaviorally distinct failure buckets and supplied exact representative rerun commands.
+      - Reproduced both first decisive signatures with their exact test/seed identities.
+    gaps:
+      - Tighten the completion bucket's causal wording: input payload bits are a trigger condition, while the defect hypothesis must describe why completion accounting violates its contract.
+      - Record actual Git terminology precisely: the reviewed run was on `master` at `790e31f` with a modified learner ledger, not `main` with a clean worktree.
+    reviewer_notes:
+      - Learner regression was rerun in XSim 2025.2 on 2026-08-06: seven rows executed, smoke seed 1 passed, arithmetic seeds 1/17/31 failed through DV02_DATA, and completion seeds 1/17/31 failed through DV02_MISSING.
+      - Exact individual reruns reproduced arithmetic seed 1 through DV02_DATA and completion seed 1 through DV02_MISSING, both nonzero.
+      - Score: matrix design 15/15, complete execution 20/20, exact reproduction 20/20, causal bucketing 24/30, concise communication 13/15. Guided reflects focused triage coaching.
+      - Learner work was limited to matrix rationale and the causal triage ledger; no generic reflection or duplicate evidence summary was required.
+  DV-03:
     state: not_started
     attempts: 0
     completed_on: null
@@ -1277,13 +1302,13 @@ modules:
     hints_used: []
     seeds: []
     artifacts:
-      - modules/internship-readiness/DV-02-reproducible-regression/module.yaml
-      - modules/internship-readiness/DV-02-reproducible-regression/implementation-handoff.md
+      - modules/internship-readiness/DV-03-coverage-closure/module.yaml
+      - modules/internship-readiness/DV-03-coverage-closure/implementation-handoff.md
     strengths: []
     gaps: []
     reviewer_notes:
-      - Module scaffold and XSim 2025.2 fixture validation exist, but no learner regression or triage evidence has been submitted.
-      - Learner work is limited to matrix rationale and the causal triage ledger; there is no separate reflection or generic evidence summary.
+      - Module scaffold and XSim 2025.2 reference/fault validation exist, but no learner closure or disposition evidence has been submitted.
+      - Learner work is limited to minimal targeted stimulus and the specification-backed coverage-disposition table; no generic reflection or duplicate evidence summary is required.
 evidence_schema:
   state: not_started
   attempts: 0
