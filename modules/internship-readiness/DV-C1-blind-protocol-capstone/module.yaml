@@ -1,0 +1,41 @@
+id: DV-C1
+title: Blind capstone on an unfamiliar protocol peripheral
+phase: internship-readiness
+kind: capstone
+status: ready
+estimated_minutes: 1200
+siemens_mapping:
+  track: Independent application
+  unit: Portfolio capstone
+prerequisites: [DV-03]
+objectives:
+  primary: Independently plan, build, debug, and defend a reusable UVM environment for an unfamiliar concurrent protocol peripheral.
+  supporting:
+    - Match accepted commands to delayed responses by tag under independent backpressure.
+    - Derive prediction, protocol checks, and functional coverage from the specification.
+    - Run a reproducible regression and reduce failures to evidence-backed diagnoses.
+learner_owns:
+  - plan/verification-plan.md
+  - tb/
+  - reports/capstone-report.md
+codex_owns:
+  - README.md
+  - spec/
+  - dut/
+  - tests/reference/
+  - tests/faults/
+  - run.ps1
+  - rubric.md
+  - hints.md
+  - reflection.md
+  - implementation-handoff.md
+run:
+  shell: powershell
+  command: ./run.ps1 -Test tcs_smoke_test -Seed 1
+  verified_with: "AMD Vivado/XSim 2025.2 seed 1 on 2026-08-06: independent procedural reference passed six command/response checks including backpressure and reset recovery; opaque F1 failed nonzero through DVC1_REF_MISMATCH"
+completion_evidence:
+  - A deterministic smoke test and a multi-seed stress regression pass on the correct DUT.
+  - Passive observation independently checks command/response values, tags, status, and stability under backpressure.
+  - At least one supplied opaque fault is detected by the learner-owned environment with a decisive diagnostic.
+  - Requirement-level coverage is measured from observed transfers and honestly dispositioned.
+  - The concise report connects plan, architecture, regression, coverage, and one debug proof.

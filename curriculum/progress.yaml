@@ -15,7 +15,7 @@ learner:
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
     - After DV-01, do not require generic reflections or duplicate evidence summaries; require only concise engineering artifacts whose decisions are themselves the lesson objective.
-current_focus: DV-03
+current_focus: DV-C1
 last_updated: "2026-08-06"
 summary:
   state: guided
@@ -1295,6 +1295,29 @@ modules:
       - Score: matrix design 15/15, complete execution 20/20, exact reproduction 20/20, causal bucketing 24/30, concise communication 13/15. Guided reflects focused triage coaching.
       - Learner work was limited to matrix rationale and the causal triage ledger; no generic reflection or duplicate evidence summary was required.
   DV-03:
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-06"
+    score: 100
+    hints_used:
+      - Focused coaching on coverage disposition terminology, first required evidence, and reachable-versus-prohibited comparisons.
+    seeds: [1]
+    artifacts:
+      - modules/internship-readiness/DV-03-coverage-closure/module.yaml
+      - modules/internship-readiness/DV-03-coverage-closure/implementation-handoff.md
+    strengths:
+      - Classified both required holes as reachable and both prohibited candidates as out of scope using the specification.
+      - Added exactly the two minimal legal observations needed to close the required coverage set.
+      - Preserved passive coverage observation and proved closure with six observed required scenarios.
+      - Explained why excluding reachable scenarios would hide real future defects.
+    gaps:
+      - Later transfer evidence should apply coverage disposition to a less enumerated specification in the capstone.
+    reviewer_notes:
+      - Learner XSim 2025.2 seed-1 run passed on 2026-08-06 with observed_required=6/6, six passive samples, and zero UVM errors/fatals.
+      - Independent baseline-only fixture returned nonzero through DV03_HOLE for scenarios 4 and 5, followed by DV03_RESULT with observed_required=4/6.
+      - Score: classification 25/25, targeted legal stimulus 30/30, passive proof/fault detection 25/25, disposition evidence 15/15, integrity explanation 5/5. Guided reflects focused terminology and evidence coaching.
+      - Learner work was limited to targeted stimulus and the coverage-disposition table; no generic reflection or duplicate evidence summary was required.
+  DV-C1:
     state: not_started
     attempts: 0
     completed_on: null
@@ -1302,13 +1325,15 @@ modules:
     hints_used: []
     seeds: []
     artifacts:
-      - modules/internship-readiness/DV-03-coverage-closure/module.yaml
-      - modules/internship-readiness/DV-03-coverage-closure/implementation-handoff.md
+      - modules/internship-readiness/DV-C1-blind-protocol-capstone/module.yaml
+      - modules/internship-readiness/DV-C1-blind-protocol-capstone/spec/tcs-peripheral-spec.md
+      - modules/internship-readiness/DV-C1-blind-protocol-capstone/implementation-handoff.md
     strengths: []
     gaps: []
     reviewer_notes:
-      - Module scaffold and XSim 2025.2 reference/fault validation exist, but no learner closure or disposition evidence has been submitted.
-      - Learner work is limited to minimal targeted stimulus and the specification-backed coverage-disposition table; no generic reflection or duplicate evidence summary is required.
+      - Blind TCS capstone scaffolded with learner ownership of plan, UVM testbench, and concise engineering report.
+      - Independent XSim 2025.2 seed-1 reference passed six command/response checks; opaque F1 failed nonzero through DVC1_REF_MISMATCH.
+      - No generic reflection or duplicate evidence summary is required.
 evidence_schema:
   state: not_started
   attempts: 0
