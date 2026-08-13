@@ -44,3 +44,35 @@
 - `TC-FULL-01` uses four normal commands and a fifth one-cycle unaccepted
   probe. Only a passive command handshake creates a predictor expectation.
 - This is planning only: no learner-owned testbench code or progress changed.
+
+## 2026-08-09 - response-ready drive policy decision
+
+- The learner extended the plan's testbench-only drive-policy enum to response
+  requests: `HOLD` keeps the chosen ready value and `PULSE` offers one
+  response-transfer opportunity before returning ready low.
+- The learner retains implementation ownership; no testbench code or progress
+  changed.
+
+## 2026-08-09 - response-ready policy reversion
+
+- The plan no longer requires `HOLD` / `PULSE` metadata on `rsp_req`.
+  Response-ready patterns remain sequence-controlled value changes; the command
+  policy remains because `TC-FULL-01` requires an unaccepted command probe.
+
+## 2026-08-12 - learner final assessment
+
+- Learner completed a multi-agent UVM environment, verification plan, scenario
+  tests, coverage model, and concise capstone report.
+- Fresh XSim 2025.2 assessment evidence passed reset, operation, and protocol
+  tests at seeds 1 and 5. The opaque F1 stress run produced decisive XOR
+  `DATA_MISMATCH` reports and drained all scoreboard queues.
+- Fresh XSim 2025.2 evidence passed all nine documented correct-DUT runs: reset
+  seeds 1/5, operation seeds 1/5, protocol seeds 1/5, and stress seeds 2/5/8.
+- Nine archived databases merged successfully through XCRG with coverage score
+  100; every required coverpoint and cross reported zero uncovered bins.
+- The exact opaque F1 command returned nonzero with three XOR `DATA_MISMATCH`
+  reports, `checked=7`, `mismatches=3`, and no queue leftovers.
+- Final score is 92/100 and state is `guided`, reflecting substantial progressive
+  coaching and requested syntax support. DV-C1 is complete; DV-C2 is next.
+- Residual risks are fixed-time drain windows instead of observed bounded drain
+  completion and response-ready randomization coupled to command iterations.

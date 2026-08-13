@@ -15,8 +15,8 @@ learner:
     - When a newly created module is converted to a completed read-only checkpoint, create the next eligible substantive module in the same task instead of stopping at the checkpoint.
     - Before assigning any new implementation unit, explicitly compare its objective with recorded evidence and name the genuinely new invariant or transfer decision; otherwise use a reading checkpoint. Do not assign fixture-specific formatting or API transcription as an implementation exercise.
     - After DV-01, do not require generic reflections or duplicate evidence summaries; require only concise engineering artifacts whose decisions are themselves the lesson objective.
-current_focus: DV-C1
-last_updated: "2026-08-06"
+current_focus: DV-C2
+last_updated: "2026-08-12"
 summary:
   state: guided
   highest_gate_passed: UB-G1
@@ -1318,22 +1318,37 @@ modules:
       - Score: classification 25/25, targeted legal stimulus 30/30, passive proof/fault detection 25/25, disposition evidence 15/15, integrity explanation 5/5. Guided reflects focused terminology and evidence coaching.
       - Learner work was limited to targeted stimulus and the coverage-disposition table; no generic reflection or duplicate evidence summary was required.
   DV-C1:
-    state: not_started
-    attempts: 0
-    completed_on: null
-    score: null
-    hints_used: []
-    seeds: []
+    state: guided
+    attempts: 1
+    completed_on: "2026-08-12"
+    score: 92
+    hints_used:
+      - Progressive coaching on monitor transaction boundaries, analysis imps, reset state, predictor/scoreboard flow, virtual sequencing, coverage flags, and bounded drain behavior.
+      - Direct syntax and small mechanical edits were supplied when requested.
+    seeds: [1, 2, 5, 8]
     artifacts:
       - modules/internship-readiness/DV-C1-blind-protocol-capstone/module.yaml
       - modules/internship-readiness/DV-C1-blind-protocol-capstone/spec/tcs-peripheral-spec.md
       - modules/internship-readiness/DV-C1-blind-protocol-capstone/implementation-handoff.md
-    strengths: []
-    gaps: []
+      - modules/internship-readiness/DV-C1-blind-protocol-capstone/plan/verification-plan.md
+      - modules/internship-readiness/DV-C1-blind-protocol-capstone/tb/
+      - modules/internship-readiness/DV-C1-blind-protocol-capstone/reports/capstone-report.md
+    strengths:
+      - Built a complete multi-agent UVM environment with passive accepted-transfer observation, independent prediction, FIFO checking, protocol assertions, and requirement-derived coverage.
+      - Correct-DUT reset, operation, and protocol tests passed fresh XSim 2025.2 runs at seeds 1 and 5; stress passed seeds 2, 5, and 8 with empty scoreboard queues.
+      - Opaque F1 was detected through decisive XOR DATA_MISMATCH diagnostics while all scoreboard queues drained.
+      - Nine archived coverage databases merged successfully with 100% requirement-level functional coverage.
+    gaps:
+      - Completion still relies on fixed time drains rather than an observed drain condition with a bounded timeout.
+      - The stress response-ready pattern changes once per command iteration rather than running as a fully independent stream.
     reviewer_notes:
       - Blind TCS capstone scaffolded with learner ownership of plan, UVM testbench, and concise engineering report.
       - Independent XSim 2025.2 seed-1 reference passed six command/response checks; opaque F1 failed nonzero through DVC1_REF_MISMATCH.
       - No generic reflection or duplicate evidence summary is required.
+      - Final XSim 2025.2 assessment on 2026-08-12 passed all nine documented correct-DUT runs: reset 1/5, operation 1/5, protocol 1/5, and stress 2/5/8.
+      - Merged XCRG evidence reported coverage score 100 with all required coverpoints and crosses covered.
+      - The exact opaque-fault command returned nonzero with three XOR DATA_MISMATCH reports, checked=7, mismatches=3, and zero queue leftovers.
+      - Score: functional checking/fault detection 29/30, architecture/passive evidence 19/20, handshake/latency/backpressure/reset/drain 16/20, coverage/disposition 10/10, reproducible regression/debug 14/15, report 4/5 = 92/100. Guided reflects substantial progressive coaching and requested direct syntax support.
 evidence_schema:
   state: not_started
   attempts: 0

@@ -42,6 +42,15 @@ Direct opaque-fault run:
 .\run.ps1 -Test tcs_stress_test -Seed 1 -Fault F1
 ```
 
+Run the planned multi-test, multi-seed regression and merge its functional
+coverage into one report:
+
+```powershell
+.\run-regression.ps1
+```
+
+The merged report is written under `coverage-merged/report/`.
+
 The module-creation fixture can be checked independently with:
 
 ```powershell

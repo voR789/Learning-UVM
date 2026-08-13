@@ -14,4 +14,13 @@ interface tcs_if(input logic clk);
               rsp_data);
   modport tb(input clk, cmd_ready, rsp_valid, rsp_tag, rsp_status, rsp_data,
              output rst_n, cmd_valid, cmd_tag, cmd_op, cmd_a, cmd_b, rsp_ready);
+
+  // Reset signal assertion
+  property reset_handshake_protocol;
+    @(posedge clk) 
+      !rst_n |-> (!cmd_ready && !rsp_valid);
+  endproperty
+
+  assert property (reset_handshake_protocol) 
+    else $error("RESET_PROTOCOL: cmd_ready and rsp_valid are not deasserted during reset");
 endinterface

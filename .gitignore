@@ -17,6 +17,8 @@ webtalk*.log
 
 # Generated reports and coverage
 coverage/
+coverage-runs/
+coverage-merged/
 reports/generated/
 *.ucdb
 
@@ -25,4 +27,3 @@ reports/generated/
 .idea/
 Thumbs.db
 Desktop.ini
-
